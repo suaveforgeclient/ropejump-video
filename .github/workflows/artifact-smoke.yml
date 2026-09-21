@@ -1,0 +1,32 @@
+name: ROPEJUMP artifact smoke
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  actions: write
+  issues: write
+
+jobs:
+  smoke:
+    if: ${{ github.event.issue.title == '[artifact-smoke]' }}
+    runs-on: ubuntu-latest
+    steps:
+      - run: printf 'ROPEJUMP\n' > smoke.txt
+      - id: upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: ropejump-smoke
+          path: smoke.txt
+          retention-days: 1
+      - env:
+          GH_TOKEN: ${{ github.token }}
+          REPO: ${{ github.repository }}
+          ISSUE: ${{ github.event.issue.number }}
+          RUN_ID: ${{ github.run_id }}
+          ARTIFACT_ID: ${{ steps.upload.outputs.artifact-id }}
+        run: |
+          body="SMOKE success run_id=$RUN_ID artifact_id=$ARTIFACT_ID"
+          payload="$(python -c 'import json,sys; print(json.dumps({"body":sys.argv[1]}))' "$body")"
+          curl -fsS -X POST -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" "https://api.github.com/repos/$REPO/issues/$ISSUE/comments" -d "$payload" >/dev/null
