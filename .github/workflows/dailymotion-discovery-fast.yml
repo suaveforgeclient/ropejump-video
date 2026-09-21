@@ -1,0 +1,79 @@
+name: ROPEJUMP Dailymotion discovery fast
+
+on:
+  push:
+    paths:
+      - ".github/workflows/dailymotion-discovery-fast.yml"
+
+permissions:
+  actions: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - name: Collect Dailymotion candidates
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          cat > /tmp/dm.py <<'PY'
+          import json, re, urllib.parse, urllib.request
+          from pathlib import Path
+
+          Q=[
+            "jump rope","jump rope basic bounce","jump rope boxer step","jump rope alternate foot",
+            "jump rope crossover","jump rope criss cross","jump rope double under","jump rope side swing",
+            "skipping rope","skipping rope basic","skipping rope crossover","skipping rope double under",
+            "pular corda","pular corda básico","pular corda cruzado",
+            "saltar la cuerda","saltar cuerda básico","comba cruzado"
+          ]
+          pos=re.compile(r"(jump\s*rope|jumping\s*rope|skipping\s*rope|double\s*under|criss\s*cross|crossover|pular\s*corda|saltar\s*(la\s*)?cuerda|comba)",re.I)
+          neg=re.compile(r"(review|unbox|unboxing|podcast|interview|reaction|music video|commercial|advert|buying guide)",re.I)
+          rows={}
+          for q in Q:
+            for page in range(1,4):
+              u="https://api.dailymotion.com/videos?"+urllib.parse.urlencode({
+                "search":q,
+                "fields":"id,title,url,duration,description,created_time,owner.screenname",
+                "limit":100,"page":page
+              })
+              try:
+                req=urllib.request.Request(u,headers={"User-Agent":"ROPEJUMP-research/1.0"})
+                with urllib.request.urlopen(req,timeout=10) as r:
+                  d=json.loads(r.read().decode("utf-8","replace"))
+              except Exception as e:
+                print("ERR",q,page,repr(e)); break
+              for v in d.get("list",[]):
+                vid=str(v.get("id") or "")
+                if not vid: continue
+                title=str(v.get("title") or "")
+                desc=str(v.get("description") or "")
+                text=title+" "+desc
+                # Keep only metadata that explicitly describes jump-rope activity.
+                if not pos.search(text) or neg.search(text):
+                  continue
+                dur=v.get("duration")
+                # Avoid very long compilation/workout sources at discovery stage.
+                if isinstance(dur,(int,float)) and (dur < 3 or dur > 180):
+                  continue
+                rows[vid]={
+                  "key":"dailymotion:"+vid,"platform":"dailymotion","id":vid,
+                  "title":title,"sourceUrl":v.get("url") or "https://www.dailymotion.com/video/"+vid,
+                  "duration":dur,"channel":v.get("owner.screenname") or "","query":q,
+                  "materialized":False,"contentStatus":"UNSCREENED"
+                }
+              if not d.get("has_more"): break
+          vals=sorted(rows.values(),key=lambda x:x["id"])
+          payload={"schemaVersion":1,"platform":"dailymotion","youtubeExcluded":True,"uniqueCandidates":len(vals),"rows":vals}
+          Path("out/dailymotion-candidates.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("out/summary.txt").write_text(f"uniqueCandidates={len(vals)}\n",encoding="utf-8")
+          print("uniqueCandidates",len(vals))
+          PY
+          python /tmp/dm.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dailymotion-discovery-fast
+          path: out/
+          retention-days: 7
