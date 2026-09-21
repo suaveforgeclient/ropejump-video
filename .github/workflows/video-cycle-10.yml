@@ -1,0 +1,115 @@
+name: ROPEJUMP 10-video artifact cycle
+
+on:
+  issues:
+    types: [opened]
+
+permissions:
+  actions: write
+  issues: write
+
+jobs:
+  video:
+    if: ${{ github.event.issue.title == '[video-cycle-10]' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    strategy:
+      fail-fast: false
+      matrix:
+        video_id:
+          - "_hjspOjY3OA"
+          - "-4GeZ0-iWmA"
+          - "-aSsSZeisxY"
+          - "-eSBdVqVCRA"
+          - "-iUpSI_eAdU"
+          - "-lHdh0uldkA"
+          - "-lj8WC_PTwU"
+          - "-r5RJhX2HeY"
+          - "-Z8Uo-BIcKI"
+          - "0-_ADy-gm5I"
+
+    steps:
+      - name: Install tools
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -y >/dev/null
+          sudo apt-get install -y ffmpeg >/dev/null
+          python -m pip install --disable-pip-version-check --no-cache-dir -U yt-dlp >/dev/null
+
+      - name: Download video with client rotation
+        id: dl
+        env:
+          ID: ${{ matrix.video_id }}
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          LOG="out/${ID}.download.log"
+          : > "$LOG"
+          ok=0
+
+          try_download() {
+            local clients="$1"
+            echo "TRY clients=$clients" | tee -a "$LOG"
+            rm -f "out/${ID}."* 2>/dev/null || true
+            if python -m yt_dlp               --no-playlist               --no-progress               --retries 3               --fragment-retries 3               --extractor-retries 3               --merge-output-format mp4               --remux-video mp4               --extractor-args "youtube:player_client=$clients"               -S "res:720,ext:mp4:m4a"               -o "out/${ID}.%(ext)s"               "https://www.youtube.com/watch?v=${ID}" >>"$LOG" 2>&1; then
+              return 0
+            fi
+            return 1
+          }
+
+          for clients in             "tv_downgraded,web,android_vr"             "android_vr,tv_downgraded,web"             "web_creator,tv_downgraded,android_vr"             "mweb,tv_downgraded,web"             "web,android_vr,tv_downgraded"
+          do
+            if try_download "$clients"; then
+              ok=1
+              break
+            fi
+          done
+
+          if [ "$ok" != 1 ]; then
+            echo "DOWNLOAD_FAILED id=$ID" | tee -a "$LOG"
+            tail -n 80 "$LOG"
+            exit 41
+          fi
+
+          file="$(find out -maxdepth 1 -type f -name "${ID}.*" ! -name '*.part' ! -name '*.log' | head -n1)"
+          test -n "$file"
+          if [ "${file##*.}" != "mp4" ]; then
+            ffmpeg -hide_banner -loglevel error -y -i "$file" -c copy "out/${ID}.mp4"
+            rm -f "$file"
+            file="out/${ID}.mp4"
+          fi
+
+          size="$(stat -c %s "$file")"
+          cap=$((90*1024*1024))
+          if [ "$size" -gt "$cap" ]; then
+            echo "VIDEO_CAP_EXCEEDED id=$ID bytes=$size cap=$cap" | tee -a "$LOG"
+            exit 42
+          fi
+
+          ffprobe -v error             -show_entries format=format_name,duration,size             -show_entries stream=index,codec_type,codec_name,width,height,r_frame_rate             -of json "$file" > "out/${ID}.ffprobe.json"
+
+          python -c 'import hashlib,pathlib,sys; p=pathlib.Path(sys.argv[1]); h=hashlib.sha256(); f=p.open("rb"); [h.update(c) for c in iter(lambda:f.read(1048576), b"")]; f.close(); print(f"{p.name}\t{p.stat().st_size}\t{h.hexdigest()}")' "$file" > "out/${ID}.sha256.tsv"
+          cat "out/${ID}.sha256.tsv"
+          cat "out/${ID}.ffprobe.json"
+
+      - name: Upload video artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ropejump-video-${{ matrix.video_id }}
+          path: |
+            out/${{ matrix.video_id }}.mp4
+            out/${{ matrix.video_id }}.ffprobe.json
+            out/${{ matrix.video_id }}.sha256.tsv
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
+
+      - name: Upload failure log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ropejump-failure-${{ matrix.video_id }}
+          path: out/${{ matrix.video_id }}.download.log
+          retention-days: 1
+          if-no-files-found: ignore
