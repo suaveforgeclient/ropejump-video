@@ -1,0 +1,72 @@
+name: ROPEJUMP strict candidates batch2 full
+
+on:
+  push:
+    paths:
+      - ".github/workflows/strict-candidates-batch2-full.yml"
+
+permissions:
+  actions: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - id: x80ku1s
+            title: "Athlete Shows Off Some Amazing Jump Rope Tricks"
+          - id: x80ku26
+            title: "Jump Rope World Champion Displays Some Serious Skill"
+          - id: x815y0i
+            title: "Blindfolded Guy Shows off Cool Jump Rope Tricks"
+          - id: x87yrtr
+            title: "Sportsperson Performs Spectacular Moves While Jumping Rope"
+          - id: x89ul35
+            title: "Woman Displays Amazing Footwork With Jump Rope"
+          - id: x8by42a
+            title: "Athlete Performs Skipping Rope Tricks"
+          - id: x8eh8hw
+            title: "Guy Does Jump Rope Dancing"
+          - id: x8eh8gp
+            title: "Guy Dances While Skipping Rope"
+          - id: x936ngo
+            title: "Man Shows Impressive Jump Rope Trick"
+          - id: x8au8pu
+            title: "Guy Brilliantly Dances While Jumping Rope"
+          - id: x7zay0w
+            title: "Guy Displays Talent by Performing Tricks While Jumping Over Skipping Rope"
+    steps:
+      - name: Install tools
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -y >/dev/null
+          sudo apt-get install -y ffmpeg >/dev/null
+          python -m pip install --disable-pip-version-check --no-cache-dir -U yt-dlp >/dev/null
+
+      - name: Download full candidate
+        env:
+          ID: ${{ matrix.id }}
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          python -m yt_dlp --no-playlist --no-progress --retries 3 --fragment-retries 3             -f "bv*[height<=720]+ba/b[height<=720]" --merge-output-format mp4             -o "out/$ID.%(ext)s" "https://www.dailymotion.com/video/$ID"
+          file="$(find out -maxdepth 1 -type f -name "$ID.*" ! -name '*.part' | head -n1)"
+          test -n "$file"
+          if [ "${file##*.}" != "mp4" ]; then
+            ffmpeg -hide_banner -loglevel error -y -i "$file" -c copy "out/$ID.mp4"
+            rm -f "$file"
+            file="out/$ID.mp4"
+          fi
+          ffprobe -v error             -show_entries format=duration,size             -show_entries stream=codec_type,codec_name,width,height,r_frame_rate             -of json "$file" > "out/$ID.ffprobe.json"
+          sha256sum "$file" > "out/$ID.sha256.txt"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: strict2-${{ matrix.id }}
+          path: out/
+          retention-days: 3
+          compression-level: 0
