@@ -1,0 +1,59 @@
+name: ROPEJUMP strict finalists
+
+on:
+  push:
+    paths:
+      - ".github/workflows/strict-finalists.yml"
+
+permissions:
+  actions: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      max-parallel: 2
+      matrix:
+        include:
+          - id: x5p78gx
+            title: "Miguel Cotto Skipping Rope"
+          - id: x5qnsdh
+            title: "Guillermo Rigondeaux jumping rope"
+          - id: x6nm0ny
+            title: "Brian Viloria jump rope"
+          - id: x6czc5e
+            title: "Lucas Matthysse - Jump Rope"
+    steps:
+      - name: Install tools
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -y >/dev/null
+          sudo apt-get install -y ffmpeg >/dev/null
+          python -m pip install --disable-pip-version-check --no-cache-dir -U yt-dlp >/dev/null
+
+      - name: Download full finalist
+        env:
+          ID: ${{ matrix.id }}
+          TITLE: ${{ matrix.title }}
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          python -m yt_dlp --no-playlist --no-progress --retries 3 --fragment-retries 3             -f "bv*[height<=720]+ba/b[height<=720]" --merge-output-format mp4             -o "out/$ID.%(ext)s" "https://www.dailymotion.com/video/$ID"
+          file="$(find out -maxdepth 1 -type f -name "$ID.*" ! -name '*.part' | head -n1)"
+          test -n "$file"
+          if [ "${file##*.}" != "mp4" ]; then
+            ffmpeg -hide_banner -loglevel error -y -i "$file" -c copy "out/$ID.mp4"
+            rm -f "$file"
+            file="out/$ID.mp4"
+          fi
+          ffprobe -v error -show_entries format=duration,size -show_entries stream=codec_type,codec_name,width,height,r_frame_rate -of json "$file" > "out/$ID.ffprobe.json"
+          sha256sum "$file" > "out/$ID.sha256.txt"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: strict-${{ matrix.id }}
+          path: out/
+          retention-days: 3
+          compression-level: 0
