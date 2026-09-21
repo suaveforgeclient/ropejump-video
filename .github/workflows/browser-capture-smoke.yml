@@ -1,15 +1,15 @@
 name: ROPEJUMP browser capture smoke
 
 on:
-  issues:
-    types: [opened]
+  push:
+    paths:
+      - ".github/workflows/browser-capture-smoke.yml"
 
 permissions:
   actions: write
 
 jobs:
   capture:
-    if: ${{ github.event.issue.title == '[browser-capture-smoke]' }}
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -20,9 +20,9 @@ jobs:
           export DISPLAY=:99
           Xvfb :99 -screen 0 1280x720x24 >/tmp/xvfb.log 2>&1 &
           sleep 2
-          google-chrome             --no-sandbox             --disable-dev-shm-usage             --disable-gpu             --autoplay-policy=no-user-gesture-required             --window-size=1280,720             --window-position=0,0             --kiosk             "https://www.youtube.com/embed/_hjspOjY3OA?autoplay=1&mute=1&controls=0&rel=0"             >/tmp/chrome.log 2>&1 &
+          google-chrome --no-sandbox --disable-dev-shm-usage --disable-gpu --autoplay-policy=no-user-gesture-required --window-size=1280,720 --window-position=0,0 --kiosk "https://www.youtube.com/embed/_hjspOjY3OA?autoplay=1&mute=1&controls=0&rel=0" >/tmp/chrome.log 2>&1 &
           sleep 8
-          ffmpeg -hide_banner -loglevel warning             -f x11grab -framerate 30 -video_size 1280x720 -i :99             -t 12 -an -c:v libx264 -preset veryfast -crf 23             -pix_fmt yuv420p out/browser-capture.mp4
+          ffmpeg -hide_banner -loglevel warning -f x11grab -framerate 30 -video_size 1280x720 -i :99 -t 12 -an -c:v libx264 -preset veryfast -crf 23 -pix_fmt yuv420p out/browser-capture.mp4
           ffprobe -v error -show_entries format=duration,size -show_entries stream=codec_name,width,height,r_frame_rate -of json out/browser-capture.mp4 > out/ffprobe.json
           sha256sum out/browser-capture.mp4 > out/sha256.txt
 
