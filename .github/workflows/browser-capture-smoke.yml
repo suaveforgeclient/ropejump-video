@@ -13,6 +13,9 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
+      - name: Install ffmpeg
+        run: sudo apt-get update -y >/dev/null && sudo apt-get install -y ffmpeg >/dev/null
+
       - name: Capture 12 seconds from normal YouTube playback
         run: |
           set -Eeuo pipefail
