@@ -1,0 +1,171 @@
+name: ROPEJUMP open-platform discovery
+
+on:
+  push:
+    paths:
+      - ".github/workflows/open-platform-discovery.yml"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Discover non-YouTube jump-rope candidates
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          cat > /tmp/discover.py <<'PY'
+          import json, re, time, urllib.parse, urllib.request
+          from pathlib import Path
+
+          UA = {"User-Agent":"ROPEJUMP-research/1.0"}
+          QUERIES = [
+            "jump rope", "jump rope basic bounce", "jump rope boxer step",
+            "jump rope alternate foot", "jump rope crossover", "jump rope criss cross",
+            "jump rope double under", "jump rope side swing", "skipping rope",
+            "skipping rope basic", "skipping rope crossover", "skipping rope double under",
+            "pular corda", "pular corda básico", "pular corda cruzado",
+            "saltar la cuerda", "saltar cuerda básico", "comba cruzado"
+          ]
+          POS = re.compile(r"\b(jump\s*rope|jumping\s*rope|skipping\s*rope|skip\s*rope|double\s*under|criss\s*cross|crossover|pular\s*corda|saltar\s*(la\s*)?cuerda|comba)\b", re.I)
+          NEG = re.compile(r"\b(review|unbox|unboxing|podcast|interview|reaction|music video|news|commercial|advert|ad |product only|rope making|how to make|buying guide)\b", re.I)
+
+          def get_json(url, timeout=25):
+            req = urllib.request.Request(url, headers=UA)
+            with urllib.request.urlopen(req, timeout=timeout) as r:
+              return json.loads(r.read().decode("utf-8","replace"))
+
+          rows = {}
+
+          # Dailymotion public API search
+          for q in QUERIES:
+            for page in range(1, 6):
+              params = {
+                "search": q,
+                "fields": "id,title,url,duration,description,created_time,owner.screenname",
+                "limit": "100",
+                "page": str(page),
+              }
+              url = "https://api.dailymotion.com/videos?" + urllib.parse.urlencode(params)
+              try:
+                data = get_json(url)
+              except Exception as e:
+                print("DM_ERR", q, page, repr(e))
+                break
+              got = 0
+              for v in data.get("list", []):
+                got += 1
+                vid = str(v.get("id") or "")
+                if not vid: continue
+                title = str(v.get("title") or "")
+                desc = str(v.get("description") or "")
+                text = title + " " + desc
+                role = "positive_candidate" if POS.search(text) and not NEG.search(text) else "metadata_reject"
+                key = "dailymotion:" + vid
+                rows[key] = {
+                  "key": key, "platform": "dailymotion", "id": vid,
+                  "title": title, "sourceUrl": v.get("url") or f"https://www.dailymotion.com/video/{vid}",
+                  "duration": v.get("duration"), "channel": v.get("owner.screenname") or "",
+                  "query": q, "metadataGate": role
+                }
+              if got == 0 or not data.get("has_more"):
+                break
+              time.sleep(.15)
+
+          # Wikimedia Commons search
+          for q in QUERIES:
+            params = {
+              "action":"query","format":"json","generator":"search","gsrnamespace":"6",
+              "gsrsearch":q,"gsrlimit":"50",
+              "prop":"imageinfo","iiprop":"url|mime|size|extmetadata"
+            }
+            url = "https://commons.wikimedia.org/w/api.php?" + urllib.parse.urlencode(params)
+            try:
+              data = get_json(url)
+            except Exception as e:
+              print("COMMONS_ERR", q, repr(e)); continue
+            for p in (data.get("query") or {}).get("pages", {}).values():
+              ii = (p.get("imageinfo") or [{}])[0]
+              mime = str(ii.get("mime") or "")
+              if not mime.startswith("video/"): continue
+              title = str(p.get("title") or "")
+              text = title
+              role = "positive_candidate" if POS.search(text) and not NEG.search(text) else "metadata_reject"
+              pid = str(p.get("pageid") or "")
+              key = "wikimedia_commons:" + pid
+              rows[key] = {
+                "key": key, "platform":"wikimedia_commons","id":pid,
+                "title":title,"sourceUrl":ii.get("descriptionurl") or ii.get("url") or "",
+                "mediaUrl":ii.get("url") or "","duration":None,"channel":"",
+                "query":q,"metadataGate":role
+              }
+            time.sleep(.1)
+
+          # Internet Archive advanced search
+          for q in QUERIES:
+            aq = f'(title:("{q}") OR description:("{q}")) AND mediatype:movies'
+            params = {
+              "q": aq, "fl[]": ["identifier","title","description","creator"],
+              "rows":"100","page":"1","output":"json"
+            }
+            pairs = []
+            for k,v in params.items():
+              if isinstance(v,list):
+                for x in v: pairs.append((k,x))
+              else: pairs.append((k,v))
+            url = "https://archive.org/advancedsearch.php?" + urllib.parse.urlencode(pairs)
+            try:
+              data = get_json(url)
+            except Exception as e:
+              print("IA_ERR", q, repr(e)); continue
+            for d in ((data.get("response") or {}).get("docs") or []):
+              ident = str(d.get("identifier") or "")
+              if not ident: continue
+              title = str(d.get("title") or "")
+              desc = str(d.get("description") or "")
+              text = title + " " + desc
+              role = "positive_candidate" if POS.search(text) and not NEG.search(text) else "metadata_reject"
+              key = "internet_archive:" + ident
+              rows[key] = {
+                "key":key,"platform":"internet_archive","id":ident,
+                "title":title,"sourceUrl":"https://archive.org/details/"+ident,
+                "duration":None,"channel":d.get("creator") or "",
+                "query":q,"metadataGate":role
+              }
+            time.sleep(.1)
+
+          allrows = sorted(rows.values(), key=lambda x:(x["platform"], x["id"]))
+          positives = [x for x in allrows if x["metadataGate"]=="positive_candidate"]
+          stats = {}
+          for x in allrows:
+            p=x["platform"]
+            stats.setdefault(p,{"total":0,"positive_candidate":0,"metadata_reject":0})
+            stats[p]["total"] += 1
+            stats[p][x["metadataGate"]] += 1
+          payload = {
+            "schemaVersion":1,
+            "youtubeExcluded":True,
+            "queries":QUERIES,
+            "stats":stats,
+            "totalUnique":len(allrows),
+            "positiveUnique":len(positives),
+            "rows":allrows
+          }
+          Path("out/open-platform-candidates.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          Path("out/open-platform-positive.jsonl").write_text("".join(json.dumps(x,ensure_ascii=False)+"\n" for x in positives),encoding="utf-8")
+          Path("out/summary.txt").write_text(json.dumps({
+            "totalUnique":len(allrows),"positiveUnique":len(positives),"stats":stats
+          },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
+          print(Path("out/summary.txt").read_text())
+          PY
+          python /tmp/discover.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: open-platform-discovery
+          path: out/
+          retention-days: 7
