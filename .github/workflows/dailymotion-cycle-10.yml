@@ -1,0 +1,99 @@
+name: ROPEJUMP Dailymotion 10-video cycle
+
+on:
+  push:
+    paths:
+      - ".github/workflows/dailymotion-cycle-10.yml"
+
+permissions:
+  actions: write
+
+jobs:
+  video:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - id: x8eh8gp
+            url: https://www.dailymotion.com/video/x8eh8gp
+          - id: x8hneoc
+            url: https://www.dailymotion.com/video/x8hneoc
+          - id: xa2xj42
+            url: https://www.dailymotion.com/video/xa2xj42
+          - id: xa7mu3i
+            url: https://www.dailymotion.com/video/xa7mu3i
+          - id: xa6ue6e
+            url: https://www.dailymotion.com/video/xa6ue6e
+          - id: xa5bvlk
+            url: https://www.dailymotion.com/video/xa5bvlk
+          - id: xa6iyju
+            url: https://www.dailymotion.com/video/xa6iyju
+          - id: xa4ea22
+            url: https://www.dailymotion.com/video/xa4ea22
+          - id: xa5ecri
+            url: https://www.dailymotion.com/video/xa5ecri
+          - id: x7ojnlb
+            url: https://www.dailymotion.com/video/x7ojnlb
+
+    steps:
+      - name: Install tools
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -y >/dev/null
+          sudo apt-get install -y ffmpeg >/dev/null
+          python -m pip install --disable-pip-version-check --no-cache-dir -U yt-dlp >/dev/null
+
+      - name: Download and verify
+        env:
+          VIDEO_ID: ${{ matrix.id }}
+          VIDEO_URL: ${{ matrix.url }}
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          python -m yt_dlp             --no-playlist             --no-progress             --retries 3             --fragment-retries 3             -S "res:720,ext:mp4:m4a"             --merge-output-format mp4             -o "out/${VIDEO_ID}.%(ext)s"             "${VIDEO_URL}" 2>&1 | tee "out/${VIDEO_ID}.download.log"
+
+          file="$(find out -maxdepth 1 -type f -name "${VIDEO_ID}.*" ! -name '*.part' ! -name '*.log' | head -n1)"
+          test -n "$file"
+
+          if [ "${file##*.}" != "mp4" ]; then
+            ffmpeg -hide_banner -loglevel error -y -i "$file" -c copy "out/${VIDEO_ID}.mp4"
+            rm -f "$file"
+            file="out/${VIDEO_ID}.mp4"
+          fi
+
+          size="$(stat -c %s "$file")"
+          cap=$((90*1024*1024))
+          if [ "$size" -gt "$cap" ]; then
+            echo "VIDEO_CAP_EXCEEDED id=$VIDEO_ID bytes=$size cap=$cap"
+            exit 42
+          fi
+
+          ffprobe -v error             -show_entries format=format_name,duration,size             -show_entries stream=index,codec_type,codec_name,width,height,r_frame_rate             -of json "$file" > "out/${VIDEO_ID}.ffprobe.json"
+
+          sha256sum "$file" > "out/${VIDEO_ID}.sha256.txt"
+
+      - name: Upload video artifact
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ropejump-dm-${{ matrix.id }}
+          path: |
+            out/${{ matrix.id }}.mp4
+            out/${{ matrix.id }}.ffprobe.json
+            out/${{ matrix.id }}.sha256.txt
+            out/${{ matrix.id }}.download.log
+          retention-days: 1
+          compression-level: 0
+          if-no-files-found: error
+
+      - name: Upload failure log
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ropejump-dm-failure-${{ matrix.id }}
+          path: out/${{ matrix.id }}.download.log
+          retention-days: 1
+          if-no-files-found: ignore
