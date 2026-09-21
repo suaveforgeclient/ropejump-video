@@ -1,0 +1,39 @@
+name: ROPEJUMP dailymotion smoke
+
+on:
+  push:
+    paths:
+      - ".github/workflows/dailymotion-smoke.yml"
+
+permissions:
+  actions: write
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Install tools
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -y >/dev/null
+          sudo apt-get install -y ffmpeg >/dev/null
+          python -m pip install --disable-pip-version-check --no-cache-dir -U yt-dlp >/dev/null
+
+      - name: Download Dailymotion jump-rope video
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          python -m yt_dlp             --no-playlist             --no-progress             --retries 3             --fragment-retries 3             -S "res:720,ext:mp4:m4a"             --merge-output-format mp4             -o "out/%(id)s.%(ext)s"             "https://www.dailymotion.com/video/x8eh8gp"
+
+          file="$(find out -maxdepth 1 -type f -name 'x8eh8gp.*' ! -name '*.part' | head -n1)"
+          test -n "$file"
+          ffprobe -v error -show_entries format=duration,size -show_entries stream=codec_type,codec_name,width,height,r_frame_rate -of json "$file" > out/ffprobe.json
+          sha256sum "$file" > out/sha256.txt
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: dailymotion-x8eh8gp
+          path: out/
+          retention-days: 1
+          compression-level: 0
