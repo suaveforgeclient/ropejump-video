@@ -1,0 +1,110 @@
+name: ROPEJUMP Dailymotion visual prescreen
+
+on:
+  push:
+    paths:
+      - ".github/workflows/dailymotion-visual-prescreen.yml"
+
+permissions:
+  actions: write
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - id: x374iaw
+            title: "Amir Khan - Jump Rope"
+          - id: x5p78gx
+            title: "Miguel Cotto Skipping Rope"
+          - id: x1dgcr
+            title: "crazy skipping rope skakanka trening"
+          - id: xa5bvlk
+            title: "Jump rope Manipulation"
+          - id: x6czc5e
+            title: "Lucas Matthysse - Jump Rope"
+          - id: x20jus8
+            title: "Jump rope"
+          - id: x2zg9vl
+            title: "jump rope"
+          - id: x6vq5kw
+            title: "Skipping rope gym - good technique"
+          - id: x6jq281
+            title: "Man performs skipping rope moves in city square"
+          - id: x5qnsdh
+            title: "Guillermo Rigondeaux jumping rope"
+          - id: x4x0tv5
+            title: "Jump Rope Consistency"
+          - id: x7oqzep
+            title: "Jump rope double jumps"
+          - id: x7k6uo8
+            title: "Jump rope double jumps"
+          - id: x6nm0ny
+            title: "Brian Viloria jump rope"
+          - id: x5oh3bl
+            title: "jumping rope like a beast"
+          - id: x6y8a1f
+            title: "Skipping rope personal trainer"
+          - id: x8cgll8
+            title: "saltar la cuerda nivel 1000"
+          - id: x7zyor3
+            title: "habilidades pular corda"
+          - id: x7zor9s
+            title: "pular corda criança"
+          - id: x84zr79
+            title: "Jump Rope Pro"
+          - id: xb6lgf6
+            title: "Amanda Kloots jump rope"
+          - id: x788tb
+            title: "butt jump rope man"
+          - id: x8ko3y
+            title: "Nike Women - Jump Rope"
+          - id: x3gq9wc
+            title: "Fun Ways to Jump Rope"
+          - id: xecz2k
+            title: "Jump Rope Techniques"
+    steps:
+      - name: Install tools
+        run: |
+          sudo apt-get update -y >/dev/null
+          sudo apt-get install -y ffmpeg >/dev/null
+          python -m pip install --disable-pip-version-check --no-cache-dir -U yt-dlp >/dev/null
+
+      - name: Download and build contact sheet
+        env:
+          ID: ${{ matrix.id }}
+          TITLE: ${{ matrix.title }}
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          url="https://www.dailymotion.com/video/$ID"
+          python -m yt_dlp --no-playlist --no-progress --retries 3 --fragment-retries 3             -f "bv*[height<=480]+ba/b[height<=480]" --merge-output-format mp4             -o "out/$ID.%(ext)s" "$url" >/tmp/dl.log 2>&1
+          file="$(find out -maxdepth 1 -type f -name "$ID.*" ! -name '*.part' | head -n1)"
+          test -n "$file"
+
+          ffprobe -v error -show_entries format=duration,size -of json "$file" > "out/$ID.ffprobe.json"
+          dur="$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$file")"
+          fps="$(python - <<PY
+          d=float("$dur")
+          print(max(0.05,12.0/max(d,1.0)))
+          PY
+          )"
+          ffmpeg -hide_banner -loglevel error -y -i "$file"             -vf "fps=$fps,scale=320:-2,tile=4x3" -frames:v 1 "out/$ID.sheet.jpg"
+
+          ffmpeg -hide_banner -i "$file" -vf "select='gt(scene,0.35)',showinfo" -an -f null -             2> "out/$ID.scene.log" || true
+          cuts="$(grep -c 'showinfo.*pts_time' "out/$ID.scene.log" || true)"
+          printf 'id=%s\ntitle=%s\nduration=%s\nsceneCuts035=%s\n' "$ID" "$TITLE" "$dur" "$cuts" > "out/$ID.summary.txt"
+          rm -f "$file"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prescreen-${{ matrix.id }}
+          path: |
+            out/${{ matrix.id }}.sheet.jpg
+            out/${{ matrix.id }}.summary.txt
+            out/${{ matrix.id }}.ffprobe.json
+          retention-days: 3
