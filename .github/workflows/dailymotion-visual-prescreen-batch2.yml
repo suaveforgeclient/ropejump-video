@@ -1,0 +1,116 @@
+name: ROPEJUMP Dailymotion visual prescreen batch2
+
+on:
+  push:
+    paths:
+      - ".github/workflows/dailymotion-visual-prescreen-batch2.yml"
+
+permissions:
+  actions: write
+
+jobs:
+  screen:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 5
+      matrix:
+        include:
+          - id: x80ku26
+            title: "Jump Rope World Champion Displays Some Serious Skill"
+          - id: x89ul35
+            title: "Woman Displays Amazing Footwork With Jump Rope"
+          - id: x8eh8hw
+            title: "Guy Does Jump Rope Dancing"
+          - id: x7xzn9u
+            title: "Guy Showcases Amazing Jump Rope Tricks"
+          - id: x971vsg
+            title: "Woman Showcases Amazing Tricks While Jumping Rope"
+          - id: x80ku1s
+            title: "Athlete Shows Off Some Amazing Jump Rope Tricks"
+          - id: x87yrtr
+            title: "Sportsperson Performs Spectacular Moves While Jumping Rope"
+          - id: x8bln4r
+            title: "Person Performs Tricks With Jump Rope on Tennis Court"
+          - id: x7zay0w
+            title: "Guy Displays Talent by Performing Tricks While Jumping Over Skipping Rope"
+          - id: x81vusk
+            title: "Couple Shows off Amazing Jump Rope Routine"
+          - id: x8au8pu
+            title: "Guy Brilliantly Dances While Jumping Rope"
+          - id: x815y0i
+            title: "Blindfolded Guy Shows off Cool Jump Rope Tricks"
+          - id: x8by42a
+            title: "Athlete Performs Skipping Rope Tricks"
+          - id: x7xznai
+            title: "Guy Displays Cool Moves While Jumping Rope"
+          - id: x6vasxz
+            title: "Professional Jump Rope Team Performs Double Dutch Routine"
+          - id: x7xwtu7
+            title: "Three Guys Give Jump Rope Performance"
+          - id: x7zb0mj
+            title: "Two Guys Jump Rope On Stage In Sychronization"
+          - id: x7xwtuo
+            title: "Three Guys Perform Coordinated Jump Rope Tricks"
+          - id: x3gqedz
+            title: "Beginning Boxing Jump Rope Routine"
+          - id: x5l4nbl
+            title: "andre berto killing the jump rope got skills EsNews Boxing"
+          - id: x8cfu36
+            title: "Guy Does Remarkable Tricks WIth Fiery Jump Rope"
+          - id: x83ydjb
+            title: "Duo Performs Tricks While Jumping Rope"
+          - id: x7xwtuq
+            title: "Guy Performs Flips While Jumping Rope"
+          - id: x7xwtu8
+            title: "Guy Combines Backflips With Jump Rope Tricks"
+          - id: x936ngo
+            title: "Man Shows Impressive Jump Rope Trick"
+          - id: x8eh8gp
+            title: "Guy Dances While Skipping Rope"
+          - id: x8c8v15
+            title: "Guy Performs Mind-blowing Tricks With Fiery Skipping Rope"
+          - id: x8iqbad
+            title: "Guy Performs Variations of Flips Using Skipping Rope"
+    steps:
+      - name: Install tools
+        run: |
+          sudo apt-get update -y >/dev/null
+          sudo apt-get install -y ffmpeg >/dev/null
+          python -m pip install --disable-pip-version-check --no-cache-dir -U yt-dlp >/dev/null
+
+      - name: Download and build contact sheet
+        env:
+          ID: ${{ matrix.id }}
+          TITLE: ${{ matrix.title }}
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          url="https://www.dailymotion.com/video/$ID"
+          python -m yt_dlp --no-playlist --no-progress --retries 3 --fragment-retries 3             -f "bv*[height<=480]+ba/b[height<=480]" --merge-output-format mp4             -o "out/$ID.%(ext)s" "$url" >/tmp/dl.log 2>&1
+          file="$(find out -maxdepth 1 -type f -name "$ID.*" ! -name '*.part' | head -n1)"
+          test -n "$file"
+
+          ffprobe -v error -show_entries format=duration,size -of json "$file" > "out/$ID.ffprobe.json"
+          dur="$(ffprobe -v error -show_entries format=duration -of default=nw=1:nk=1 "$file")"
+          fps="$(python - <<PY
+          d=float("$dur")
+          print(max(0.05,12.0/max(d,1.0)))
+          PY
+          )"
+          ffmpeg -hide_banner -loglevel error -y -i "$file"             -vf "fps=$fps,scale=320:-2,tile=4x3" -frames:v 1 "out/$ID.sheet.jpg"
+
+          ffmpeg -hide_banner -i "$file" -vf "select='gt(scene,0.35)',showinfo" -an -f null -             2> "out/$ID.scene.log" || true
+          cuts="$(grep -c 'showinfo.*pts_time' "out/$ID.scene.log" || true)"
+          printf 'id=%s\ntitle=%s\nduration=%s\nsceneCuts035=%s\n' "$ID" "$TITLE" "$dur" "$cuts" > "out/$ID.summary.txt"
+          rm -f "$file"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: prescreen2-${{ matrix.id }}
+          path: |
+            out/${{ matrix.id }}.sheet.jpg
+            out/${{ matrix.id }}.summary.txt
+            out/${{ matrix.id }}.ffprobe.json
+          retention-days: 3
