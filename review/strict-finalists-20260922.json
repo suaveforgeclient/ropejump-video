@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtUtc": "2026-09-21T16:22:00Z",
+  "criterion": "whole source must be jump-rope-only, no irrelevant footage, and stable enough for exact visual counting",
+  "rows": [
+    {
+      "id": "x5p78gx",
+      "status": "REJECT",
+      "reason": "camera leaves jumper entirely for several seconds (~13.5-19s); unusable for whole-video exact count"
+    },
+    {
+      "id": "x5qnsdh",
+      "status": "REJECT",
+      "reason": "foreground person repeatedly blocks the jumper/body and rope"
+    },
+    {
+      "id": "x6czc5e",
+      "status": "REJECT",
+      "reason": "camera framing crops feet/lower body and later upper/lower visibility is unstable for exact count"
+    },
+    {
+      "id": "x6nm0ny",
+      "status": "PASS_CONTENT",
+      "reason": "single continuous jump-rope session; jumper, feet and rope remain visible; no irrelevant cutaway"
+    }
+  ]
+}
