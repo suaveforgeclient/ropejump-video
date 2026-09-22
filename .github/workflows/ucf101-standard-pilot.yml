@@ -22,7 +22,7 @@ jobs:
           set -Eeuo pipefail
           sudo apt-get update -qq
           sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
-          python -m pip install -q --disable-pip-version-check pillow
+          python -m pip install -q --disable-pip-version-check pillow 'huggingface_hub[hf_xet]'
 
       - name: Collect diverse JumpRope class pilot without full archive
         run: |
