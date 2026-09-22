@@ -156,10 +156,27 @@ def discover(config_path, out_dir, pilot_limit=30, constrained_web_search=False)
                 label=html.unescape(m.group(1)).strip() if m else ""
             add(src,seed,raw,label,"anchor_label")
 
-        for pre,raw,post in EMBED_RE.findall(page):
+        for em in EMBED_RE.finditer(page):
+            pre,raw,post=em.groups()
             m=TITLE_RE.search(pre+" "+post)
-            label=html.unescape(m.group(1)).strip() if m else ""
-            add(src,seed,raw,label,"embed_title" if label else "embed_without_label")
+            title=html.unescape(m.group(1)).strip() if m else ""
+            label=title
+            basis="embed_title" if title else "embed_without_label"
+
+            # For unlabeled/generic embeds, the nearest preceding section heading is
+            # usable as metadata evidence only when it is close to the embed.
+            heading=""
+            last=None
+            for hm in HEADING_RE.finditer(page, 0, em.start()):
+                last=hm
+            if last is not None and em.start()-last.end() <= 2200:
+                heading=strip_tags(last.group(1))
+            title_gate,_=classify_label(title)
+            heading_gate,_=classify_label(heading)
+            if title_gate=="TYPE_UNKNOWN" and heading_gate!="TYPE_UNKNOWN":
+                label=heading
+                basis="nearest_heading"
+            add(src,seed,raw,label,basis)
 
         for raw in set(ABS_URL_RE.findall(page)):
             add(src,seed,raw,"","raw_url_without_label")
@@ -191,7 +208,7 @@ def discover(config_path, out_dir, pilot_limit=30, constrained_web_search=False)
         0 if x["contentRisk"]=="DEMO_HINT_NOT_VISUAL_PASS" else 1,
         x["sourcePoolId"],x["videoUrl"]))
 
-    explicit=[x for x in vals if x["typeGate"]=="STANDARD_EXPLICIT_LABEL" and x["evidenceBasis"] in ("anchor_label","embed_title")]
+    explicit=[x for x in vals if x["typeGate"]=="STANDARD_EXPLICIT_LABEL" and x["evidenceBasis"] in ("anchor_label","embed_title","nearest_heading")]
     search_evidence=[x for x in vals if x["typeGate"]=="STANDARD_SEARCH_EVIDENCE" and x["evidenceBasis"]=="constrained_web_search"]
     usable_access=lambda x: x["accessPolicy"] not in (
         "LINK_ONLY_KNOWN_ACCESS_RISK","LINK_ONLY_UNCERTAIN_ACCESS","LINK_ONLY_REVIEW_URL")
