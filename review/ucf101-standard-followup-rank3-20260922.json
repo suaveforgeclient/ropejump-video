@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtKst": "2026-09-22",
+  "dataset": "UCF101",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceReview": "review/ucf101-standard-followup-20260922.json",
+  "selection": "Third clip from source groups whose first two reviewed clips both passed STANDARD.",
+  "reviewMethod": "GPT direct whole-source visual review using dense 10 fps evidence. Ambiguous subtype is held rather than auto-passed.",
+  "policy": {
+    "priorSiblingPassDoesNotAutoPassThisClip": true,
+    "wholeSourcePureStandardRequired": true,
+    "ambiguousSubtypeHeldOut": true,
+    "countingDeferredUntilVisualPass": true
+  },
+  "summary": {
+    "reviewed": 5,
+    "passStandard": 2,
+    "hold": 1,
+    "reject": 2
+  },
+  "importantFinding": "Even groups with two consecutive STANDARD clips are not guaranteed subtype-pure. g02 and g11 change away from basic two-foot STANDARD by c03. Only g22 and g25 remained clear STANDARD across c01-c03; g08 c03 is held as visually ambiguous rather than forced into STANDARD.",
+  "rows": [
+    {
+      "id": "v_JumpRope_g02_c03",
+      "sha256": "ecc18d75a9e2b630184d7364d3616047e977843bc05c37997fea86dfd3f97f27",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_OR_LATERAL_STEP",
+      "reason": "Dense sequence shows repeated asymmetric/single-foot support and stepping rather than a stable synchronized two-foot basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g08_c03",
+      "sha256": "dc572c412ce49d5c42630c924a573a26d6bf7ca050b6b6c7f91f7753ace77d6b",
+      "status": "HOLD_TYPE_AMBIGUOUS",
+      "observedType": "POSSIBLE_BASIC_OR_SUBTLE_ALTERNATE",
+      "reason": "Rope action is continuous and uncrossed, but the low-resolution dense sequence does not resolve foot synchronization strongly enough to label pure two-foot STANDARD with confidence."
+    },
+    {
+      "id": "v_JumpRope_g11_c03",
+      "sha256": "45afd932fb70962d0c12d2c7c3fc7c4ffc782351fdd906bb28af278f32dee1b1",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT",
+      "reason": "Side-view dense sequence repeatedly shows one knee/foot cycling independently of the other, inconsistent with synchronized two-foot basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g22_c03",
+      "sha256": "44a319e8b42943b733d646b645c610057e0825c8cbd402f2e6d7c6c5ab986f62",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; uncrossed rope with synchronized two-foot basic bounce remains clear through the full clip."
+    },
+    {
+      "id": "v_JumpRope_g25_c03",
+      "sha256": "405dd2d41f4def8dd6129e832aaf785c94793f4e6d545fa19d856f4c7091bb44",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; repeated two-foot synchronized airborne/landing cycles with uncrossed rope and no type change or irrelevant cut."
+    }
+  ]
+}
