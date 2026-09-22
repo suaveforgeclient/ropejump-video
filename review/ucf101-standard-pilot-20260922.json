@@ -4,7 +4,7 @@
   "dataset": "UCF101",
   "datasetClass": "JumpRope",
   "targetType": "STANDARD_BASIC_SINGLE_UNDER",
-  "reviewMethod": "GPT direct visual review of whole source using 4 fps overview plus dense 10 fps frame sheets; dataset class and program signals were not used to auto-pass subtype.",
+  "reviewMethod": "GPT direct visual review of whole source using 4 fps overview plus dense 10/15 fps lower-body re-audit for PASS candidates; dataset class and program signals were not used to auto-pass subtype.",
   "policy": {
     "wholeSourcePureStandardRequired": true,
     "mixedTypeRejectedFromStandardPool": true,
@@ -14,9 +14,9 @@
   },
   "summary": {
     "reviewed": 25,
-    "passStandard": 7,
-    "rejectOrHold": 18,
-    "passRate": 0.28
+    "passStandard": 6,
+    "rejectOrHold": 19,
+    "passRate": 0.24
   },
   "rows": [
     {
@@ -92,9 +92,9 @@
     {
       "id": "v_JumpRope_g11_c01",
       "sha256": "1291eb29132fd245f1b8f0ccdfb1711841e8b490e918e5b66b123e296ca81b26",
-      "status": "PASS_STANDARD",
-      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
-      "reason": "Single jumper; dense foot review confirms synchronized two-foot bounce through the clip with uncrossed arms."
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_TO_ALTERNATE_FOOT",
+      "reason": "Higher-density whole-source re-audit found the clip transitions into asymmetric/alternate-foot skipping near the tail, so it is not pure STANDARD."
     },
     {
       "id": "v_JumpRope_g12_c01",
@@ -194,5 +194,6 @@
       "observedType": "STANDARD_BASIC_SINGLE_UNDER",
       "reason": "Single jumper; continuous synchronized two-foot basic bounce with uncrossed rope rotation and no irrelevant cut or visible type change."
     }
-  ]
+  ],
+  "reauditNote": "2026-09-23: re-audited prior PASS candidates at higher temporal density before counting; g11_c01 was downgraded due a late alternate-foot transition."
 }
