@@ -1,0 +1,46 @@
+name: ROPEJUMP UCF101 path probe
+
+on:
+  push:
+    paths:
+      - ".github/workflows/ucf101-path-probe.yml"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -q --disable-pip-version-check huggingface_hub
+      - name: Probe exact published object paths
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          python - <<'PY'
+          import json, os, hashlib
+          from pathlib import Path
+          from huggingface_hub import HfApi, hf_hub_download
+          repo="bitmind/UCF101-Videos"
+          api=HfApi()
+          files=api.list_repo_files(repo_id=repo, repo_type="dataset")
+          hits=[f for f in files if "JumpRope" in f or "jumprope" in f.lower()]
+          payload={"repo":repo,"totalFiles":len(files),"jumpRopeMatches":len(hits),"matches":hits[:200]}
+          if hits:
+              target=hits[0]
+              p=hf_hub_download(repo_id=repo,filename=target,repo_type="dataset")
+              data=Path(p).read_bytes()
+              payload["probeDownload"]={"path":target,"bytes":len(data),"sha256":hashlib.sha256(data).hexdigest()}
+          Path("out/path-probe.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n")
+          print(json.dumps(payload,ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ucf101-path-probe
+          path: out/
+          retention-days: 2
