@@ -55,5 +55,6 @@
       "observedType": "STANDARD_BASIC_SINGLE_UNDER",
       "reason": "Single jumper; repeated two-foot synchronized airborne/landing cycles with uncrossed rope and no type change or irrelevant cut."
     }
-  ]
+  ],
+  "sourceEligibilityCorrection": "After 2026-09-23 re-audit, g02_c02 and g11_c02 are no longer STANDARD PASS. Their c03 clips remain retained as historical probes but are not considered eligible descendants of two-pass STANDARD groups."
 }
