@@ -43,7 +43,8 @@
       "url": "https://vimeo.com/channels/usajumprope",
       "searchAliases": [
         "USA Jump Rope"
-      ]
+      ],
+      "expander": "vimeo_flat"
     },
     {
       "id": "universe_skippers_materials",
@@ -100,6 +101,26 @@
       "searchAliases": [
         "The Art of Jumping Rope",
         "Learn To Jump Rope"
+      ]
+    },
+    {
+      "id": "aha_vimeo_public",
+      "class": "official_health_org_video_profile",
+      "authority": "high",
+      "url": "https://vimeo.com/americanheartassociation",
+      "expander": "vimeo_flat",
+      "searchAliases": [
+        "American Heart Association jump rope"
+      ]
+    },
+    {
+      "id": "khc_vimeo_public",
+      "class": "official_health_education_video_profile",
+      "authority": "high",
+      "url": "https://vimeo.com/kidsheartchallenge",
+      "expander": "vimeo_flat",
+      "searchAliases": [
+        "Kids Heart Challenge jump rope"
       ]
     }
   ]
