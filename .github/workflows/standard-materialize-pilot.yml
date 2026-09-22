@@ -29,7 +29,7 @@ jobs:
         shell: bash
         run: |
           set -Eeuo pipefail
-          python scripts/standard-source-pool-discovery.py --config research/source-pools-standard.json --out discovery --pilot-limit 10 --constrained-web-search
+          python scripts/standard-source-pool-discovery.py --config research/source-pools-standard.json --out discovery --pilot-limit 10
           python - <<'PY'
           import hashlib, json, subprocess
           from pathlib import Path
