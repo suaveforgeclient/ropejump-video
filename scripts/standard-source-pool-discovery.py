@@ -19,7 +19,7 @@ A_RE=re.compile(r'(?is)<a\b([^>]*?)href=["\']([^"\']+)["\']([^>]*)>(.*?)</a>')
 EMBED_RE=re.compile(r'(?is)<(?:iframe|video|source)\b([^>]*?)(?:src|data-src)=["\']([^"\']+)["\']([^>]*)>')
 TITLE_RE=re.compile(r'(?is)(?:title|aria-label)=["\']([^"\']+)["\']')
 ABS_URL_RE=re.compile(r'https?://[^\s"\'<>\\)]+', re.I)
-DDG_RESULT_RE=re.compile(r'(?is)<a[^>]+class=["\\']result__a["\\'][^>]+href=["\\']([^"\\']+)["\\'][^>]*>(.*?)</a>')
+DDG_RESULT_RE=re.compile(r"(?is)<a[^>]+class=['\\\"]result__a['\\\"][^>]+href=['\\\"]([^'\\\"]+)['\\\"][^>]*>(.*?)</a>")
 HEADING_RE=re.compile(r'(?is)<h[1-6]\\b[^>]*>(.*?)</h[1-6]>')
 
 def fetch(url):
