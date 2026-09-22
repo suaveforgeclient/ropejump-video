@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtKst": "2026-09-22",
+  "dataset": "UCF101",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceReview": "review/ucf101-standard-pilot-20260922.json",
+  "selection": "One second clip from each source group whose first clip passed STANDARD.",
+  "reviewMethod": "GPT direct whole-source visual review using dense 10 fps evidence; no sibling clip inherits a pass from its source group.",
+  "policy": {
+    "groupPassDoesNotImplySiblingPass": true,
+    "wholeSourcePureStandardRequired": true,
+    "mixedTypeRejectedFromStandardPool": true,
+    "countingDeferredUntilVisualPass": true
+  },
+  "summary": {
+    "reviewed": 7,
+    "passStandard": 5,
+    "rejectOrHold": 2,
+    "passRate": 0.7142857143
+  },
+  "importantFinding": "UCF101 source groups are not subtype-pure. g03 and g24 had STANDARD c01 clips but non-STANDARD c02 clips, so every clip must be visually typed independently.",
+  "rows": [
+    {
+      "id": "v_JumpRope_g02_c02",
+      "sha256": "ac914b57236a749d2a2b87050c737f3086a32c59f9e6584f5f2cba64907b5307",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; ordinary uncrossed single-rope rotations with synchronized two-foot bounce remain consistent through the full clip."
+    },
+    {
+      "id": "v_JumpRope_g03_c02",
+      "sha256": "a9c30992f783a31de8cc9f64f5458ed7c6319fe40c61ec057b236a41cd5d7a69",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_TO_ALTERNATE_FOOT",
+      "reason": "Begins close to synchronized basic bounce, then clearly changes into alternating-foot/high-knee skipping in the latter half."
+    },
+    {
+      "id": "v_JumpRope_g08_c02",
+      "sha256": "846cd42d398248a269aa81ad70f2f41d54f59a796eed333c01fd0883bcafcc24",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; continuous uncrossed rope rotation and synchronized two-foot bounce throughout."
+    },
+    {
+      "id": "v_JumpRope_g11_c02",
+      "sha256": "eb076fe078196a73269f24fe1cad20d25fc80084254ec7ca397c73bf0b0bc096",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; front-to-side camera view changes but the action remains synchronized two-foot basic single-under with no trick transition."
+    },
+    {
+      "id": "v_JumpRope_g22_c02",
+      "sha256": "aac83932509a91dfae8cc4e08b76319ce55e12ac52254ecdcf761d4fb73a68e5",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; uncrossed rope and close synchronized two-foot basic bounce persist across the full short clip."
+    },
+    {
+      "id": "v_JumpRope_g24_c02",
+      "sha256": "f53414c61dd091c21e0fcf3e9ff1d63481f380a2c31b8235d63e35b21ca3c7ba",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_HIGH_KNEE",
+      "reason": "Repeated unilateral knee lift and alternating-foot support dominate the clip; this is not pure two-foot basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g25_c02",
+      "sha256": "55996cf0837d370e47b8eebd788538ba865cca345f24033778d36f3e83ff257d",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; two feet move together with mild lateral drift, uncrossed hands, and continuous ordinary single-under action throughout."
+    }
+  ]
+}
