@@ -78,17 +78,16 @@ jobs:
             if NON_ACTIVITY.search(t):
               return "METADATA_REJECT_NON_ACTIVITY", -5
             other=bool(OTHER_TYPE.search(text or ""))
-            strong=bool(STRONG.search(text or ""))
             general=bool(GENERAL.search(text or ""))
-            qstrong=bool(STRONG.search(query or ""))
+            strong=bool(STRONG.search(text or "")) or bool(TWO_FEET_CONTEXT.search(text or ""))
             if other:
               return "OTHER_TYPE_EXPLICIT", -3
-            if strong:
-              return "STANDARD_STRONG_CANDIDATE", 4
-            if general and qstrong:
-              return "STANDARD_QUERY_CANDIDATE", 2
+            # Type classification must come from source metadata itself.
+            # Search-query wording is discovery context only and can NEVER create a STANDARD label.
+            if general and strong:
+              return "STANDARD_EXPLICIT_METADATA", 4
             if general:
-              return "STANDARD_UNVERIFIED", 1
+              return "JUMPROPE_TYPE_UNKNOWN", 1
             return "METADATA_WEAK", 0
 
           def add(platform, keyid, title, url, desc="", query="", channel="", duration=None, media_url="", source_kind="api"):
@@ -100,7 +99,7 @@ jobs:
               "key":key,"platform":platform,"id":str(keyid),"title":str(title or ""),
               "sourceUrl":str(url),"mediaUrl":str(media_url or ""),"duration":duration,
               "channel":str(channel or ""),"query":str(query or ""),"targetType":TYPE,
-              "typeGate":gate,"typeScore":score,"sourceKind":source_kind,
+              "typeGate":gate,"typeScore":score,"sourceKind":source_kind,"queryIsDiscoveryOnly":True,
               "materialized":False,"visualStatus":"UNSCREENED"
             }
             old=rows.get(key)
@@ -245,15 +244,16 @@ jobs:
               time.sleep(.2)
 
           allrows=sorted(rows.values(),key=lambda x:(-x.get("typeScore",0),x["platform"],x["id"]))
-          candidates=[x for x in allrows if x["typeGate"] in ("STANDARD_STRONG_CANDIDATE","STANDARD_QUERY_CANDIDATE","STANDARD_UNVERIFIED")]
-          strong=[x for x in allrows if x["typeGate"]=="STANDARD_STRONG_CANDIDATE"]
+          candidates=[x for x in allrows if x["typeGate"]=="STANDARD_EXPLICIT_METADATA"]
+          unknown=[x for x in allrows if x["typeGate"]=="JUMPROPE_TYPE_UNKNOWN"]
+          strong=candidates
           by_platform={}
           for x in allrows:
             p=x["platform"]
             by_platform.setdefault(p,{"total":0,"standardCandidates":0,"strong":0,"otherType":0,"rejected":0})
             by_platform[p]["total"]+=1
             if x in candidates: by_platform[p]["standardCandidates"]+=1
-            if x["typeGate"]=="STANDARD_STRONG_CANDIDATE": by_platform[p]["strong"]+=1
+            if x["typeGate"]=="STANDARD_EXPLICIT_METADATA": by_platform[p]["strong"]+=1
             if x["typeGate"]=="OTHER_TYPE_EXPLICIT": by_platform[p]["otherType"]+=1
             if x["typeGate"].startswith("METADATA_REJECT"): by_platform[p]["rejected"]+=1
 
@@ -266,6 +266,7 @@ jobs:
             "queries":QUERIES,
             "totalUnique":len(allrows),
             "standardCandidates":len(candidates),
+            "unknownJumpRopeType":len(unknown),
             "strongMetadataCandidates":len(strong),
             "stats":by_platform,
             "errors":errors,
@@ -275,7 +276,7 @@ jobs:
           Path("out/standard-candidates.jsonl").write_text("".join(json.dumps(x,ensure_ascii=False)+"\n" for x in candidates),encoding="utf-8")
           Path("out/summary.json").write_text(json.dumps({
             "targetType":TYPE,"totalUnique":len(allrows),"standardCandidates":len(candidates),
-            "strongMetadataCandidates":len(strong),"stats":by_platform,"errorCount":len(errors)
+            "unknownJumpRopeType":len(unknown),"strongMetadataCandidates":len(strong),"stats":by_platform,"errorCount":len(errors)
           },ensure_ascii=False,indent=2)+"\n",encoding="utf-8")
           print(Path("out/summary.json").read_text())
           PY
