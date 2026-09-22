@@ -50,7 +50,7 @@ def list_hf_mirror():
                 clip_path=str(row.get("clip_path") or "").strip().lstrip("/")
                 # HF mirror stores these as root-level names containing literal
                 # backslashes, matching the repository tree display.
-                repo_path=clip_path.replace("/","\\")
+                repo_path=clip_path.replace("\\","/").lstrip("/")
                 found[name]={
                     "filename":name,
                     "group":int(g),
@@ -87,7 +87,7 @@ def download_hf(repo_path):
     # Normalize only path separators. Do not invent a different dataset object.
     # CSV/UI paths are canonical slash paths such as train/JumpRope/v_...avi.
     from huggingface_hub import hf_hub_download
-    clean=str(repo_path or "").strip().replace("\\\\","/").lstrip("/")
+    clean=str(repo_path or "").strip().replace("\\","/").lstrip("/")
     if not clean:
         raise RuntimeError("empty_hf_repo_path")
     errors=[]
