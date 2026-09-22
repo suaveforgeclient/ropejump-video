@@ -91,6 +91,16 @@
       "searchAliases": [
         "Eddie Jumps"
       ]
+    },
+    {
+      "id": "art_of_jumping_rope_member_dashboard",
+      "class": "specialist_jump_rope_skill_library",
+      "authority": "medium",
+      "url": "https://learntojumprope.com/member-dashboard/",
+      "searchAliases": [
+        "The Art of Jumping Rope",
+        "Learn To Jump Rope"
+      ]
     }
   ]
 }
