@@ -1,0 +1,32 @@
+name: ROPEJUMP source metadata review finalized counts
+
+on:
+  push:
+    paths:
+      - ".github/workflows/source-metadata-finalized-counts.yml"
+
+permissions:
+  actions: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        id: [x8au8pu, x7zay0w, x8by42a]
+    steps:
+      - name: Fetch exact Dailymotion source metadata
+        env:
+          ID: ${{ matrix.id }}
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          curl -fsSL --retry 3             "https://api.dailymotion.com/video/$ID?fields=id,title,description,duration,url,owner.screenname"             -o "out/$ID.source.json"
+          cat "out/$ID.source.json"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: source-meta-${{ matrix.id }}
+          path: out/${{ matrix.id }}.source.json
+          retention-days: 3
