@@ -20,7 +20,7 @@ jobs:
       - name: Crawl specialist/official source pools conservatively
         run: |
           set -Eeuo pipefail
-          python scripts/standard-source-pool-discovery.py --config research/source-pools-standard.json --out out --pilot-limit 30 --constrained-web-search
+          python scripts/standard-source-pool-discovery.py --config research/source-pools-standard.json --out out --pilot-limit 30
           cat out/summary.json
       - uses: actions/upload-artifact@v4
         with:
