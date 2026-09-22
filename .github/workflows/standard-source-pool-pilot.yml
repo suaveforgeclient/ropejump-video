@@ -1,0 +1,188 @@
+name: ROPEJUMP standard source-pool pilot
+
+on:
+  push:
+    paths:
+      - ".github/workflows/standard-source-pool-pilot.yml"
+      - "research/source-pools-standard.json"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  discover:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Crawl specialist/official source pools conservatively
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          cat > /tmp/pilot.py <<'PY'
+          import html, json, re, urllib.parse, urllib.request
+          from pathlib import Path
+
+          cfg=json.loads(Path("research/source-pools-standard.json").read_text())
+          UA={"User-Agent":"ROPEJUMP-research/2.1 source-pool-pilot"}
+
+          STANDARD=re.compile(
+            r"(basic\s*(bounce|jump)|single\s*under|single\s*bounce|regular\s*(bounce|jump)|"
+            r"basic\s*skipping|two[- ]?foot\s*(bounce|jump)|two\s+feet\s*(bounce|jump)|"
+            r"salto\s+b[aá]sico|pular\s+corda.*b[aá]sic|縄跳び.*(基本|前跳び)|줄넘기.*(기본|양발))", re.I)
+          OTHER=re.compile(
+            r"(double\s*under|triple\s*under|crossover|cross\s*over|criss\s*cross|boxer\s*step|"
+            r"alternate\s*foot|alternating\s*foot|running\s*step|high\s*knee|side\s*swing|"
+            r"freestyle|double\s*dutch|one[- ]?foot|release|mic\s*release|toad\b|frog\b|backward)", re.I)
+          EXPLAIN=re.compile(
+            r"(tutorial|lesson|how\s+to|instruction|explainer|learn\s+to|coach|teaching|drill)", re.I)
+          DEMO=re.compile(
+            r"(demo|demonstration|example|basic\s*bounce|single\s*under|single\s*bounce|basic\s*jump)", re.I)
+
+          URL_RE=re.compile(r'https?://[^\s"\'<>\\)]+', re.I)
+          ATTR_RE=re.compile(r'(?:href|src|data-src|contentUrl|embedUrl)\s*[:=]\s*["\']([^"\']+)["\']',re.I)
+
+          def fetch(url):
+            req=urllib.request.Request(url,headers=UA)
+            with urllib.request.urlopen(req,timeout=20) as r:
+              raw=r.read()
+              ctype=r.headers.get("content-type","")
+            return raw.decode("utf-8","replace"),ctype
+
+          def strip_tags(x):
+            x=re.sub(r"(?is)<script.*?</script>|<style.*?</style>"," ",x)
+            x=re.sub(r"(?s)<[^>]+>"," ",x)
+            x=html.unescape(x)
+            return re.sub(r"\s+"," ",x).strip()
+
+          def canonical_video(url):
+            u=html.unescape(url).strip()
+            if u.startswith("//"): u="https:"+u
+            if not u.startswith("http"): return None
+            p=urllib.parse.urlparse(u)
+            host=p.netloc.lower().replace("www.","")
+            path=p.path
+            if "youtube.com" in host or "youtu.be" in host:
+              return ("youtube",u,"LINK_ONLY_KNOWN_ACCESS_RISK")
+            if "vimeo.com" in host:
+              return ("vimeo",u,"MATERIALIZATION_TEST_REQUIRED")
+            if "dailymotion.com" in host or "dai.ly" in host:
+              return ("dailymotion",u,"MATERIALIZATION_TEST_REQUIRED")
+            if "peertube" in host or "/w/" in path or "/videos/watch/" in path:
+              return ("peertube_or_federated",u,"MATERIALIZATION_TEST_REQUIRED")
+            if re.search(r"\.(mp4|webm|mov)(?:$|\?)",u,re.I):
+              return ("direct_video",u,"DIRECT_MEDIA_TEST_REQUIRED")
+            if any(x in host for x in ["instagram.com","tiktok.com","facebook.com"]):
+              return ("social_video",u,"LINK_ONLY_UNCERTAIN_ACCESS")
+            return None
+
+          rows={}
+          fetches=[]
+          for src in cfg["sources"]:
+            seed=src["url"]
+            try:
+              page,ctype=fetch(seed)
+              fetches.append({"sourceId":src["id"],"url":seed,"ok":True,"contentType":ctype,"bytes":len(page.encode())})
+            except Exception as e:
+              fetches.append({"sourceId":src["id"],"url":seed,"ok":False,"error":repr(e)})
+              continue
+
+            # collect explicit attrs + any absolute URLs, then keep only video-like destinations
+            urls=set(ATTR_RE.findall(page))
+            urls.update(URL_RE.findall(page))
+            for raw in urls:
+              raw=urllib.parse.urljoin(seed,raw)
+              cv=canonical_video(raw)
+              if not cv: continue
+              platform,url,access=cv
+
+              # use nearby raw-HTML context only as evidence, never as visual truth
+              pos=page.find(raw)
+              if pos<0:
+                pos=page.find(html.escape(raw))
+              ctx=page[max(0,pos-700):pos+700] if pos>=0 else ""
+              context=strip_tags(ctx)[:1200]
+              standard=bool(STANDARD.search(context))
+              other=bool(OTHER.search(context))
+              explain=bool(EXPLAIN.search(context))
+              demo=bool(DEMO.search(context))
+
+              if other and not standard:
+                typeGate="OTHER_TYPE_EXPLICIT"
+              elif standard and not other:
+                typeGate="STANDARD_EXPLICIT_CONTEXT"
+              elif standard and other:
+                typeGate="MIXED_TYPE_CONTEXT"
+              else:
+                typeGate="TYPE_UNKNOWN"
+
+              if explain:
+                contentRisk="EXPLANATION_OR_LESSON_RISK"
+              elif demo:
+                contentRisk="DEMO_HINT_NOT_VISUAL_PASS"
+              else:
+                contentRisk="UNKNOWN_CONTENT_STRUCTURE"
+
+              key=platform+":"+re.sub(r"[^a-zA-Z0-9]+","_",url)[:220]
+              rows[key]={
+                "key":key,
+                "targetType":cfg["targetType"],
+                "sourcePoolId":src["id"],
+                "sourceClass":src["class"],
+                "authority":src["authority"],
+                "sourcePoolUrl":seed,
+                "platform":platform,
+                "videoUrl":url,
+                "typeGate":typeGate,
+                "contentRisk":contentRisk,
+                "accessPolicy":access,
+                "contextEvidence":context,
+                "visualStatus":"UNSCREENED",
+                "autoPass":False
+              }
+
+          vals=list(rows.values())
+          vals.sort(key=lambda x:(
+            0 if x["typeGate"]=="STANDARD_EXPLICIT_CONTEXT" else 1,
+            0 if x["authority"]=="high" else 1,
+            0 if x["contentRisk"]=="DEMO_HINT_NOT_VISUAL_PASS" else 1,
+            x["sourcePoolId"],x["videoUrl"]))
+
+          explicit=[x for x in vals if x["typeGate"]=="STANDARD_EXPLICIT_CONTEXT"]
+          accessible=[x for x in explicit if x["accessPolicy"] not in ("LINK_ONLY_KNOWN_ACCESS_RISK","LINK_ONLY_UNCERTAIN_ACCESS")]
+          pilot=accessible[:30]
+
+          # No item here is content-PASS. This batch is only the next visual-review queue.
+          payload={
+            "schemaVersion":1,
+            "targetType":cfg["targetType"],
+            "policy":cfg["policy"],
+            "sourceFetches":fetches,
+            "totalVideoLinks":len(vals),
+            "explicitStandardContext":len(explicit),
+            "accessibleExplicitStandard":len(accessible),
+            "visualPilotCount":len(pilot),
+            "rows":vals,
+            "visualPilot":pilot
+          }
+          Path("out/source-pool-pilot.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n")
+          Path("out/visual-pilot.json").write_text(json.dumps({"rows":pilot},ensure_ascii=False,indent=2)+"\n")
+          Path("out/summary.json").write_text(json.dumps({
+            "sourceFetches":fetches,
+            "totalVideoLinks":len(vals),
+            "explicitStandardContext":len(explicit),
+            "accessibleExplicitStandard":len(accessible),
+            "visualPilotCount":len(pilot)
+          },ensure_ascii=False,indent=2)+"\n")
+          print(Path("out/summary.json").read_text())
+          PY
+          python /tmp/pilot.py
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: standard-source-pool-pilot
+          path: out/
+          retention-days: 7
