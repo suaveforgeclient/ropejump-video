@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import argparse, hashlib, json, re, shutil, ssl, urllib.parse, urllib.request
+import argparse, csv, hashlib, json, re, shutil, ssl, urllib.parse, urllib.request
 from pathlib import Path
 
 OFFICIAL_ROOT="https://www.crcv.ucf.edu/THUMOS14/UCF101/UCF101/"
@@ -21,26 +21,44 @@ def list_official():
     return sorted(found.values(),key=lambda x:(x["group"],x["clip"]))
 
 def list_hf_mirror():
-    from huggingface_hub import HfApi
-    api=HfApi()
-    files=api.list_repo_files(HF_REPO,repo_type="dataset")
+    # This mirror exposes split CSVs cheaply. Read those instead of listing the
+    # entire 13k-file repo. The uploaded AVI objects use literal backslashes in
+    # repo filenames, so derive that exact path from clip_path.
+    from huggingface_hub import hf_hub_download
     found={}
-    for repo_path in files:
-        norm=str(repo_path).replace("\\","/")
-        if "/JumpRope/" not in ("/"+norm):
+    for split in ("train","validation","test"):
+        try:
+            csv_path=hf_hub_download(
+                repo_id=HF_REPO,
+                filename=f"{split}.csv",
+                repo_type="dataset"
+            )
+        except Exception:
             continue
-        name=norm.rsplit("/",1)[-1]
-        m=NAME_RE.fullmatch(name)
-        if not m:
-            continue
-        _,g,c=m.groups()
-        found[name]={
-            "filename":name,
-            "group":int(g),
-            "clip":int(c),
-            "repoPath":str(repo_path),
-            "sourceKind":"HF_UCF101_MIRROR"
-        }
+        with open(csv_path,newline="",encoding="utf-8-sig") as fh:
+            for row in csv.DictReader(fh):
+                if str(row.get("label") or "").strip()!="JumpRope":
+                    continue
+                clip_name=str(row.get("clip_name") or "").strip()
+                if not clip_name:
+                    continue
+                name=clip_name if clip_name.endswith(".avi") else clip_name+".avi"
+                m=NAME_RE.fullmatch(name)
+                if not m:
+                    continue
+                _,g,cc=m.groups()
+                clip_path=str(row.get("clip_path") or "").strip().lstrip("/")
+                # HF mirror stores these as root-level names containing literal
+                # backslashes, matching the repository tree display.
+                repo_path=clip_path.replace("/","\\")
+                found[name]={
+                    "filename":name,
+                    "group":int(g),
+                    "clip":int(cc),
+                    "split":split,
+                    "repoPath":repo_path,
+                    "sourceKind":"HF_UCF101_MIRROR"
+                }
     return sorted(found.values(),key=lambda x:(x["group"],x["clip"]))
 
 def select_diverse(rows, limit):
@@ -67,11 +85,21 @@ def select_diverse(rows, limit):
 
 def download_hf(repo_path):
     from huggingface_hub import hf_hub_download
-    return Path(hf_hub_download(
-        repo_id=HF_REPO,
-        filename=repo_path,
-        repo_type="dataset"
-    ))
+    attempts=[repo_path]
+    alt=repo_path.replace("\\","/")
+    if alt not in attempts:
+        attempts.append(alt)
+    last=None
+    for candidate in attempts:
+        try:
+            return Path(hf_hub_download(
+                repo_id=HF_REPO,
+                filename=candidate,
+                repo_type="dataset"
+            ))
+        except Exception as e:
+            last=e
+    raise last
 
 def main():
     ap=argparse.ArgumentParser()
