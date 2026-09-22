@@ -18,24 +18,28 @@ jobs:
         with:
           python-version: '3.11'
       - run: python -m pip install -q --disable-pip-version-check huggingface_hub
-      - name: Probe exact published object paths
+      - name: Probe UCF101 mirror layouts without downloading archives
         run: |
           set -Eeuo pipefail
           mkdir -p out
           python - <<'PY'
-          import json, os, hashlib
+          import json
           from pathlib import Path
-          from huggingface_hub import HfApi, hf_hub_download
-          repo="bitmind/UCF101-Videos"
+          from huggingface_hub import HfApi
           api=HfApi()
-          files=api.list_repo_files(repo_id=repo, repo_type="dataset")
-          hits=[f for f in files if "JumpRope" in f or "jumprope" in f.lower()]
-          payload={"repo":repo,"totalFiles":len(files),"jumpRopeMatches":len(hits),"matches":hits[:200]}
-          if hits:
-              target=hits[0]
-              p=hf_hub_download(repo_id=repo,filename=target,repo_type="dataset")
-              data=Path(p).read_bytes()
-              payload["probeDownload"]={"path":target,"bytes":len(data),"sha256":hashlib.sha256(data).hexdigest()}
+          repos=["bitmind/UCF101-Videos","bitmind/UCF101Fullvideo","BDeng/UCF-101","flwrlabs/ucf101"]
+          payload={"repos":[]}
+          for repo in repos:
+              rec={"repo":repo}
+              try:
+                  files=api.list_repo_files(repo_id=repo, repo_type="dataset")
+                  rec["totalFiles"]=len(files)
+                  rec["jumpRopeMatches"]=[f for f in files if "jumprope" in f.lower()][:200]
+                  rec["archiveLike"]=[f for f in files if f.lower().endswith((".rar",".zip",".tar",".tar.gz",".tgz"))][:50]
+                  rec["samples"]=files[:40]
+              except Exception as e:
+                  rec["error"]=repr(e)
+              payload["repos"].append(rec)
           Path("out/path-probe.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n")
           print(json.dumps(payload,ensure_ascii=False))
           PY
