@@ -32,7 +32,7 @@ jobs:
           import json
           d=json.load(open("collected/manifest.json"))
           print(json.dumps({"selected":d["selectedCount"],"downloaded":d["downloadedCount"]}))
-          if d["selectedCount"] != 20 or d["downloadedCount"] != d["selectedCount"]:
+          if d["selectedCount"] != 25 or d["downloadedCount"] != d["selectedCount"]:
               raise SystemExit("UCF101_PILOT_INCOMPLETE")
           PY
 
