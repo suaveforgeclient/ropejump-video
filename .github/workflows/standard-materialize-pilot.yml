@@ -1,0 +1,135 @@
+name: ROPEJUMP standard materialization pilot
+
+on:
+  push:
+    paths:
+      - ".github/workflows/standard-materialize-pilot.yml"
+      - "research/source-pools-standard.json"
+      - "scripts/standard-source-pool-discovery.py"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  materialize:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install media tools
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+          python -m pip install -q --disable-pip-version-check yt-dlp pillow
+
+      - name: Discover and materialize only explicit STANDARD pilot links
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          python scripts/standard-source-pool-discovery.py --config research/source-pools-standard.json --out discovery --pilot-limit 10
+          python - <<'PY'
+          import hashlib, json, subprocess
+          from pathlib import Path
+
+          from PIL import Image, ImageDraw, ImageOps
+
+          rows=json.loads(Path("discovery/visual-pilot.json").read_text())["rows"]
+          root=Path("out")
+          root.mkdir(exist_ok=True)
+          results=[]
+
+          for i,row in enumerate(rows,1):
+              key=f"standard-{i:02d}-{hashlib.sha1(row['videoUrl'].encode()).hexdigest()[:8]}"
+              d=root/key
+              d.mkdir(parents=True,exist_ok=True)
+              (d/"candidate.json").write_text(json.dumps(row,ensure_ascii=False,indent=2)+"\n")
+              url=row["videoUrl"]
+              outtmpl=str(d/"source.%(ext)s")
+              cmd=[
+                  "python","-m","yt_dlp",
+                  "--no-playlist","--no-progress","--retries","3","--fragment-retries","3",
+                  "-f","bv*[height<=720]+ba/b[height<=720]",
+                  "--merge-output-format","mp4",
+                  "-o",outtmpl,url
+              ]
+              p=subprocess.run(cmd,text=True,capture_output=True)
+              rec={"key":key,"videoUrl":url,"linkLabel":row.get("linkLabel",""),
+                   "downloadOk":p.returncode==0,"downloadReturnCode":p.returncode,
+                   "stderrTail":p.stderr[-1600:]}
+              files=[x for x in d.glob("source.*") if x.suffix not in (".part",".ytdl")]
+              if p.returncode!=0 or not files:
+                  results.append(rec)
+                  continue
+
+              src=files[0]
+              if src.suffix.lower()!=".mp4":
+                  mp4=d/"source.mp4"
+                  cp=subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),"-c","copy",str(mp4)])
+                  if cp.returncode==0:
+                      src.unlink(missing_ok=True)
+                      src=mp4
+
+              probe=subprocess.run([
+                  "ffprobe","-v","error","-show_entries",
+                  "format=duration,size:stream=index,codec_type,width,height,avg_frame_rate,r_frame_rate",
+                  "-of","json",str(src)
+              ],text=True,capture_output=True)
+              (d/"ffprobe.json").write_text(probe.stdout or "{}")
+
+              frames=d/"frames2fps"
+              frames.mkdir(exist_ok=True)
+              ex=subprocess.run([
+                  "ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),
+                  "-vf","fps=2,scale=480:-2:flags=lanczos",
+                  "-q:v","3",str(frames/"f_%05d.jpg")
+              ])
+              jpgs=sorted(frames.glob("*.jpg"))
+              pages=[]
+              for page_i in range(0,len(jpgs),20):
+                  chunk=jpgs[page_i:page_i+20]
+                  canvas=Image.new("RGB",(5*500,4*300),"white")
+                  draw=ImageDraw.Draw(canvas)
+                  for j,jpg in enumerate(chunk):
+                      im=Image.open(jpg).convert("RGB")
+                      im.thumbnail((480,250))
+                      cell=Image.new("RGB",(500,300),"white")
+                      x=(500-im.width)//2
+                      y=22+(250-im.height)//2
+                      cell.paste(im,(x,y))
+                      frame_num=int(jpg.stem.split("_")[-1])
+                      sec=(frame_num-1)/2.0
+                      ImageDraw.Draw(cell).text((8,5),f"{sec:0.1f}s",fill="black")
+                      cx=(j%5)*500
+                      cy=(j//5)*300
+                      canvas.paste(cell,(cx,cy))
+                  outp=d/f"sheet_{page_i//20+1:02d}.jpg"
+                  canvas.save(outp,quality=88)
+                  pages.append(outp.name)
+
+              rec.update({
+                  "downloadOk":True,
+                  "sourceFile":src.name,
+                  "frameCount2fps":len(jpgs),
+                  "sheets":pages
+              })
+              results.append(rec)
+
+          (root/"materialize-results.json").write_text(json.dumps({
+              "targetType":"STANDARD_BASIC_SINGLE_UNDER",
+              "policy":"Evidence package only. No automatic content/type/count PASS.",
+              "results":results
+          },ensure_ascii=False,indent=2)+"\n")
+          print(json.dumps(results,ensure_ascii=False,indent=2))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: standard-materialization-pilot
+          path: |
+            discovery/
+            out/
+          retention-days: 2
