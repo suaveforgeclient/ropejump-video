@@ -20,43 +20,77 @@
       "id": "aha_khc_jump_skills",
       "class": "official_health_education",
       "authority": "high",
-      "url": "https://www2.heart.org/site/SPageServer?pagename=khc_resources_jump_skills_videos"
+      "url": "https://www2.heart.org/site/SPageServer?pagename=khc_resources_jump_skills_videos",
+      "searchAliases": [
+        "Kids Heart Challenge",
+        "American Heart Association jump rope"
+      ]
     },
     {
       "id": "ijru_education",
       "class": "official_federation",
       "authority": "high",
-      "url": "https://ijru.sport/education"
+      "url": "https://ijru.sport/education",
+      "searchAliases": [
+        "IJRU jump rope",
+        "International Jump Rope Union"
+      ]
     },
     {
       "id": "usa_jump_rope_vimeo",
       "class": "national_jump_rope_org_video_channel",
       "authority": "high",
-      "url": "https://vimeo.com/channels/usajumprope"
+      "url": "https://vimeo.com/channels/usajumprope",
+      "searchAliases": [
+        "USA Jump Rope"
+      ]
     },
     {
       "id": "universe_skippers_materials",
       "class": "jump_rope_team_education_library",
       "authority": "medium",
-      "url": "https://universeskippers.mozello.de/materials/"
+      "url": "https://universeskippers.mozello.de/materials/",
+      "searchAliases": [
+        "Universe Skippers"
+      ]
     },
     {
       "id": "art_of_jumping_rope_all_videos",
       "class": "specialist_jump_rope_library",
       "authority": "medium",
-      "url": "https://learntojumprope.com/all-videos/"
+      "url": "https://learntojumprope.com/all-videos/",
+      "searchAliases": [
+        "The Art of Jumping Rope",
+        "Learn To Jump Rope"
+      ]
     },
     {
       "id": "jump_rope_index",
       "class": "specialist_jump_rope_index",
       "authority": "medium",
-      "url": "https://thejumpropeindex.webador.com/"
+      "url": "https://thejumpropeindex.webador.com/",
+      "searchAliases": [
+        "The Jump Rope Index"
+      ]
     },
     {
       "id": "coach_chris_single_bounce",
       "class": "specialist_coaching_skill_page",
       "authority": "medium",
-      "url": "https://www.thejumpropecoachchris.com/beginner/day-2"
+      "url": "https://www.thejumpropecoachchris.com/beginner/day-2",
+      "searchAliases": [
+        "Jump Rope Coach Chris",
+        "Coach Chris jump rope"
+      ]
+    },
+    {
+      "id": "eddie_jumps_public",
+      "class": "specialist_jump_rope_creator",
+      "authority": "medium",
+      "url": "https://www.eddiejumps.co.uk/",
+      "searchAliases": [
+        "Eddie Jumps"
+      ]
     }
   ]
 }
