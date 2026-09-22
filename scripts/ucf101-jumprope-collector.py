@@ -84,22 +84,17 @@ def select_diverse(rows, limit):
     return selected
 
 def download_hf(repo_path):
-    from huggingface_hub import hf_hub_download
-    attempts=[repo_path]
-    alt=repo_path.replace("\\","/")
-    if alt not in attempts:
-        attempts.append(alt)
-    last=None
-    for candidate in attempts:
-        try:
-            return Path(hf_hub_download(
-                repo_id=HF_REPO,
-                filename=candidate,
-                repo_type="dataset"
-            ))
-        except Exception as e:
-            last=e
-    raise last
+    # The mirror uploaded AVI objects with literal backslashes in the repo
+    # filename. huggingface_hub normalizes them into "/" and misses the entry,
+    # so request the literal filename as one percent-encoded path segment.
+    encoded=urllib.parse.quote(repo_path,safe="")
+    url=f"https://huggingface.co/datasets/{HF_REPO}/resolve/main/{encoded}?download=true"
+    data=fetch_bytes(url,90)
+    cache=Path("/tmp/ucf101-hf")
+    cache.mkdir(parents=True,exist_ok=True)
+    out=cache/repo_path.rsplit("\\",1)[-1]
+    out.write_bytes(data)
+    return out
 
 def main():
     ap=argparse.ArgumentParser()
