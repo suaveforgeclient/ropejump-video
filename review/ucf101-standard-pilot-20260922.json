@@ -13,31 +13,186 @@
     "countingOnlyAfterStandardPass": true
   },
   "summary": {
-    "reviewed": 20,
-    "passStandard": 4,
-    "rejectOrHold": 16,
-    "passRate": 0.2
+    "reviewed": 25,
+    "passStandard": 7,
+    "rejectOrHold": 18,
+    "passRate": 0.28
   },
   "rows": [
-    {"id":"v_JumpRope_g01_c01","sha256":"0ca703d875e402b88368858dfd19b4d891a18115d37749669a321680437dced5","status":"REJECT_STANDARD_POOL","observedType":"MIXED_BASIC_CROSSOVER","reason":"Basic bounce transitions into repeated crossed-arm/crossover jumping in the latter part."},
-    {"id":"v_JumpRope_g02_c01","sha256":"a2c0e34603cc73a9aa630335d3f2a185db25b77a6eb04ac9ea7494118014538d","status":"PASS_STANDARD","observedType":"STANDARD_BASIC_SINGLE_UNDER","reason":"Single jumper; two-foot basic bounce and ordinary uncrossed rope rotation remain visually consistent through the whole clip. Resolution is low but motion is resolvable."},
-    {"id":"v_JumpRope_g03_c01","sha256":"196f83741979ae7113cdb2bdb4f11165b43eaf9b63ddeb676e401d9e7685acca","status":"PASS_STANDARD","observedType":"STANDARD_BASIC_SINGLE_UNDER","reason":"Single jumper; continuous two-foot basic bounce with uncrossed arms through the whole clip."},
-    {"id":"v_JumpRope_g04_c01","sha256":"cb50cf4082b72a572ad92b7479b14ce461effa845af5ceb32e598cc81e6c3efe","status":"REJECT_STANDARD_POOL","observedType":"ALTERNATE_FOOT_OR_JOG_STEP","reason":"Dense lower-body review shows alternating/split foot support rather than a pure two-foot basic bounce."},
-    {"id":"v_JumpRope_g05_c01","sha256":"f03cc025a29cdcf9edc7cb0cce9e425973fbc04d1c65f041ddacb822f9d9a063","status":"REJECT_STANDARD_POOL","observedType":"MIXED_BASIC_CROSSOVER","reason":"Repeated crossed-arm/crossover sections are mixed into the clip."},
-    {"id":"v_JumpRope_g06_c01","sha256":"d8e6412f98bd6b37902221c4a5ec99f266c8ba4cc0d7c8ff03bbca735abc8b9b","status":"REJECT_STANDARD_POOL","observedType":"ALTERNATE_FOOT_JOG_STEP","reason":"Alternating feet/knee lift is visible throughout; not pure basic two-foot standard."},
-    {"id":"v_JumpRope_g07_c01","sha256":"d2d506115186aad9f59516c2686405a1a4c6a9c1a35638a51ac195ba69ffccea","status":"HOLD_OUT_STANDARD_POOL","observedType":"MULTI_PERSON_STAGE_DEMONSTRATION","reason":"Multiple people are present in the active rope scene, making the intended single counting target ambiguous for the current standard pool."},
-    {"id":"v_JumpRope_g08_c01","sha256":"e7d6681365be2867c7b47a9f77442e0633f504525ca77402898927fb83c44f76","status":"PASS_STANDARD","observedType":"STANDARD_BASIC_SINGLE_UNDER","reason":"Single jumper; continuous uncrossed basic bounce through the whole clip with clear rope trajectory."},
-    {"id":"v_JumpRope_g09_c01","sha256":"339cbe52a3ea7cb6b4957d91e8424d68df7aa9b475a4a63ff860da2542ab761e","status":"REJECT_STANDARD_POOL","observedType":"CROSSOVER_OR_MIXED_CROSSOVER","reason":"Repeated crossed-arm rope cycles are visible; not pure standard basic bounce."},
-    {"id":"v_JumpRope_g10_c01","sha256":"6c7cfbfd04575ddbcf6353756571843bce0659862b42d7bd32b48cdd23fc18d3","status":"HOLD_OUT_STANDARD_POOL","observedType":"MULTI_PERSON_GROUP_JUMP_ROPE","reason":"Several active jumpers share the frame; not suitable for the current single-target standard pool."},
-    {"id":"v_JumpRope_g11_c01","sha256":"1291eb29132fd245f1b8f0ccdfb1711841e8b490e918e5b66b123e296ca81b26","status":"PASS_STANDARD","observedType":"STANDARD_BASIC_SINGLE_UNDER","reason":"Single jumper; dense foot review confirms synchronized two-foot bounce through the clip with uncrossed arms."},
-    {"id":"v_JumpRope_g12_c01","sha256":"679d3b8f8c6435e79b336242b729fefc401051c9e3f77bc6566d93b2936d1ee1","status":"REJECT_STANDARD_POOL","observedType":"ALTERNATE_FOOT_OR_BOXER_STEP","reason":"Split/alternating foot pattern is visible rather than synchronized two-foot basic bounce."},
-    {"id":"v_JumpRope_g13_c01","sha256":"1731ec90484661023c9eb5a8923abad43f561cfa907c5f0957fbd042d361b075","status":"REJECT_STANDARD_POOL","observedType":"HIGH_KNEE_ALTERNATE_FOOT","reason":"Repeated unilateral knee lifts/alternating support; not basic two-foot standard."},
-    {"id":"v_JumpRope_g14_c01","sha256":"2f7e80a7df563cdf870b61b6bbb3e70425f635f40683d2b96a60e7a180c05b82","status":"REJECT_STANDARD_POOL","observedType":"CROSSOVER_MIXED","reason":"Crossed-arm rope passages recur throughout the clip."},
-    {"id":"v_JumpRope_g15_c01","sha256":"894976a1690b15c059646520622befbc6f3798dc522cbf6867c7d1083a27551b","status":"REJECT_STANDARD_POOL","observedType":"ALTERNATE_FOOT_BOXER_OR_JOG_STEP","reason":"Dense foot review shows repeated alternating/single-foot support rather than pure synchronized basic bounce."},
-    {"id":"v_JumpRope_g16_c01","sha256":"9b513725b2ae9134fc5bb15f063a772a66ff2b1a9ecc01f545fda102c3465153","status":"REJECT_STANDARD_POOL","observedType":"MIXED_BASIC_TO_ALTERNATE_FOOT","reason":"Starts closer to basic bounce then changes into clear alternating knee/foot work."},
-    {"id":"v_JumpRope_g17_c01","sha256":"2dd8f25e281b44e9164882bc9be3ee4d166dce4c6fd5b8d1389b63675555b7b3","status":"REJECT_STANDARD_POOL","observedType":"MIXED_CROSSOVER","reason":"Crossed-arm sections are visible during the clip, so it is not pure standard despite mostly two-foot jumping."},
-    {"id":"v_JumpRope_g18_c01","sha256":"4640b8de765318785e41d75492375090a0a72a9d217bbb9695de4e448b5b5948","status":"REJECT_STANDARD_POOL","observedType":"ALTERNATE_FOOT_JOG_STEP","reason":"Side-view sequence shows alternating foot support/jog-style skipping."},
-    {"id":"v_JumpRope_g19_c01","sha256":"08f282ce86f0bcbca9f09a72a87f496af184662cebac1c16607af5b0744771e0","status":"REJECT_STANDARD_POOL","observedType":"BOXER_OR_ALTERNATE_FOOT","reason":"Weight shifts and alternating support dominate; not pure synchronized two-foot standard."},
-    {"id":"v_JumpRope_g20_c01","sha256":"a105fdebc11563d5194ed744df8c05acf8942c5c9155dce06cd6c7d7757ec949","status":"REJECT_STANDARD_POOL","observedType":"MIXED_BASIC_CROSSOVER","reason":"Crossed-arm/crossover sections appear at the beginning and again mid/late clip, mixed with basic bounce."}
+    {
+      "id": "v_JumpRope_g01_c01",
+      "sha256": "0ca703d875e402b88368858dfd19b4d891a18115d37749669a321680437dced5",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_CROSSOVER",
+      "reason": "Basic bounce transitions into repeated crossed-arm/crossover jumping in the latter part."
+    },
+    {
+      "id": "v_JumpRope_g02_c01",
+      "sha256": "a2c0e34603cc73a9aa630335d3f2a185db25b77a6eb04ac9ea7494118014538d",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; two-foot basic bounce and ordinary uncrossed rope rotation remain visually consistent through the whole clip. Resolution is low but motion is resolvable."
+    },
+    {
+      "id": "v_JumpRope_g03_c01",
+      "sha256": "196f83741979ae7113cdb2bdb4f11165b43eaf9b63ddeb676e401d9e7685acca",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; continuous two-foot basic bounce with uncrossed arms through the whole clip."
+    },
+    {
+      "id": "v_JumpRope_g04_c01",
+      "sha256": "cb50cf4082b72a572ad92b7479b14ce461effa845af5ceb32e598cc81e6c3efe",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_OR_JOG_STEP",
+      "reason": "Dense lower-body review shows alternating/split foot support rather than a pure two-foot basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g05_c01",
+      "sha256": "f03cc025a29cdcf9edc7cb0cce9e425973fbc04d1c65f041ddacb822f9d9a063",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_CROSSOVER",
+      "reason": "Repeated crossed-arm/crossover sections are mixed into the clip."
+    },
+    {
+      "id": "v_JumpRope_g06_c01",
+      "sha256": "d8e6412f98bd6b37902221c4a5ec99f266c8ba4cc0d7c8ff03bbca735abc8b9b",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_JOG_STEP",
+      "reason": "Alternating feet/knee lift is visible throughout; not pure basic two-foot standard."
+    },
+    {
+      "id": "v_JumpRope_g07_c01",
+      "sha256": "d2d506115186aad9f59516c2686405a1a4c6a9c1a35638a51ac195ba69ffccea",
+      "status": "HOLD_OUT_STANDARD_POOL",
+      "observedType": "MULTI_PERSON_STAGE_DEMONSTRATION",
+      "reason": "Multiple people are present in the active rope scene, making the intended single counting target ambiguous for the current standard pool."
+    },
+    {
+      "id": "v_JumpRope_g08_c01",
+      "sha256": "e7d6681365be2867c7b47a9f77442e0633f504525ca77402898927fb83c44f76",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; continuous uncrossed basic bounce through the whole clip with clear rope trajectory."
+    },
+    {
+      "id": "v_JumpRope_g09_c01",
+      "sha256": "339cbe52a3ea7cb6b4957d91e8424d68df7aa9b475a4a63ff860da2542ab761e",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "CROSSOVER_OR_MIXED_CROSSOVER",
+      "reason": "Repeated crossed-arm rope cycles are visible; not pure standard basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g10_c01",
+      "sha256": "6c7cfbfd04575ddbcf6353756571843bce0659862b42d7bd32b48cdd23fc18d3",
+      "status": "HOLD_OUT_STANDARD_POOL",
+      "observedType": "MULTI_PERSON_GROUP_JUMP_ROPE",
+      "reason": "Several active jumpers share the frame; not suitable for the current single-target standard pool."
+    },
+    {
+      "id": "v_JumpRope_g11_c01",
+      "sha256": "1291eb29132fd245f1b8f0ccdfb1711841e8b490e918e5b66b123e296ca81b26",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; dense foot review confirms synchronized two-foot bounce through the clip with uncrossed arms."
+    },
+    {
+      "id": "v_JumpRope_g12_c01",
+      "sha256": "679d3b8f8c6435e79b336242b729fefc401051c9e3f77bc6566d93b2936d1ee1",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_OR_BOXER_STEP",
+      "reason": "Split/alternating foot pattern is visible rather than synchronized two-foot basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g13_c01",
+      "sha256": "1731ec90484661023c9eb5a8923abad43f561cfa907c5f0957fbd042d361b075",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "HIGH_KNEE_ALTERNATE_FOOT",
+      "reason": "Repeated unilateral knee lifts/alternating support; not basic two-foot standard."
+    },
+    {
+      "id": "v_JumpRope_g14_c01",
+      "sha256": "2f7e80a7df563cdf870b61b6bbb3e70425f635f40683d2b96a60e7a180c05b82",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "CROSSOVER_MIXED",
+      "reason": "Crossed-arm rope passages recur throughout the clip."
+    },
+    {
+      "id": "v_JumpRope_g15_c01",
+      "sha256": "894976a1690b15c059646520622befbc6f3798dc522cbf6867c7d1083a27551b",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_BOXER_OR_JOG_STEP",
+      "reason": "Dense foot review shows repeated alternating/single-foot support rather than pure synchronized basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g16_c01",
+      "sha256": "9b513725b2ae9134fc5bb15f063a772a66ff2b1a9ecc01f545fda102c3465153",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_TO_ALTERNATE_FOOT",
+      "reason": "Starts closer to basic bounce then changes into clear alternating knee/foot work."
+    },
+    {
+      "id": "v_JumpRope_g17_c01",
+      "sha256": "2dd8f25e281b44e9164882bc9be3ee4d166dce4c6fd5b8d1389b63675555b7b3",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_CROSSOVER",
+      "reason": "Crossed-arm sections are visible during the clip, so it is not pure standard despite mostly two-foot jumping."
+    },
+    {
+      "id": "v_JumpRope_g18_c01",
+      "sha256": "4640b8de765318785e41d75492375090a0a72a9d217bbb9695de4e448b5b5948",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_JOG_STEP",
+      "reason": "Side-view sequence shows alternating foot support/jog-style skipping."
+    },
+    {
+      "id": "v_JumpRope_g19_c01",
+      "sha256": "08f282ce86f0bcbca9f09a72a87f496af184662cebac1c16607af5b0744771e0",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "BOXER_OR_ALTERNATE_FOOT",
+      "reason": "Weight shifts and alternating support dominate; not pure synchronized two-foot standard."
+    },
+    {
+      "id": "v_JumpRope_g20_c01",
+      "sha256": "a105fdebc11563d5194ed744df8c05acf8942c5c9155dce06cd6c7d7757ec949",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_CROSSOVER",
+      "reason": "Crossed-arm/crossover sections appear at the beginning and again mid/late clip, mixed with basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g21_c01",
+      "sha256": "d80e1d0508bf549a8e274be0242b6357a65518e2106e1ef6cf45af30c0017b7b",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_ALTERNATE_FOOT_TO_BASIC",
+      "reason": "The clip begins with clear alternating-foot/jog-style skipping and later shifts toward synchronized two-foot basic bounce, so it is mixed rather than pure STANDARD."
+    },
+    {
+      "id": "v_JumpRope_g22_c01",
+      "sha256": "767bfd65e379a50aa0f1c232f094f4f39db9c2461f76311787365f89ed4a9fa7",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; synchronized two-foot basic bounce with uncrossed arms and ordinary single-rope rotation remains consistent through the whole clip."
+    },
+    {
+      "id": "v_JumpRope_g23_c01",
+      "sha256": "c4743b2212df8ae8965e35bca8e8c79cd7e9770849d471cbf60dc16b19457983",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "HIGH_KNEE_ALTERNATE_FOOT",
+      "reason": "Repeated alternating high-knee/single-foot support is visible throughout; not pure synchronized two-foot basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g24_c01",
+      "sha256": "c2ee9b1e65db936501abf042c13d8e9d26ed3a25e902f19ba2b4aef4f2f95007",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; continuous synchronized two-foot bounce with uncrossed hands and no visible type change through the whole clip."
+    },
+    {
+      "id": "v_JumpRope_g25_c01",
+      "sha256": "038c7dbbe7f8f74b3741f3f7d146fef213b8ce95c62edc84622f0efc93d6d857",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Single jumper; continuous synchronized two-foot basic bounce with uncrossed rope rotation and no irrelevant cut or visible type change."
+    }
   ]
 }
