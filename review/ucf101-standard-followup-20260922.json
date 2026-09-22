@@ -5,7 +5,7 @@
   "targetType": "STANDARD_BASIC_SINGLE_UNDER",
   "sourceReview": "review/ucf101-standard-pilot-20260922.json",
   "selection": "One second clip from each source group whose first clip passed STANDARD.",
-  "reviewMethod": "GPT direct whole-source visual review using dense 10 fps evidence; no sibling clip inherits a pass from its source group.",
+  "reviewMethod": "GPT direct whole-source visual review using dense 10 fps evidence, followed by higher-density lower-body re-audit before count admission; no sibling clip inherits a pass from its source group.",
   "policy": {
     "groupPassDoesNotImplySiblingPass": true,
     "wholeSourcePureStandardRequired": true,
@@ -14,18 +14,18 @@
   },
   "summary": {
     "reviewed": 7,
-    "passStandard": 5,
-    "rejectOrHold": 2,
-    "passRate": 0.7142857143
+    "passStandard": 3,
+    "rejectOrHold": 4,
+    "passRate": 0.42857142857142855
   },
   "importantFinding": "UCF101 source groups are not subtype-pure. g03 and g24 had STANDARD c01 clips but non-STANDARD c02 clips, so every clip must be visually typed independently.",
   "rows": [
     {
       "id": "v_JumpRope_g02_c02",
       "sha256": "ac914b57236a749d2a2b87050c737f3086a32c59f9e6584f5f2cba64907b5307",
-      "status": "PASS_STANDARD",
-      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
-      "reason": "Single jumper; ordinary uncrossed single-rope rotations with synchronized two-foot bounce remain consistent through the full clip."
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_TO_ALTERNATE_FOOT",
+      "reason": "Higher-density whole-source re-audit shows a clear alternate-foot/jog-step section around the latter half; not pure STANDARD."
     },
     {
       "id": "v_JumpRope_g03_c02",
@@ -44,9 +44,9 @@
     {
       "id": "v_JumpRope_g11_c02",
       "sha256": "eb076fe078196a73269f24fe1cad20d25fc80084254ec7ca397c73bf0b0bc096",
-      "status": "PASS_STANDARD",
-      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
-      "reason": "Single jumper; front-to-side camera view changes but the action remains synchronized two-foot basic single-under with no trick transition."
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_TO_ALTERNATE_FOOT",
+      "reason": "Higher-density whole-source re-audit shows a sustained alternate-foot/high-knee section in the latter half; not pure STANDARD."
     },
     {
       "id": "v_JumpRope_g22_c02",
@@ -69,5 +69,6 @@
       "observedType": "STANDARD_BASIC_SINGLE_UNDER",
       "reason": "Single jumper; two feet move together with mild lateral drift, uncrossed hands, and continuous ordinary single-under action throughout."
     }
-  ]
+  ],
+  "reauditNote": "2026-09-23: g02_c02 and g11_c02 downgraded from PASS after denser lower-body review exposed alternate-foot sections."
 }
