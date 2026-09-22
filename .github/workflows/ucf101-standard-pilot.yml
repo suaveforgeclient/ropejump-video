@@ -27,7 +27,7 @@ jobs:
       - name: Collect diverse JumpRope class pilot by selective range
         run: |
           set -Eeuo pipefail
-          python scripts/ucf101-jumprope-collector.py --out collected --limit 20
+          python scripts/ucf101-jumprope-collector.py --out collected --limit 25
           python - <<'PY'
           import json
           d=json.load(open("collected/manifest.json"))
