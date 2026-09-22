@@ -5,7 +5,7 @@ from remotezip import RemoteZip
 
 OFFICIAL_DATASET_PAGE="https://www.crcv.ucf.edu/data/UCF101.php"
 MATERIALIZATION_ZIP="https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true"
-NAME_RE=re.compile(r"(?:^|/)JumpRope/(v_JumpRope_g(\\d{2})_c(\\d{2})\\.avi)$")
+NAME_RE=re.compile(r"(?:^|/)JumpRope/(v_JumpRope_g(\d{2})_c(\d{2})\.avi)$")
 
 def list_jump_rope(rz):
     rows=[]
