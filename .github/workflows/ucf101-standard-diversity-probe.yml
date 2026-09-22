@@ -1,0 +1,98 @@
+name: ROPEJUMP UCF101 STANDARD diversity probe
+
+on:
+  push:
+    paths:
+      - ".github/workflows/ucf101-standard-diversity-probe.yml"
+      - "scripts/ucf101-standard-diversity.py"
+      - "review/ucf101-standard-pilot-20260922.json"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install selective archive and media tools
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+          python -m pip install -q --disable-pip-version-check pillow remotezip
+
+      - name: Collect c02 diversity probes from groups whose c01 was not STANDARD
+        run: |
+          set -Eeuo pipefail
+          python scripts/ucf101-standard-diversity.py --out collected --rank 2
+          python - <<'PY'
+          import json
+          d=json.load(open("collected/manifest.json"))
+          print(json.dumps({"selected":d["selectedCount"],"downloaded":d["downloadedCount"],"groups":d["targetGroups"]}))
+          if d["selectedCount"] == 0 or d["downloadedCount"] != d["selectedCount"]:
+              raise SystemExit("UCF101_DIVERSITY_PROBE_INCOMPLETE")
+          PY
+
+      - name: Build dense 10 fps visual-review evidence
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json, math, subprocess
+          from pathlib import Path
+          from PIL import Image, ImageDraw
+
+          root=Path("collected")
+          manifest=json.loads((root/"manifest.json").read_text())
+          review=Path("review-evidence"); review.mkdir(exist_ok=True)
+          rows=[]
+          for row in manifest["rows"]:
+              rec={k:row.get(k) for k in ["filename","group","clip","sha256","bytes","downloadOk","groupPriorStatus","selectionReason"]}
+              if not row.get("downloadOk"):
+                  rows.append(rec); continue
+              src=root/row["filename"]
+              d=review/src.stem; d.mkdir(parents=True,exist_ok=True)
+              probe=subprocess.run([
+                  "ffprobe","-v","error","-show_entries",
+                  "format=duration,size:stream=codec_type,codec_name,width,height,avg_frame_rate,r_frame_rate",
+                  "-of","json",str(src)
+              ],text=True,capture_output=True,check=False)
+              (d/"ffprobe.json").write_text(probe.stdout or "{}")
+              frames=d/"frames10fps"; frames.mkdir(exist_ok=True)
+              subprocess.run([
+                  "ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),
+                  "-vf","fps=10,scale=420:-2:flags=lanczos","-q:v","3",str(frames/"f_%05d.jpg")
+              ],check=True)
+              jpgs=sorted(frames.glob("*.jpg"))
+              pages=[]; per=30; cols=5; cw=440; ch=270
+              for st in range(0,len(jpgs),per):
+                  chunk=jpgs[st:st+per]; rr=math.ceil(len(chunk)/cols)
+                  canvas=Image.new("RGB",(cols*cw,rr*ch),"white"); draw=ImageDraw.Draw(canvas)
+                  for j,jpg in enumerate(chunk):
+                      im=Image.open(jpg).convert("RGB"); im.thumbnail((420,230))
+                      x=(j%cols)*cw+(cw-im.width)//2; y=(j//cols)*ch+25+(230-im.height)//2
+                      canvas.paste(im,(x,y))
+                      num=int(jpg.stem.split("_")[-1]); sec=(num-1)/10.0
+                      draw.text(((j%cols)*cw+6,(j//cols)*ch+5),f"{sec:.1f}s",fill="black")
+                  page=d/f"sheet_{st//per+1:02d}.jpg"; canvas.save(page,quality=88); pages.append(page.name)
+              rec.update({"visualEvidenceFps":10,"evidenceFrames":len(jpgs),"sheets":pages})
+              rows.append(rec)
+          (review/"review-manifest.json").write_text(json.dumps({
+              "schemaVersion":1,
+              "targetType":"STANDARD_BASIC_SINGLE_UNDER",
+              "policy":{"noAutoPass":True,"wholeSourceVisualReviewRequired":True},
+              "rows":rows
+          },ensure_ascii=False,indent=2)+"\n")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ucf101-standard-diversity-probe
+          path: |
+            collected/manifest.json
+            collected/*.avi
+            review-evidence/
+          retention-days: 2
