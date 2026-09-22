@@ -84,32 +84,43 @@ def select_diverse(rows, limit):
     return selected
 
 def download_hf(repo_path):
-    # Try the repository path exactly as published by the dataset CSV first.
-    # Do not guess a transformed filename. A raw resolve URL is only a fallback.
+    # Normalize only path separators. Do not invent a different dataset object.
+    # CSV/UI paths are canonical slash paths such as train/JumpRope/v_...avi.
     from huggingface_hub import hf_hub_download
-    clean=str(repo_path or "").strip().lstrip("/")
+    clean=str(repo_path or "").strip().replace("\\\\","/").lstrip("/")
     if not clean:
         raise RuntimeError("empty_hf_repo_path")
     errors=[]
-    try:
-        return Path(hf_hub_download(
-            repo_id=HF_REPO,
-            filename=clean,
-            repo_type="dataset"
-        ))
-    except Exception as e:
-        errors.append("hf_hub_download="+repr(e))
-    try:
-        encoded="/".join(urllib.parse.quote(part,safe="") for part in clean.split("/"))
-        url=f"https://huggingface.co/datasets/{HF_REPO}/resolve/main/{encoded}?download=true"
-        data=fetch_bytes(url,90)
-        cache=Path("/tmp/ucf101-hf")
-        cache.mkdir(parents=True,exist_ok=True)
-        out=cache/Path(clean).name
-        out.write_bytes(data)
-        return out
-    except Exception as e:
-        errors.append("raw_resolve="+repr(e))
+    candidates=[clean]
+    # Some mirrors expose split CSV paths with a redundant leading folder token.
+    # Keep fallbacks deterministic and derived only from the published path.
+    parts=[p for p in clean.split("/") if p]
+    if len(parts)>=3:
+        canonical="/".join(parts[-3:])
+        if canonical not in candidates:
+            candidates.append(canonical)
+    for candidate in candidates:
+        try:
+            return Path(hf_hub_download(
+                repo_id=HF_REPO,
+                filename=candidate,
+                repo_type="dataset"
+            ))
+        except Exception as e:
+            errors.append(f"hf_hub_download[{candidate}]="+repr(e))
+        try:
+            encoded="/".join(urllib.parse.quote(part,safe="") for part in candidate.split("/"))
+            url=f"https://huggingface.co/datasets/{HF_REPO}/resolve/main/{encoded}?download=true"
+            data=fetch_bytes(url,90)
+            if len(data) < 1024:
+                raise RuntimeError(f"download_too_small:{len(data)}")
+            cache=Path("/tmp/ucf101-hf")
+            cache.mkdir(parents=True,exist_ok=True)
+            out=cache/Path(candidate).name
+            out.write_bytes(data)
+            return out
+        except Exception as e:
+            errors.append(f"raw_resolve[{candidate}]="+repr(e))
     raise RuntimeError("; ".join(errors))
 
 def main():
