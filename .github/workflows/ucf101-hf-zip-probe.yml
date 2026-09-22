@@ -1,0 +1,47 @@
+name: ROPEJUMP UCF101 HF ZIP probe
+
+on:
+  push:
+    paths:
+      - ".github/workflows/ucf101-hf-zip-probe.yml"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: python -m pip install -q --disable-pip-version-check remotezip
+      - name: Probe selective range access to HF UCF101 zip
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from remotezip import RemoteZip
+          url="https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true"
+          with RemoteZip(url) as rz:
+              names=rz.namelist()
+              hits=[n for n in names if "/JumpRope/" in n or n.startswith("JumpRope/") or "JumpRope" in n]
+              payload={"url":url,"archiveEntries":len(names),"jumpRopeEntries":len(hits),"sample":hits[:40]}
+              if not hits:
+                  raise SystemExit("NO_JUMPROPE_ENTRIES")
+              target=hits[0]
+              data=rz.read(target)
+              payload["probe"]={"entry":target,"bytes":len(data),"sha256":hashlib.sha256(data).hexdigest()}
+              Path("out/"+Path(target).name).write_bytes(data)
+          Path("out/probe.json").write_text(json.dumps(payload,ensure_ascii=False,indent=2)+"\n")
+          print(json.dumps(payload,ensure_ascii=False))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ucf101-hf-zip-probe
+          path: out/
+          retention-days: 2
