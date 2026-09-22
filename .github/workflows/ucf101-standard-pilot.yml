@@ -28,6 +28,13 @@ jobs:
         run: |
           set -Eeuo pipefail
           python scripts/ucf101-jumprope-collector.py --out collected --limit 20
+          python - <<'PY'
+          import json
+          d=json.load(open("collected/manifest.json"))
+          print(json.dumps({"selected":d["selectedCount"],"downloaded":d["downloadedCount"]}))
+          if d["downloadedCount"] == 0:
+              raise SystemExit("UCF101_MATERIALIZATION_ZERO")
+          PY
 
       - name: Build exact-hash visual-review evidence
         shell: bash
