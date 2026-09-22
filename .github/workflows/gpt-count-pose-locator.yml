@@ -1,0 +1,102 @@
+name: ROPEJUMP GPT count pose locator
+
+on:
+  push:
+    paths:
+      - ".github/workflows/gpt-count-pose-locator.yml"
+
+permissions:
+  actions: write
+
+jobs:
+  locate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - id: x6nm0ny
+          - id: x7zay0w
+          - id: x80ku1s
+          - id: x80ku26
+          - id: x815y0i
+          - id: x87yrtr
+          - id: x8au8pu
+          - id: x8by42a
+          - id: x936ngo
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install video pose runtime
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq libegl1 libgles2 libgl1 libgbm1 libglib2.0-0 ffmpeg
+          python -m pip install -q --disable-pip-version-check mediapipe yt-dlp
+          python -m pip uninstall -y -q opencv-python opencv-contrib-python opencv-python-headless opencv-contrib-python-headless || true
+          python -m pip install -q --disable-pip-version-check 'opencv-contrib-python-headless==4.10.0.84'
+          mkdir -p out /tmp/pose
+          curl -fsSL 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task' -o /tmp/pose/pose.task
+
+      - name: Download source and extract pose locator
+        env:
+          ID: ${{ matrix.id }}
+        run: |
+          set -Eeuo pipefail
+          python -m yt_dlp --no-playlist --no-progress --retries 3 --fragment-retries 3             -f 'bv*[height<=720]+ba/b[height<=720]' --merge-output-format mp4             -o "out/$ID.%(ext)s" "https://www.dailymotion.com/video/$ID"
+          file="$(find out -maxdepth 1 -type f -name "$ID.*" ! -name '*.part' | head -n1)"
+          if [ "${file##*.}" != mp4 ]; then
+            ffmpeg -hide_banner -loglevel error -y -i "$file" -c copy "out/$ID.mp4"
+            rm -f "$file"
+            file="out/$ID.mp4"
+          fi
+          python - "$file" "$ID" <<'PY'
+          import cv2, json, math, sys
+          import mediapipe as mp
+          video, vid = sys.argv[1:3]
+          cap=cv2.VideoCapture(video)
+          fps=float(cap.get(cv2.CAP_PROP_FPS) or 30)
+          n=int(cap.get(cv2.CAP_PROP_FRAME_COUNT) or 0)
+          sample=15.0
+          step=max(1, round(fps/sample))
+          opts=mp.tasks.vision.PoseLandmarkerOptions(
+            base_options=mp.tasks.BaseOptions(model_asset_path='/tmp/pose/pose.task'),
+            running_mode=mp.tasks.vision.RunningMode.VIDEO,
+            num_poses=1,
+            min_pose_detection_confidence=.35,
+            min_pose_presence_confidence=.30,
+            min_tracking_confidence=.30)
+          rows=[]; idx=0
+          with mp.tasks.vision.PoseLandmarker.create_from_options(opts) as lm:
+            while True:
+              ok,fr=cap.read()
+              if not ok: break
+              if idx%step:
+                idx+=1; continue
+              t=int(round(idx/fps*1000))
+              rgb=cv2.cvtColor(fr,cv2.COLOR_BGR2RGB)
+              im=mp.Image(image_format=mp.ImageFormat.SRGB,data=rgb)
+              r=lm.detect_for_video(im,t)
+              if r.pose_landmarks:
+                p=r.pose_landmarks[0]
+                def avg(ii):
+                  vals=[p[i].y for i in ii if getattr(p[i],'visibility',1)>=.25]
+                  return sum(vals)/len(vals) if vals else None
+                rows.append({"t":t,"hipY":avg([23,24]),"shoulderY":avg([11,12]),"ankleY":avg([27,28])})
+              else:
+                rows.append({"t":t,"hipY":None,"shoulderY":None,"ankleY":None})
+              idx+=1
+          cap.release()
+          json.dump({"id":vid,"sourceFps":fps,"frameCount":n,"sampleFps":sample,"rows":rows},
+                    open(f"out/{vid}.pose.json","w"),separators=(',',':'))
+          PY
+          rm -f "$file"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pose-locator-${{ matrix.id }}
+          path: out/${{ matrix.id }}.pose.json
+          retention-days: 2
