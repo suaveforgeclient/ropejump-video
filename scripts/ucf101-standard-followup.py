@@ -6,7 +6,7 @@ from remotezip import RemoteZip
 REVIEW_DEFAULT="review/ucf101-standard-pilot-20260922.json"
 OFFICIAL_DATASET_PAGE="https://www.crcv.ucf.edu/data/UCF101.php"
 MATERIALIZATION_ZIP="https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true"
-NAME_RE=re.compile(r"(?:^|/)JumpRope/(v_JumpRope_g(\\d{2})_c(\\d{2})\\.avi)$")
+NAME_RE=re.compile(r"(?:^|/)JumpRope/(v_JumpRope_g(\d{2})_c(\d{2})\.avi)$")
 
 def list_jump_rope(rz):
     rows=[]
@@ -29,7 +29,7 @@ def pass_groups(review):
     for row in review.get("rows",[]):
         if row.get("status")!="PASS_STANDARD":
             continue
-        m=re.search(r"_g(\\d{2})_c(\\d{2})$",str(row.get("id") or ""))
+        m=re.search(r"_g(\d{2})_c(\d{2})$",str(row.get("id") or ""))
         if m:
             out.append(int(m.group(1)))
     return sorted(set(out))
