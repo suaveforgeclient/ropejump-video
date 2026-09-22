@@ -43,7 +43,11 @@ def canonical_video(url):
     if "youtube.com" in host or "youtu.be" in host:
         return ("youtube",u,"LINK_ONLY_KNOWN_ACCESS_RISK")
     if "vimeo.com" in host:
-        return ("vimeo",u,"MATERIALIZATION_TEST_REQUIRED")
+        if "/review/" in path:
+            return ("vimeo",u,"LINK_ONLY_REVIEW_URL")
+        if re.fullmatch(r"/\\d+/?", path) or re.search(r"/(?:video/)?\\d+/?$", path):
+            return ("vimeo",u,"MATERIALIZATION_TEST_REQUIRED")
+        return None
     if "dailymotion.com" in host or "dai.ly" in host:
         return ("dailymotion",u,"MATERIALIZATION_TEST_REQUIRED")
     if "peertube" in host or "/w/" in path or "/videos/watch/" in path:
@@ -74,17 +78,42 @@ def classify_label(label):
         risk="UNKNOWN_CONTENT_STRUCTURE"
     return gate,risk
 
-def discover(config_path, out_dir, pilot_limit=30):
+def ddg_search(query):
+    url="https://html.duckduckgo.com/html/?"+urllib.parse.urlencode({"q":query})
+    page,_=fetch(url)
+    out=[]
+    for href,title_html in DDG_RESULT_RE.findall(page):
+        href=html.unescape(href)
+        p=urllib.parse.urlparse(href)
+        qs=urllib.parse.parse_qs(p.query)
+        if "uddg" in qs:
+            href=qs["uddg"][0]
+        pos=page.find(title_html)
+        around=page[pos:pos+2200] if pos>=0 else title_html
+        label=strip_tags(title_html+" "+around)[:1400]
+        out.append((href,label))
+    return out
+
+def discover(config_path, out_dir, pilot_limit=30, constrained_web_search=False):
     cfg=json.loads(Path(config_path).read_text())
     rows={}
     fetches=[]
 
-    def add(src, seed, raw, label, evidence_basis):
+    def add(src, seed, raw, label, evidence_basis, search_query="", search_alias=""):
         raw=urllib.parse.urljoin(seed,html.unescape(raw).strip())
         cv=canonical_video(raw)
         if not cv: return
         platform,url,access=cv
         gate,risk=classify_label(label)
+        if evidence_basis=="constrained_web_search":
+            standard=bool(STANDARD.search(label or ""))
+            other=bool(OTHER.search(label or ""))
+            if standard and not other:
+                gate="STANDARD_SEARCH_EVIDENCE"
+            elif other and not standard:
+                gate="OTHER_TYPE_SEARCH_EVIDENCE"
+            else:
+                gate="TYPE_UNKNOWN"
         key=platform+":"+re.sub(r"[^a-zA-Z0-9]+","_",url)[:220]
         item={
             "key":key,
@@ -101,10 +130,13 @@ def discover(config_path, out_dir, pilot_limit=30):
             "contentRisk":risk,
             "accessPolicy":access,
             "visualStatus":"UNSCREENED",
-            "autoPass":False
+            "autoPass":False,
+            "searchQuery":search_query,
+            "searchAlias":search_alias
         }
         old=rows.get(key)
-        rank={"STANDARD_EXPLICIT_LABEL":4,"MIXED_TYPE_LABEL":3,"OTHER_TYPE_EXPLICIT":2,"TYPE_UNKNOWN":1}
+        rank={"STANDARD_EXPLICIT_LABEL":5,"STANDARD_SEARCH_EVIDENCE":4,"MIXED_TYPE_LABEL":3,
+              "OTHER_TYPE_EXPLICIT":2,"OTHER_TYPE_SEARCH_EVIDENCE":2,"TYPE_UNKNOWN":1}
         if old is None or rank[item["typeGate"]]>rank.get(old.get("typeGate"),0):
             rows[key]=item
 
@@ -132,16 +164,40 @@ def discover(config_path, out_dir, pilot_limit=30):
         for raw in set(ABS_URL_RE.findall(page)):
             add(src,seed,raw,"","raw_url_without_label")
 
+    if constrained_web_search:
+        search_domains=["vimeo.com","dailymotion.com"]
+        phrases=["basic bounce","single bounce","single under","basic jump rope"]
+        for src in cfg["sources"]:
+            aliases=src.get("searchAliases") or []
+            if not aliases:
+                continue
+            alias=str(aliases[0])
+            for domain in search_domains:
+                for phrase in phrases:
+                    q=f'site:{domain} "{alias}" "{phrase}"'
+                    try:
+                        found=ddg_search(q)
+                    except Exception as e:
+                        fetches.append({"sourceId":src["id"],"searchQuery":q,"ok":False,"error":repr(e)})
+                        continue
+                    fetches.append({"sourceId":src["id"],"searchQuery":q,"ok":True,"results":len(found)})
+                    for raw,label in found:
+                        add(src,src["url"],raw,label,"constrained_web_search",q,alias)
+
     vals=list(rows.values())
     vals.sort(key=lambda x:(
-        0 if x["typeGate"]=="STANDARD_EXPLICIT_LABEL" else 1,
+        0 if x["typeGate"]=="STANDARD_EXPLICIT_LABEL" else (1 if x["typeGate"]=="STANDARD_SEARCH_EVIDENCE" else 2),
         0 if x["authority"]=="high" else 1,
         0 if x["contentRisk"]=="DEMO_HINT_NOT_VISUAL_PASS" else 1,
         x["sourcePoolId"],x["videoUrl"]))
 
     explicit=[x for x in vals if x["typeGate"]=="STANDARD_EXPLICIT_LABEL" and x["evidenceBasis"] in ("anchor_label","embed_title")]
-    accessible=[x for x in explicit if x["accessPolicy"] not in ("LINK_ONLY_KNOWN_ACCESS_RISK","LINK_ONLY_UNCERTAIN_ACCESS")]
-    pilot=accessible[:pilot_limit]
+    search_evidence=[x for x in vals if x["typeGate"]=="STANDARD_SEARCH_EVIDENCE" and x["evidenceBasis"]=="constrained_web_search"]
+    usable_access=lambda x: x["accessPolicy"] not in (
+        "LINK_ONLY_KNOWN_ACCESS_RISK","LINK_ONLY_UNCERTAIN_ACCESS","LINK_ONLY_REVIEW_URL")
+    accessible=[x for x in explicit if usable_access(x)]
+    accessible_search=[x for x in search_evidence if usable_access(x)]
+    pilot=(accessible+accessible_search)[:pilot_limit]
 
     payload={
         "schemaVersion":3,
@@ -151,6 +207,8 @@ def discover(config_path, out_dir, pilot_limit=30):
         "totalVideoLinks":len(vals),
         "explicitStandardLabel":len(explicit),
         "accessibleExplicitStandard":len(accessible),
+        "searchEvidenceStandard":len(search_evidence),
+        "accessibleSearchEvidence":len(accessible_search),
         "visualPilotCount":len(pilot),
         "rows":vals,
         "visualPilot":pilot
@@ -164,6 +222,8 @@ def discover(config_path, out_dir, pilot_limit=30):
         "totalVideoLinks":len(vals),
         "explicitStandardLabel":len(explicit),
         "accessibleExplicitStandard":len(accessible),
+        "searchEvidenceStandard":len(search_evidence),
+        "accessibleSearchEvidence":len(accessible_search),
         "visualPilotCount":len(pilot)
     },ensure_ascii=False,indent=2)+"\n")
     return payload
@@ -173,12 +233,15 @@ def main():
     ap.add_argument("--config",default="research/source-pools-standard.json")
     ap.add_argument("--out",default="out")
     ap.add_argument("--pilot-limit",type=int,default=30)
+    ap.add_argument("--constrained-web-search",action="store_true")
     args=ap.parse_args()
-    payload=discover(args.config,args.out,args.pilot_limit)
+    payload=discover(args.config,args.out,args.pilot_limit,args.constrained_web_search)
     print(json.dumps({
         "totalVideoLinks":payload["totalVideoLinks"],
         "explicitStandardLabel":payload["explicitStandardLabel"],
         "accessibleExplicitStandard":payload["accessibleExplicitStandard"],
+        "searchEvidenceStandard":payload["searchEvidenceStandard"],
+        "accessibleSearchEvidence":payload["accessibleSearchEvidence"],
         "visualPilotCount":payload["visualPilotCount"]
     },ensure_ascii=False))
 
