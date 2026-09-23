@@ -1,0 +1,53 @@
+{
+  "schemaVersion": 1,
+  "reviewed_at_kst": "2026-09-23 15:54 KST",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceRun": {
+    "workflowRunId": 35828839218,
+    "artifactId": 10736647279,
+    "artifactName": "legacy-dailymotion-standard-purity",
+    "artifactDigestSha256": "5ef6629f875799447aab9b4782b538d58f2932332e672aa295e83f95986d1a4b",
+    "headSha": "2fae75a887e0dc601a574535f974517f822268aa"
+  },
+  "reviewMethod": {
+    "authority": "GPT_DIRECT_VISUAL_REVIEW",
+    "wholeSourcePurity": "Exact Dailymotion sources were downloaded and sampled at 15 fps into whole-body and lower-body sheets. A single non-standard segment rejects the entire source from pure STANDARD.",
+    "countPolicy": "Existing GPT repetition counts are preserved as historical direct counts; this review only resolves STANDARD type purity and dataset eligibility.",
+    "noTitleInference": true
+  },
+  "summary": {
+    "reviewed": 3,
+    "pass": 0,
+    "hold": 0,
+    "reject": 3
+  },
+  "rows": [
+    {
+      "id": "x8au8pu",
+      "sha256": "b117ae591b6d61fac9cbfa69d3172e6d90058e7ffbc6010c77d3f617d41ca09e",
+      "sourceRef": "https://www.dailymotion.com/video/x8au8pu",
+      "verdict": "REJECT",
+      "reason": "MIXED_DANCE_ALTERNATE_FOOT",
+      "existingGptCount": 31,
+      "note": "Direct 15 fps whole/lower review shows dance footwork and unilateral knee/foot lift in the opening sequence (including around ~1.3 s). Strict synchronized neutral two-foot STANDARD purity fails."
+    },
+    {
+      "id": "x7zay0w",
+      "sha256": "e1329822d7cd226a05f58d7564922b543e6c7f638386595b8941a256ab4d07d4",
+      "sourceRef": "https://www.dailymotion.com/video/x7zay0w",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_TRICK_STEP",
+      "existingGptCount": 17,
+      "note": "Direct opening frames already show alternating unilateral support/high-knee trick footwork rather than synchronized two-foot basic."
+    },
+    {
+      "id": "x8by42a",
+      "sha256": "1dffd35398a8eec4a856ac98178bfde05a41e407863ef6b3438f3199e44526e1",
+      "sourceRef": "https://www.dailymotion.com/video/x8by42a",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_HIGH_KNEE_TRICK",
+      "existingGptCount": 38,
+      "note": "Direct whole-body review shows clear alternate-foot/high-knee phases from roughly the first second onward. Pure STANDARD purity fails."
+    }
+  ]
+}
