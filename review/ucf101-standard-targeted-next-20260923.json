@@ -1,0 +1,49 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtKst": "2026-09-23 09:55 KST",
+  "dataset": "UCF101",
+  "datasetClass": "JumpRope",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceArtifactRun": 35795731525,
+  "sourceArtifactId": 10723362868,
+  "reviewMethod": "GPT direct whole-source visual review. Artifact 10 fps evidence was reviewed for all candidates; only PASS candidates were re-reviewed at 15 fps across the full clip before direct frame-by-frame body-jump counting. Programmatic motion/centroid signals were used only to locate candidate apex frames, never to generate GT.",
+  "policy": {
+    "groupOrDatasetLabelNeverAutoPasses": true,
+    "wholeSourcePureStandardRequired": true,
+    "mixedTypeRejectedFromStandardPool": true,
+    "countingOnlyAfterVisualStandardPass": true,
+    "passRequiresDenseLowerBodyRecheck": true
+  },
+  "summary": {
+    "reviewed": 3,
+    "passStandard": 1,
+    "hold": 0,
+    "reject": 2
+  },
+  "rows": [
+    {
+      "id": "v_JumpRope_g22_c04",
+      "sha256": "5023daebc325c26fa97134f62156a0c72cdefbdd18d2a1dfa7c9500518168502",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Whole-source 10 fps review and independent 15 fps full-clip lower-body re-review show synchronized two-foot takeoff/airborne/landing throughout, uncrossed ordinary single-under rope rotation, and no visible subtype change or extraneous cut.",
+      "gptDirectBodyJumpCount": 17,
+      "countConfidence": "HIGH",
+      "countNote": "Seventeen distinct completed body-jump cycles were directly confirmed. The first airborne cycle begins immediately at the clip start and was explicitly included; 16 subsequent complete cycles were independently checked through the final completed landing. Motion/centroid signals only located candidate frames."
+    },
+    {
+      "id": "v_JumpRope_g25_c04",
+      "sha256": "2d525e3838b3c8f6e44d95a8dba6b183067bd6e133935ad15ef105e422346bdf",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_ALTERNATE_FOOT_AND_CROSSOVER",
+      "reason": "Lower-body sequence repeatedly shows unilateral/alternate-foot support, and the late clip contains clear crossed-arm/crossover rope passages; not a pure basic two-foot STANDARD clip."
+    },
+    {
+      "id": "v_JumpRope_g13_c03",
+      "sha256": "8a911eee6a63f0e17fc3173fb2ee4c8918a7777b464e994b9ad8a1cd26a419a7",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_RUNNING_STEP",
+      "reason": "From the opening seconds, repeated unilateral knee lift and alternating-foot/running-step support are visible, so the clip fails pure synchronized two-foot STANDARD criteria."
+    }
+  ]
+}
