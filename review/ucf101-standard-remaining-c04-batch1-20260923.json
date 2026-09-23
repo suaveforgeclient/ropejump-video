@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "reviewed_at_kst": "2026-09-23 13:12 KST",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceRun": {
+    "workflowRunId": 35816733129,
+    "artifactId": 10732031551,
+    "artifactName": "ucf101-standard-remaining-c04-batch1",
+    "artifactDigestSha256": "04d5e09a0cb696d032c26cee5f334f69ab5469eb4ef23a773e6208c798ddc781",
+    "headSha": "975c73f99e39f9ce5e001081b6deccb8db5286b5"
+  },
+  "reviewMethod": {
+    "authority": "GPT_DIRECT_VISUAL_REVIEW",
+    "wholeSourcePurity": "Every candidate was reviewed across full-source 15 fps whole-body and lower-body evidence before any count was admitted.",
+    "densePassReview": "The single PASS clip was re-reviewed with original ~30 fps frames around 40 candidate cycles and the source boundary. Each admitted cycle was visually checked as synchronized two-foot takeoff/airborne/landing.",
+    "locatorPolicy": "Programmatic dark-pixel/body-motion analysis was used only to propose candidate timestamps for the PASS clip. It did not decide type and did not generate the GT count.",
+    "mixedTypePolicy": "Any alternate-foot, high-knee, crossover, lateral/non-basic footwork, or mixed subtype anywhere in the source rejects the clip from STANDARD."
+  },
+  "summary": {
+    "reviewed": 8,
+    "pass": 1,
+    "hold": 0,
+    "reject": 7
+  },
+  "rows": [
+    {
+      "id": "v_JumpRope_g01_c04",
+      "sha256": "5fa7296df2a6a67cc72481c0c6b2e156041216b91d01838861554cd83ca4a2ab",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g01_c04.avi",
+      "verdict": "REJECT",
+      "reason": "MIXED_BASIC_TO_ALTERNATE_FOOT_HIGH_KNEE",
+      "note": "Later source frames show clear unilateral/high-knee footwork rather than synchronized two-foot basic. Whole-source purity fails."
+    },
+    {
+      "id": "v_JumpRope_g04_c04",
+      "sha256": "1f553121f1b912cdd1ca3636979645408d43d9ceb2715b6ca28845538536e9ec",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=val/JumpRope/v_JumpRope_g04_c04.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_RUNNING_STEP",
+      "note": "Repeated unilateral support and alternating running-step contacts are visible across the source."
+    },
+    {
+      "id": "v_JumpRope_g05_c04",
+      "sha256": "bc789154aa3662736d94ba892904b07fc81861335c9ddd4a22a0f8a953aec0ef",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g05_c04.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_HIGH_KNEE",
+      "note": "Repeated one-leg support/opposite-leg lift is visible throughout; not synchronized two-foot STANDARD."
+    },
+    {
+      "id": "v_JumpRope_g06_c04",
+      "sha256": "71e89d09f56d46f8827a4252045c7e1424b362bd68b28901b97624f469c6269d",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g06_c04.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_RUNNING_STEP",
+      "note": "The lower-body sequence repeatedly alternates support legs; strict synchronized two-foot purity fails."
+    },
+    {
+      "id": "v_JumpRope_g07_c04",
+      "sha256": "422010902fbfcc0e0a4cd03107b72aa1143ca98c190f83141f2e81e9d58c6c75",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=test/JumpRope/v_JumpRope_g07_c04.avi",
+      "verdict": "REJECT",
+      "reason": "MIXED_BASIC_TO_ALTERNATE_FOOT",
+      "note": "Earlier source is closer to two-foot basic, but around 8.4 s onward the feet visibly alternate with unilateral airborne/support phases."
+    },
+    {
+      "id": "v_JumpRope_g09_c04",
+      "sha256": "a551c779781a3e14bcbc3c6cce2a35e38ef883118034ced334fd0ac14899b82e",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g09_c04.avi",
+      "verdict": "REJECT",
+      "reason": "CROSSOVER",
+      "note": "Full-body 15 fps review shows clear crossed arms/handles from roughly 0.8 s in the opening sequence. Strict uncrossed basic purity fails."
+    },
+    {
+      "id": "v_JumpRope_g10_c04",
+      "sha256": "b090ac0730f8be33819ecb6cf1255ff53feff6578b07d0bca11d26b2e304aa5b",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g10_c04.avi",
+      "verdict": "REJECT",
+      "reason": "MIXED_LATERAL_NON_BASIC_FOOTWORK",
+      "note": "The later source contains pronounced lateral/non-basic footwork rather than continuous synchronized neutral two-foot basic."
+    },
+    {
+      "id": "v_JumpRope_g11_c04",
+      "sha256": "22358e5adb02e1fe6cf5137c0fce3c51ee2332dfdde73d2680b7bfa6e25c69c0",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g11_c04.avi",
+      "verdict": "PASS",
+      "jumpRopeType": "STANDARD_BASIC_SINGLE_UNDER",
+      "confidence": "HIGH",
+      "gptDirectBodyJumpCount": 40,
+      "note": "Full-source 15 fps whole-body/lower-body review remained synchronized two-foot and uncrossed throughout. Forty candidate cycles were each rechecked in original ~30 fps windows as real takeoff/airborne/landing cycles. The 40th apex is near 17.02 s and its landing completes before the 17.284 s source end."
+    }
+  ]
+}
