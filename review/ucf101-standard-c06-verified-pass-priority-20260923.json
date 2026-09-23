@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "reviewed_at_kst": "2026-09-23 12:34 KST",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceRun": {
+    "workflowRunId": 35814117729,
+    "artifactId": 10731057004,
+    "artifactName": "ucf101-standard-c06-verified-pass-priority",
+    "artifactDigestSha256": "821787c1c3fe9eb08fdfbc7d5b4b7aacaac2a48bbbf00051ff7a8488fed9ea64",
+    "headSha": "b6b8cfd6f998f658422c230bf4c2cb2e317fb989"
+  },
+  "reviewMethod": {
+    "authority": "GPT_DIRECT_VISUAL_REVIEW",
+    "wholeSourcePurity": "Full-source 15 fps whole-body and lower-body evidence was directly visually reviewed before counting. Any alternate-foot, high-knee, cross/scissor step, crossover, side-swing, or other mixed subtype rejects the clip from STANDARD.",
+    "densePassReview": "The single PASS clip was rechecked across the complete 15 fps sequence; 24 locator-centered event windows were then visually verified as real synchronized two-foot takeoff/airborne/landing cycles, with start/end boundaries checked.",
+    "locatorPolicy": "Programmatic image/motion analysis was used only to suggest candidate cycle timestamps. Type and GT count were decided by direct visual inspection."
+  },
+  "summary": {
+    "reviewed": 6,
+    "pass": 1,
+    "hold": 0,
+    "reject": 5
+  },
+  "missingRequestedCandidates": [
+    "v_JumpRope_g03_c06",
+    "v_JumpRope_g13_c06",
+    "v_JumpRope_g23_c06"
+  ],
+  "rows": [
+    {
+      "id": "v_JumpRope_g02_c06",
+      "sha256": "4b9c3bb4bc6e90142402509cee5a21cae02f93bf2555174483453474bd74f933",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g02_c06.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_RUNNING_STEP_HIGH_KNEE",
+      "note": "Opening 15 fps lower-body sequence already shows repeated unilateral support and alternating knee lift; not synchronized two-foot basic."
+    },
+    {
+      "id": "v_JumpRope_g08_c06",
+      "sha256": "05884cb9a9ce755bdd28b2864b2752984dca1d4c172824649fa1bac6f197f7c5",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g08_c06.avi",
+      "verdict": "PASS",
+      "jumpRopeType": "STANDARD_BASIC_SINGLE_UNDER",
+      "confidence": "HIGH",
+      "gptDirectBodyJumpCount": 24,
+      "note": "Full-source 15 fps whole-body/lower-body review shows synchronized two-foot uncrossed basic single-under throughout. Twenty-four completed cycles were directly visually verified from locator-centered dense event windows. The first cycle starts after the source begins and lands inside the clip; the 24th cycle also lands before the source end, with no additional completed cycle after it."
+    },
+    {
+      "id": "v_JumpRope_g15_c06",
+      "sha256": "7dd9c91dd632aca68fffea634c2cb2cafa2334b76031691831604cadeb81e811",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g15_c06.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_RUNNING_STEP_HIGH_KNEE",
+      "note": "Opening sequence visibly alternates support legs with repeated high-knee/running-step footwork. Not pure STANDARD."
+    },
+    {
+      "id": "v_JumpRope_g22_c06",
+      "sha256": "0512f9ff1084a1ae5b3fef533b21cc13b4e699e350e65d9d877537ae940699df",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=test/JumpRope/v_JumpRope_g22_c06.avi",
+      "verdict": "REJECT",
+      "reason": "CROSS_FOOT_SCISSOR_STEP",
+      "note": "Dense lower-body review shows repeated crossed/scissoring foot placement rather than neutral synchronized two-foot basic jumps."
+    },
+    {
+      "id": "v_JumpRope_g24_c06",
+      "sha256": "168bb7bc08687d3b28ad1aa7050b91ea27847188a322379333a9cc9e48e5676d",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g24_c06.avi",
+      "verdict": "REJECT",
+      "reason": "MIXED_SIDE_SWING_AND_NON_BASIC_LATERAL_FOOTWORK",
+      "note": "Whole-body review shows rope/arm side-swing motion and lateral non-basic jump footwork. Strict STANDARD purity fails."
+    },
+    {
+      "id": "v_JumpRope_g25_c06",
+      "sha256": "62e80b3dffaa8a88cca971f3ea7b0a881fc19fb75a297253e257e33ebfb02542",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g25_c06.avi",
+      "verdict": "REJECT",
+      "reason": "MIXED_CROSSOVER_AND_NON_BASIC_FOOTWORK",
+      "note": "Although some portions are synchronized basic, the mid-source sequence contains clear arm/rope crossover and non-basic footwork. Whole-source STANDARD purity therefore fails."
+    }
+  ]
+}
