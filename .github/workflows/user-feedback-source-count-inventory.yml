@@ -1,0 +1,39 @@
+name: ROPEJUMP user feedback source-count inventory
+
+on:
+  push:
+    paths:
+      - ".github/workflows/user-feedback-source-count-inventory.yml"
+
+permissions:
+  actions: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch public feedback pages
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          python - <<'PY'
+          import json,urllib.request
+          base='https://api-jumprope.suaveforge.com/v1/feedback'
+          items=[]
+          for page in range(1,100):
+              url=f'{base}?page={page}&limit=20&includeDiagnostics=1'
+              with urllib.request.urlopen(url,timeout=20) as r:
+                  x=json.load(r)
+              items.extend(x.get('items') or [])
+              if page >= int(x.get('pages') or 1):
+                  break
+          open('out/feedback.json','w').write(json.dumps({'items':items},ensure_ascii=False,indent=2)+'\n')
+          print('FEEDBACK_ITEMS',len(items))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: user-feedback-source-count-inventory
+          path: out/feedback.json
+          retention-days: 2
