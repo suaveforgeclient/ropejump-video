@@ -1,0 +1,52 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtKst": "2026-09-23",
+  "dataset": "UCF101",
+  "datasetClass": "JumpRope",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "purpose": "Resolve previously held subtype ambiguity using denser direct visual review without auto-promotion.",
+  "sourceArtifacts": [
+    {
+      "run": 35794211081,
+      "artifactId": 10723736109,
+      "name": "ucf101-standard-followup-rank3"
+    },
+    {
+      "run": 35794208598,
+      "artifactId": 10722309784,
+      "name": "ucf101-standard-diversity-probe"
+    }
+  ],
+  "reviewMethod": "GPT direct visual re-review from original ~29.97 fps source material using newly generated 15 fps whole-source/lower-body evidence and targeted enlarged views. Any clearly asymmetric or one-foot support sequence rejects the clip from the pure two-foot STANDARD pool. No count is produced for rejected clips.",
+  "policy": {
+    "priorHoldNeverAutoPasses": true,
+    "wholeSourcePureStandardRequired": true,
+    "asymmetricSupportRejectsStandard": true,
+    "countingOnlyAfterVisualStandardPass": true,
+    "programSignalsNotUsedForGt": true
+  },
+  "summary": {
+    "reviewed": 2,
+    "passStandard": 0,
+    "hold": 0,
+    "reject": 2
+  },
+  "rows": [
+    {
+      "id": "v_JumpRope_g08_c03",
+      "sha256": "dc572c412ce49d5c42630c924a573a26d6bf7ca050b6b6c7f91f7753ace77d6b",
+      "previousStatus": "HOLD_TYPE_AMBIGUOUS",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_OR_BOXER_STEP",
+      "reason": "At 15 fps, the opening sequence already shows repeated unilateral support: one foot remains planted while the opposite foot lifts independently, with the pattern alternating across successive rope cycles. This is incompatible with synchronized two-foot basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g04_c02",
+      "sha256": "8cc6341c7b17075017e46f5333735d469d6a191734f3cf1acb8861c47357eb0e",
+      "previousStatus": "HOLD_TYPE_AMBIGUOUS",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "BOXER_OR_ALTERNATE_FOOT",
+      "reason": "Dense 15 fps review plus enlarged frontal mirror view resolves the earlier distance/mirror ambiguity: the feet repeatedly remain staggered and alternate support rather than taking off and landing together. The clip is therefore not pure two-foot STANDARD."
+    }
+  ]
+}
