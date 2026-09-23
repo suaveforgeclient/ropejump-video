@@ -44,11 +44,17 @@ jobs:
           rows=[]
           for public_id,yid in items:
             d=out/public_id; d.mkdir()
-            subprocess.run(["python","-m","yt_dlp","--no-playlist","--no-progress","--retries","3","--fragment-retries","3",
-              "-f","bv*[height<=720]+ba/b[height<=720]","--merge-output-format","mp4",
-              "-o",str(d/"source.%(ext)s"),f"https://www.youtube.com/watch?v={yid}"],check=True)
-            files=[p for p in d.glob("source.*") if p.suffix not in {".part",".ytdl"}]
-            src=next((p for p in files if p.suffix==".mp4"),files[0])
+            try:
+              subprocess.run(["python","-m","yt_dlp","--no-playlist","--no-progress","--retries","3","--fragment-retries","3",
+                "-f","bv*[height<=720]+ba/b[height<=720]","--merge-output-format","mp4",
+                "-o",str(d/"source.%(ext)s"),f"https://www.youtube.com/watch?v={yid}"],check=True)
+              files=[p for p in d.glob("source.*") if p.suffix not in {".part",".ytdl"}]
+              if not files:
+                raise RuntimeError("download produced no media")
+              src=next((p for p in files if p.suffix==".mp4"),files[0])
+            except Exception as e:
+              rows.append({"id":public_id,"youtubeId":yid,"archiveOnlyForTypeReview":True,"status":"DOWNLOAD_FAILED","error":str(e)})
+              continue
             if src.suffix!=".mp4":
               mp4=d/"source.mp4"; subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),"-c","copy",str(mp4)],check=True); src.unlink(); src=mp4
             probe=json.loads(subprocess.check_output(["ffprobe","-v","error","-show_entries","format=duration,size","-show_entries","stream=codec_type,width,height,r_frame_rate","-of","json",str(src)]))
@@ -71,7 +77,7 @@ jobs:
                 op=dest/f"sheet_{st//per+1:03d}.jpg"; canvas.save(op,quality=89); names.append(str(op.relative_to(out)))
               return names
             full=make("full"); lower=make("lower"); shutil.rmtree(frames); src.unlink()
-            rows.append({"id":public_id,"youtubeId":yid,"archiveOnlyForTypeReview":True,"evidenceFps":15,"fullSheets":full,"lowerSheets":lower,"probe":probe})
+            rows.append({"id":public_id,"youtubeId":yid,"archiveOnlyForTypeReview":True,"status":"EVIDENCE_READY","evidenceFps":15,"fullSheets":full,"lowerSheets":lower,"probe":probe})
           (out/"manifest.json").write_text(json.dumps({"schemaVersion":1,"purpose":"direct visual STANDARD purity review of known USER_ORIGINAL archive copies; counts remain exact locked USER_ORIGINAL GT","rows":rows},indent=2)+"\n")
           PY
       - uses: actions/upload-artifact@v4
