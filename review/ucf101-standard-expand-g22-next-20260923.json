@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtKst": "2026-09-23 10:05 KST",
+  "dataset": "UCF101",
+  "datasetClass": "JumpRope",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceArtifactRun": 35804755671,
+  "sourceArtifactId": 10727711120,
+  "reviewMethod": "GPT direct whole-source visual review using the artifact's dense 10 fps evidence. Because a disqualifying subtype change is directly visible, the clip is rejected without entering the PASS-only counting stage.",
+  "policy": {
+    "priorSiblingPassDoesNotAutoPassThisClip": true,
+    "wholeSourcePureStandardRequired": true,
+    "mixedTypeRejectedFromStandardPool": true,
+    "countingOnlyAfterVisualStandardPass": true
+  },
+  "summary": {"reviewed": 1, "passStandard": 0, "hold": 0, "reject": 1},
+  "rows": [
+    {
+      "id": "v_JumpRope_g22_c05",
+      "sha256": "6d7a48a591a7701de73e4103c5fe22098a532856bf7fd550b1b761f46b2c14f3",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_TO_ALTERNATE_FOOT",
+      "reason": "The clip begins with ordinary synchronized-looking basic bounce but changes near 6.0-6.2 s into clear unilateral knee/foot lift with asymmetric support. Because any alternate-foot section disqualifies the source, it is excluded from the pure STANDARD pool."
+    }
+  ]
+}
