@@ -1,0 +1,74 @@
+{
+  "schemaVersion": 1,
+  "reviewed_at_kst": "2026-09-23",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceRun": {
+    "workflowRunId": 35818188149,
+    "artifactId": 10732600985,
+    "artifactName": "ucf101-standard-remaining-c05-batch1",
+    "artifactDigestSha256": "5686c673b4ec7bf03dd0a2068fca1930cdd0e708a276708b16b570a2f2d80c77",
+    "headSha": "d890c350adf981c97f5fee56d6029b79c79a1e28"
+  },
+  "reviewMethod": {
+    "authority": "GPT_DIRECT_VISUAL_REVIEW",
+    "wholeSourcePurity": "All six clips were reviewed from full-source 15 fps whole-body/lower-body evidence before any count decision.",
+    "strictPolicy": "Any alternate-foot, high-knee, crossover, lateral/boxer step, or mixed subtype anywhere rejects the source from STANDARD.",
+    "countPolicy": "No clip passed strict type purity, so no GT count was admitted for this batch."
+  },
+  "summary": {
+    "reviewed": 6,
+    "pass": 0,
+    "hold": 0,
+    "reject": 6
+  },
+  "rows": [
+    {
+      "id": "v_JumpRope_g04_c05",
+      "sha256": "2aab6c3dc541a870330d48706a0006f59ad1d3669f9046e85c580a7906f9f2fc",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g04_c05.avi",
+      "verdict": "REJECT",
+      "reason": "LATERAL_BOXER_STEP",
+      "note": "Opening and subsequent lower-body frames show staggered/lateral foot placement rather than synchronized neutral two-foot basic."
+    },
+    {
+      "id": "v_JumpRope_g05_c05",
+      "sha256": "b5cf4bf5a4206307ec8a38f2f55eda56e5bd1423acb616f77ed64f2a0322e19b",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g05_c05.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_HIGH_KNEE",
+      "note": "Repeated unilateral support and lifted opposite leg are visible across the source."
+    },
+    {
+      "id": "v_JumpRope_g06_c05",
+      "sha256": "a06d1ec4de1bd60c43f6b3daac81bd3339b99f18bc362262aa2b8ae95f852ba2",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g06_c05.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_BOXER_STEP",
+      "note": "Whole-source lower-body review shows repeated alternating/staggered one-foot support and boxer-step motion."
+    },
+    {
+      "id": "v_JumpRope_g07_c05",
+      "sha256": "df84f5c67f10f7812fe2774cedf8273de5bcbf34324379df191472e969a50436",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g07_c05.avi",
+      "verdict": "REJECT",
+      "reason": "CROSSOVER",
+      "note": "The source includes a clear crossover sequence around 7.8-7.9 s; strict uncrossed STANDARD purity fails."
+    },
+    {
+      "id": "v_JumpRope_g09_c05",
+      "sha256": "023b6b57911ac5e48640f9f6da005d3ce1dd0178c8c7d51831929fcce097bd19",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=val/JumpRope/v_JumpRope_g09_c05.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_HIGH_KNEE",
+      "note": "The opening sequence already shows one-foot support with the opposite knee/foot lifted."
+    },
+    {
+      "id": "v_JumpRope_g11_c05",
+      "sha256": "9eef6a93eec6be2ddb4cc58efbb8a65048f7fbed2f9d05ea0edf2f20e7b90761",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g11_c05.avi",
+      "verdict": "REJECT",
+      "reason": "MIXED_BASIC_TO_ALTERNATE_FOOT",
+      "note": "Most of the source resembles synchronized two-foot basic, but direct dense review around 3.6-3.8 s shows a clear unilateral knee-lift/one-foot phase. Mixed subtype rejects the whole source."
+    }
+  ]
+}
