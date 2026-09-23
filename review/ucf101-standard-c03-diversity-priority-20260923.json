@@ -1,0 +1,90 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtKst": "2026-09-23",
+  "dataset": "UCF101",
+  "datasetClass": "JumpRope",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceArtifactRun": 35805421030,
+  "sourceArtifactId": 10727482912,
+  "selection": "Previously unreviewed c03 clips from nine groups prioritized because earlier sibling clips contained either a confirmed STANDARD clip or visually basic-like sections. Group history was used only to prioritize collection, never to pass a clip.",
+  "reviewMethod": "GPT direct visual review of 15 fps whole-source and lower-body evidence generated from each original ~29.97 fps clip. Clear crossover, alternate-foot, high-knee, or asymmetric single-foot support immediately excludes a clip. Targeted original-frame review was used for g19 around 8.65-9.55 s to resolve the foot pattern.",
+  "policy": {
+    "groupHistoryPriorityOnly": true,
+    "groupHistoryNeverAutoPasses": true,
+    "wholeSourcePureStandardRequired": true,
+    "mixedTypeRejectedFromStandardPool": true,
+    "countingOnlyAfterVisualStandardPass": true,
+    "programSignalsNotUsedForGt": true
+  },
+  "summary": {
+    "reviewed": 9,
+    "passStandard": 0,
+    "hold": 0,
+    "reject": 9
+  },
+  "rows": [
+    {
+      "id": "v_JumpRope_g01_c03",
+      "sha256": "1481089c38340f171d7272c579a966606d90b88005fcba03424883161b8b4951",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_OR_HIGH_KNEE",
+      "reason": "When active skipping begins around 4.1 s, the lower-body sequence shows a unilateral knee/foot lift rather than synchronized two-foot basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g03_c03",
+      "sha256": "42207b1247640e69e4d5b1a460799cabc1a85986df0ef0d2f6f8ac61d2dfc122",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_RUNNING_STEP",
+      "reason": "From the opening sequence, feet alternate support with repeated unilateral lifts; not synchronized two-foot STANDARD."
+    },
+    {
+      "id": "v_JumpRope_g05_c03",
+      "sha256": "2f7b4dc354f34e0a6c8e3f16a1fe650560287a7a7253e468197e0e44003280e9",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_CROSSOVER",
+      "reason": "The clip initially resembles two-foot basic bounce, but clear crossed-arm/crossover rope passages appear around 3.5-3.9 s, so the whole source is not pure STANDARD."
+    },
+    {
+      "id": "v_JumpRope_g16_c03",
+      "sha256": "bcb41dabdb22d91a6f48cddb2f20857cb1bc6b2a49bd4b702136617f122b6c47",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_HIGH_KNEE",
+      "reason": "By roughly 1.2 s, repeated unilateral knee lift and asymmetric support are directly visible."
+    },
+    {
+      "id": "v_JumpRope_g17_c03",
+      "sha256": "9455b0f29c6a8e78d24e7c5f3e3cb4a5a0d3a1bfd6082894e7bd1a2bad6ad00e",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "CROSSOVER_MIXED",
+      "reason": "Crossed-arm/crossover rope handling is already visible in the opening second; not pure uncrossed basic single-under."
+    },
+    {
+      "id": "v_JumpRope_g19_c03",
+      "sha256": "0246b294e15e1705051ee39dfa437a56283fc769418e34fefdce6930df60a8ba",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "BOXER_OR_ALTERNATE_FOOT",
+      "reason": "The clip looks basic-like through much of the early/middle section, but targeted ~30 fps original-frame review around 8.65-9.55 s shows a unilateral knee/foot lift and asymmetric support near 9.0 s. Purity therefore fails."
+    },
+    {
+      "id": "v_JumpRope_g20_c03",
+      "sha256": "e037bb09b5d8d33076a5feab727c4a6767f30d05776115eeabfb2248ce7199f5",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_ALTERNATE_FOOT_AND_CROSSOVER",
+      "reason": "Opening 15 fps sequence shows alternating-foot support, with crossed-arm/crossover handling also visible; not STANDARD."
+    },
+    {
+      "id": "v_JumpRope_g21_c03",
+      "sha256": "e9bda811d1dfc72725bcdd826a3a0aaa06388eb4ec9319242168e9eeb71a4073",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "CROSSOVER_MIXED",
+      "reason": "Although the feet can appear synchronized, clear crossed-arm/crossover rope passages occur within the opening second, disqualifying the clip from the pure STANDARD pool."
+    },
+    {
+      "id": "v_JumpRope_g24_c03",
+      "sha256": "eb383e77f5a7a20a96446fa35291a28eaefe4ff55c5c191d662c3e2942b315a2",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "HIGH_KNEE_ALTERNATE_FOOT",
+      "reason": "Repeated unilateral high-knee lifts and alternating support are visible from the opening frames."
+    }
+  ]
+}
