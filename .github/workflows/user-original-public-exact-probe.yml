@@ -1,0 +1,96 @@
+name: ROPEJUMP USER_ORIGINAL public-source exact probe
+
+on:
+  push:
+    paths:
+      - ".github/workflows/user-original-public-exact-probe.yml"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Install media tools
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+          python -m pip install -q --disable-pip-version-check pillow
+      - name: Probe each public feedback media independently
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import hashlib,json,math,os,subprocess,urllib.request,urllib.error,shutil
+          from pathlib import Path
+          from PIL import Image,ImageDraw
+
+          items = [
+            ("JR-20260908-376EF057","https://api-jumprope.suaveforge.com/v1/feedback-media/a100e835b924772966dde0f815e9e76e0d470e3da21006e4","711b89492f78e3386ff045f7a816cf66a8a4b435bf1f05c8f07882e7dfad2e22"),
+            ("JR-20260909-9BDBF573","https://api-jumprope.suaveforge.com/v1/feedback-media/0424d9984578d063220ce557fec5fa0f5aefb6110da22718","1cbb78f65e660c52d8471366cadf4ec7395f65fe3ddf02690e5fbfceb9be04fe"),
+            ("JR-20260909-AC5539AF","https://api-jumprope.suaveforge.com/v1/feedback-media/963d81534d22d9c681ba0a0d7bdd7c0d61ec89d50bca824a","3175f101b902c5b7a8dc1da6010ff1d2c155847872582dfbf12b076a7bcf35ca"),
+            ("JR-20260911-BD41E9A3","https://api-jumprope.suaveforge.com/v1/feedback-media/e1ab83f073b6603d75a9c7a1896176b361adda1656cac27e","3812aa2afaa929dc93e8d999e27075698aeee568a9667e0360c230717583f4bb"),
+            ("JR-20260908-F62DC60E","https://api-jumprope.suaveforge.com/v1/feedback-media/ca65d933e632523e52139e50446113cc3d63d7dd4d86a399","7e3d6256d7d9e35409488427a7b1dbfe2cee2451be6cd6e2cf798f3691dc4bdf"),
+            ("JR-20260910-07583788","https://api-jumprope.suaveforge.com/v1/feedback-media/dcc6f73bffd0f431d0316f0aa4ccfcc55973bfdaa6282bc4","a2030f88490c41598a6f53f2b58b3bb33b247a7fd5e5f70e7f9f0b00d3e4e898"),
+            ("JR-20260908-913C26E0","https://api-jumprope.suaveforge.com/v1/feedback-media/4d502176134f9ee332cc7280f4bc0cd6ef1fb1834822b492","712d2738d9bd412d332191994644600ff815946a27536a5d7466965b205b43a0"),
+            ("JR-20260908-F45E4935","https://api-jumprope.suaveforge.com/v1/feedback-media/8c172f3e2c3db3d10d5a211850691d106da9735b1e71524c","7600030b114fac88dcd149047df4e92fd305a97acc9ed5af8359377ea295880b"),
+            ("JR-20260910-C32FED68","https://api-jumprope.suaveforge.com/v1/feedback-media/0a9e1945ab919a8617feb5ee7aaba5ffc1805bdf53fd6642","6bf454a676ecfaa8bd3e5e6bbe478ac4255dbbf19237cf391c973b07157842ef"),
+            ("JR-20260912-D5EEAE97","https://api-jumprope.suaveforge.com/v1/feedback-media/10cc42669010b717d2de3dbf2a93e013fa9aee28eaa7fe81","8ebe77b26beae6afcad031c3d01809981c736a24b9cee6647544cf5261c4c802"),
+            ("JR-20260913-694638E8","https://api-jumprope.suaveforge.com/v1/feedback-media/8c9d846b684129ef7b6ae65a681258076b111acc39bf7cbe","fda492fa1ce637261837b07ba73ea1aea3535f711d5bd02d9ab3719118cba6d9"),
+          ]
+          out=Path("out"); out.mkdir()
+          results=[]
+          for public_id,url,expected in items:
+            d=out/public_id; d.mkdir()
+            raw=d/"download.bin"
+            result={"id":public_id,"url":url,"expectedSha256":expected,"downloaded":False,"exactSha":False}
+            try:
+              req=urllib.request.Request(url,headers={"User-Agent":"ropejump-research-review"})
+              with urllib.request.urlopen(req,timeout=90) as r, open(raw,"wb") as f:
+                result["httpStatus"]=getattr(r,"status",None)
+                result["finalUrl"]=r.geturl()
+                result["contentType"]=r.headers.get("Content-Type","")
+                shutil.copyfileobj(r,f)
+              result["downloaded"]=True
+              result["sizeBytes"]=raw.stat().st_size
+              got=hashlib.sha256(raw.read_bytes()).hexdigest()
+              result["sha256"]=got
+              result["exactSha"]=(got==expected)
+              if result["exactSha"]:
+                mp4=d/"source.mp4"
+                subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(raw),"-c","copy",str(mp4)],check=True)
+                result["probe"]=json.loads(subprocess.check_output(["ffprobe","-v","error","-show_entries","format=duration,size","-show_entries","stream=codec_type,width,height,r_frame_rate","-of","json",str(mp4)]))
+                frames=d/"frames10"; frames.mkdir()
+                subprocess.run(["ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(mp4),"-vf","fps=10,scale=480:-2:flags=lanczos","-q:v","3",str(frames/"f_%05d.jpg")],check=True)
+                jpgs=sorted(frames.glob("*.jpg")); sheets=d/"sheets"; sheets.mkdir()
+                per=20; cols=5; cw=300; ch=245
+                for st in range(0,len(jpgs),per):
+                  chunk=jpgs[st:st+per]; rr=math.ceil(len(chunk)/cols)
+                  canvas=Image.new("RGB",(cols*cw,rr*ch),"white"); draw=ImageDraw.Draw(canvas)
+                  for j,p in enumerate(chunk):
+                    im=Image.open(p).convert("RGB"); im.thumbnail((290,210))
+                    x=(j%cols)*cw+(cw-im.width)//2; y=(j//cols)*ch+25+(210-im.height)//2
+                    canvas.paste(im,(x,y)); n=int(p.stem.split("_")[-1])
+                    draw.text(((j%cols)*cw+5,(j//cols)*ch+5),f"{(n-1)/10:.1f}s",fill="black")
+                  canvas.save(sheets/f"sheet_{st//per+1:03d}.jpg",quality=88)
+                result["sheetCount"]=len(list(sheets.glob("*.jpg")))
+                shutil.rmtree(frames)
+              else:
+                raw.unlink(missing_ok=True)
+            except Exception as e:
+              result["error"]=repr(e)
+              raw.unlink(missing_ok=True)
+            results.append(result)
+            print(json.dumps(result,ensure_ascii=False))
+          (out/"probe-results.json").write_text(json.dumps({"rows":results},indent=2,ensure_ascii=False)+"\n")
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: user-original-public-exact-probe
+          path: out/
+          retention-days: 2
+          compression-level: 0
