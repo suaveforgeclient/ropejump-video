@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 1,
+  "reviewed_at_kst": "2026-09-23 14:24 KST",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceRun": {
+    "workflowRunId": 35822188622,
+    "artifactId": 10733992823,
+    "artifactName": "ucf101-standard-remaining-c05-batch2",
+    "artifactDigestSha256": "1addfaac7f46b4ceb7d6fc1173220d864d5a20193bcff3fd099616639bac659d",
+    "headSha": "f00155ab6842a743279622137574a4cf04519c0f"
+  },
+  "reviewMethod": {
+    "authority": "GPT_DIRECT_VISUAL_REVIEW",
+    "wholeSourcePurity": "Every clip was reviewed across full-source 15 fps whole-body/lower-body evidence. Potential passes were re-reviewed with native ~30 fps foot/body windows.",
+    "countPolicy": "Only clips passing whole-source subtype purity were counted. Programmatic motion/centroid analysis was used only to propose candidate timestamps; every admitted cycle, long gap, and source boundary was visually checked.",
+    "strictPolicy": "Any alternate-foot, high-knee, boxer/lateral step, crossover, or mixed subtype anywhere rejects the clip from STANDARD.",
+    "datasetRolePolicy": "UCF archive partition is preserved directly: train=TRAIN, val=VALIDATION, test=HOLDOUT."
+  },
+  "summary": {
+    "reviewed": 6,
+    "pass": 2,
+    "hold": 0,
+    "reject": 4
+  },
+  "rows": [
+    {
+      "id": "v_JumpRope_g12_c05",
+      "sha256": "ef26058ffa38b8cc18e6a6b684d3c45f08e23449b4058dca5a7fc0e8fd40f6db",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=val/JumpRope/v_JumpRope_g12_c05.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_HIGH_KNEE",
+      "note": "Opening frames already show unilateral support with the opposite knee raised; strict synchronized two-foot purity fails."
+    },
+    {
+      "id": "v_JumpRope_g16_c05",
+      "sha256": "a1c8c1eefb56445a1c5d995ab23b6c8c5d78bbd2b9568e906b7c1fb9029a973d",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g16_c05.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_HIGH_KNEE",
+      "note": "Full-source lower-body review shows repeated one-foot support/opposite-leg lift."
+    },
+    {
+      "id": "v_JumpRope_g17_c05",
+      "sha256": "1aa9d278948826f90b193266777bacbdbb978f30a4d4f65556313d9d2073dc9b",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=val/JumpRope/v_JumpRope_g17_c05.avi",
+      "verdict": "REJECT",
+      "reason": "MIXED_BASIC_TO_ALTERNATE_FOOT",
+      "note": "The source begins with two-foot basic but around 9 s clearly changes to unilateral/alternate-foot high-knee steps."
+    },
+    {
+      "id": "v_JumpRope_g18_c05",
+      "sha256": "f48eb58375a9e4882ebba01eabc5ed8bb82c68352dfd2b6e6a3c0cd9942234ce",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g18_c05.avi",
+      "verdict": "PASS",
+      "jumpRopeType": "STANDARD_BASIC_SINGLE_UNDER",
+      "confidence": "HIGH",
+      "gptDirectBodyJumpCount": 35,
+      "datasetRole": "TRAIN",
+      "note": "Full-source whole/lower review and targeted native-frame foot review remained synchronized two-foot and uncrossed. Thirty-five completed cycles were directly verified. The long gap around ~1.8-2.5 s was separately reviewed as a real pause, not a missed cycle; the final cycle lands before the source end."
+    },
+    {
+      "id": "v_JumpRope_g20_c05",
+      "sha256": "0131c421b15df428e043b16fe19c86a0ee4c85339b4169d66c2241c3de22f12a",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g20_c05.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_HIGH_KNEE",
+      "note": "Dense candidate and whole-source review show repeated one-knee-up unilateral support phases."
+    },
+    {
+      "id": "v_JumpRope_g21_c05",
+      "sha256": "558a46ed0d544ec1cb6a362a3ea305d8a40612be31269d6f84fb43b96da1c7b0",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g21_c05.avi",
+      "verdict": "PASS",
+      "jumpRopeType": "STANDARD_BASIC_SINGLE_UNDER",
+      "confidence": "HIGH",
+      "gptDirectBodyJumpCount": 49,
+      "datasetRole": "TRAIN",
+      "note": "Whole-source review shows synchronized two-foot uncrossed basic throughout. Forty-nine completed cycles were directly verified from native-frame windows. The close opening cycles were separately confirmed as distinct completed jumps, the ~13.75-14.38 s gap is a real pause, and the final cycle lands before source end."
+    }
+  ]
+}
