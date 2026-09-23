@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "reviewed_at_kst": "2026-09-23 13:20 KST",
+  "reviewed_at_kst": "2026-09-23 13:31 KST",
   "targetType": "STANDARD_BASIC_SINGLE_UNDER",
   "sourceRun": {
     "workflowRunId": 35817490032,
@@ -12,14 +12,15 @@
   "reviewMethod": {
     "authority": "GPT_DIRECT_VISUAL_REVIEW",
     "wholeSourcePurity": "Every candidate was reviewed from full-source 15 fps whole-body and lower-body evidence. Detailed 15 fps sheets were used whenever the coarse overview could hide staggered contacts.",
-    "countPolicy": "No clip passed type purity, so no GT count was admitted and no programmatic count was used.",
-    "mixedTypePolicy": "Any alternate-foot, boxer-step, high-knee, crossover, lateral/non-basic footwork, or mixed subtype anywhere in the source rejects the clip from STANDARD."
+    "countPolicy": "Only the single clip that passed whole-source purity after targeted ~30 fps re-resolution received a GT. Programmatic motion/centroid signals were used only as timestamp locators; every admitted cycle and long cadence gap was visually reviewed.",
+    "mixedTypePolicy": "Any alternate-foot, boxer-step, high-knee, crossover, lateral/non-basic footwork, or mixed subtype anywhere in the source rejects the clip from STANDARD.",
+    "reResolution": "g18_c04 was initially over-rejected from blurred 15 fps evidence. Targeted original-frame foot-level review resolved it as synchronized two-foot STANDARD, so the review was corrected rather than preserving the false reject."
   },
   "summary": {
     "reviewed": 8,
-    "pass": 0,
+    "pass": 1,
     "hold": 0,
-    "reject": 8
+    "reject": 7
   },
   "rows": [
     {
@@ -58,9 +59,11 @@
       "id": "v_JumpRope_g18_c04",
       "sha256": "fe9e03593e078a5c0e6fb703edf6674b967d6fcae0715872c0f51d84a934b899",
       "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g18_c04.avi",
-      "verdict": "REJECT",
-      "reason": "ALTERNATE_FOOT_HIGH_KNEE",
-      "note": "Opening and full-source 15 fps lower-body review show one leg repeatedly lifted while the other supports/lands; not synchronized two-foot basic."
+      "verdict": "PASS",
+      "note": "Targeted re-resolution after an initial conservative false reject. Original ~30 fps foot-level frame review across the opening and multiple later windows shows synchronized two-foot takeoff/airborne/landing rather than unilateral alternate-foot support. Full-source 15 fps whole/lower review shows no crossover or other subtype. Twenty-eight completed cycles were directly visually verified from dense candidate windows; long inter-event gaps around ~4.7-5.3 s, ~6.4-7.3 s, and ~8.5-9.3 s were separately reviewed and are actual pauses rather than missed jumps. The final cycle around 12.51 s lands before the ~12.75 s source boundary.",
+      "jumpRopeType": "STANDARD_BASIC_SINGLE_UNDER",
+      "confidence": "HIGH",
+      "gptDirectBodyJumpCount": 28
     },
     {
       "id": "v_JumpRope_g19_c04",
