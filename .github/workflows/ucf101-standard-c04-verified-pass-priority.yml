@@ -1,0 +1,178 @@
+name: ROPEJUMP UCF101 STANDARD c04 verified-pass priority
+
+on:
+  push:
+    paths:
+      - ".github/workflows/ucf101-standard-c04-verified-pass-priority.yml"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install selective archive and media tools
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg
+          python -m pip install -q --disable-pip-version-check pillow remotezip
+
+      - name: Collect c04 candidates from groups with a prior direct STANDARD pass
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import hashlib, json
+          from pathlib import Path
+          from remotezip import RemoteZip
+
+          URL="https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true"
+          # Priority only. Prior sibling PASS never promotes this clip.
+          # g22_c04 and g25_c04 were already directly reviewed, so they are excluded here.
+          groups=[2,3,8,13,15,23,24]
+          target={f"v_JumpRope_g{g:02d}_c04.avi":g for g in groups}
+          out=Path("collected"); out.mkdir(exist_ok=True)
+          rows=[]; found=set()
+
+          with RemoteZip(URL) as rz:
+              for entry in rz.namelist():
+                  name=entry.rsplit("/",1)[-1]
+                  if name not in target or "/JumpRope/" not in entry:
+                      continue
+                  found.add(name)
+                  data=rz.read(entry)
+                  if len(data)<1024:
+                      raise RuntimeError(f"entry_too_small:{name}:{len(data)}")
+                  (out/name).write_bytes(data)
+                  rows.append({
+                    "filename":name,
+                    "group":target[name],
+                    "clip":4,
+                    "archiveEntry":entry,
+                    "dataset":"UCF101",
+                    "datasetClass":"JumpRope",
+                    "targetType":"STANDARD_BASIC_SINGLE_UNDER",
+                    "selectionReason":"C04_PRIORITY_FROM_GROUP_WITH_PRIOR_DIRECT_STANDARD_PASS",
+                    "priorSiblingPassPriorityOnly":True,
+                    "groupHistoryDoesNotImplyClipType":True,
+                    "typeStatus":"NEED_VISUAL_REVIEW",
+                    "contentStatus":"NEED_VISUAL_REVIEW",
+                    "countStatus":"NOT_REVIEWED",
+                    "autoPass":False,
+                    "downloadOk":True,
+                    "bytes":len(data),
+                    "sha256":hashlib.sha256(data).hexdigest(),
+                    "sourceRef":URL+"#entry="+entry
+                  })
+
+          missing=sorted(set(target)-found)
+          rows=sorted(rows,key=lambda x:x["group"])
+          Path("manifest.json").write_text(json.dumps({
+            "schemaVersion":1,
+            "collector":"UCF101_STANDARD_C04_VERIFIED_PASS_PRIORITY",
+            "requestedGroups":groups,
+            "requestedClip":4,
+            "selectionPolicy":{
+              "priorSiblingPassPriorityOnly":True,
+              "groupHistoryNeverAutoPasses":True,
+              "wholeSourceVisualReviewRequired":True,
+              "mixedTypeRejectRequired":True,
+              "countingDeferredUntilVisualPass":True
+            },
+            "missing":missing,
+            "selectedCount":len(rows),
+            "downloadedCount":len(rows),
+            "rows":rows
+          },ensure_ascii=False,indent=2)+"\n")
+          print(json.dumps({"selected":len(rows),"missing":missing}))
+          if not rows:
+              raise SystemExit("NO_EXISTING_C04_CANDIDATES")
+          PY
+
+      - name: Build 15 fps whole-source and lower-body review sheets
+        run: |
+          set -Eeuo pipefail
+          python - <<'PY'
+          import json, math, shutil, subprocess
+          from pathlib import Path
+          from PIL import Image, ImageDraw
+
+          manifest=json.loads(Path("manifest.json").read_text())
+          out=Path("review-evidence"); out.mkdir(exist_ok=True)
+          reviewed=[]
+
+          for row in manifest["rows"]:
+              src=Path("collected")/row["filename"]
+              d=out/src.stem; d.mkdir(parents=True,exist_ok=True)
+              probe=subprocess.run([
+                "ffprobe","-v","error","-show_entries",
+                "format=duration,size:stream=codec_type,codec_name,width,height,avg_frame_rate,r_frame_rate",
+                "-of","json",str(src)
+              ],text=True,capture_output=True,check=False)
+              (d/"ffprobe.json").write_text(probe.stdout or "{}")
+              temp=d/"frames15"; temp.mkdir(exist_ok=True)
+              subprocess.run([
+                "ffmpeg","-hide_banner","-loglevel","error","-y","-i",str(src),
+                "-vf","fps=15,scale=640:-2:flags=lanczos","-q:v","2",
+                str(temp/"f_%05d.jpg")
+              ],check=True)
+              jpgs=sorted(temp.glob("*.jpg"))
+
+              def sheets(mode):
+                  dest=d/mode; dest.mkdir(exist_ok=True)
+                  per=24; cols=4; cw=340; ch=300 if mode=="full" else 260
+                  names=[]
+                  for st in range(0,len(jpgs),per):
+                      chunk=jpgs[st:st+per]
+                      rr=math.ceil(len(chunk)/cols)
+                      canvas=Image.new("RGB",(cols*cw,rr*ch),"white")
+                      draw=ImageDraw.Draw(canvas)
+                      for j,jpg in enumerate(chunk):
+                          im=Image.open(jpg).convert("RGB")
+                          if mode=="lower":
+                              w,h=im.size
+                              im=im.crop((0,int(h*0.32),w,h))
+                          im.thumbnail((330,250 if mode=="full" else 220))
+                          x=(j%cols)*cw+(cw-im.width)//2
+                          y=(j//cols)*ch+30+(230-im.height)//2
+                          canvas.paste(im,(x,y))
+                          n=int(jpg.stem.split("_")[-1]); sec=(n-1)/15.0
+                          draw.text(((j%cols)*cw+6,(j//cols)*ch+6),f"{sec:.2f}s",fill="black")
+                      p=dest/f"sheet_{st//per+1:02d}.jpg"
+                      canvas.save(p,quality=91)
+                      names.append(str(p.relative_to(out)))
+                  return names
+
+              full=sheets("full")
+              lower=sheets("lower")
+              shutil.rmtree(temp)
+              reviewed.append({
+                **{k:row.get(k) for k in ["filename","group","clip","sha256","bytes","sourceRef"]},
+                "visualEvidenceFps":15,
+                "fullSheets":full,
+                "lowerSheets":lower
+              })
+
+          (out/"review-manifest.json").write_text(json.dumps({
+            "schemaVersion":1,
+            "targetType":"STANDARD_BASIC_SINGLE_UNDER",
+            "noAutoPass":True,
+            "countOnlyAfterWholeSourceVisualPass":True,
+            "rows":reviewed
+          },ensure_ascii=False,indent=2)+"\n")
+          PY
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: ucf101-standard-c04-verified-pass-priority
+          path: |
+            manifest.json
+            collected/*.avi
+            review-evidence/
+          retention-days: 2
