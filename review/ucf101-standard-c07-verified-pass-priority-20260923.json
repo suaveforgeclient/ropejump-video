@@ -1,0 +1,61 @@
+{
+  "schemaVersion": 1,
+  "reviewed_at_kst": "2026-09-23 12:53 KST",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceRun": {
+    "workflowRunId": 35814946708,
+    "artifactId": 10730164966,
+    "artifactName": "ucf101-standard-c07-verified-pass-priority",
+    "artifactDigestSha256": "47433ea04b920feaa3f300c27fee39f39373078209132aa9bb30bed10de4b167",
+    "headSha": "79a121bc0d9cde2384d42e68e5c3adf2face5659"
+  },
+  "reviewMethod": {
+    "authority": "GPT_DIRECT_VISUAL_REVIEW",
+    "wholeSourcePurity": "Full-source 15 fps whole-body and lower-body evidence was directly visually reviewed before any count was admitted.",
+    "densePassReview": "The PASS clip was rechecked at 10 fps across the full source and at 30 fps around start/end and the long cadence gap. Thirty completed takeoff/airborne/landing cycles were directly visually confirmed.",
+    "locatorPolicy": "Programmatic centroid/motion analysis was used only to suggest candidate timestamps. It did not decide type and did not generate the GT. One real cycle missed by the locator around 14.15 s was recovered by direct visual gap review.",
+    "mixedTypePolicy": "Any alternate-foot, boxer-step, high-knee, crossover, side-step, or other mixed subtype anywhere in the source rejects the clip from STANDARD."
+  },
+  "summary": {
+    "reviewed": 3,
+    "pass": 1,
+    "hold": 0,
+    "reject": 2
+  },
+  "missingRequestedCandidates": [
+    "v_JumpRope_g03_c07",
+    "v_JumpRope_g13_c07",
+    "v_JumpRope_g15_c07",
+    "v_JumpRope_g22_c07",
+    "v_JumpRope_g23_c07",
+    "v_JumpRope_g25_c07"
+  ],
+  "rows": [
+    {
+      "id": "v_JumpRope_g02_c07",
+      "sha256": "d77016d6de4bde7ec75d5f839d92b5193e9f52dbe4a23f295ace2e5b64fab031",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g02_c07.avi",
+      "verdict": "REJECT",
+      "reason": "ALTERNATE_FOOT_HIGH_KNEE_RUNNING_STEP",
+      "note": "Opening 15 fps lower-body sequence immediately shows repeated unilateral support and alternating high-knee/running-step footwork. Not synchronized two-foot basic; no GT count admitted."
+    },
+    {
+      "id": "v_JumpRope_g08_c07",
+      "sha256": "c28db94fe21db381e9f76c55bd4d5be4afa8b81070720dc352f039e2b56b7ade",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=val/JumpRope/v_JumpRope_g08_c07.avi",
+      "verdict": "PASS",
+      "jumpRopeType": "STANDARD_BASIC_SINGLE_UNDER",
+      "confidence": "HIGH",
+      "gptDirectBodyJumpCount": 30,
+      "note": "Full-source 15 fps whole-body/lower-body review confirmed synchronized two-foot uncrossed basic single-under throughout. Thirty completed cycles were directly visually verified. A locator suggested 29 candidate apexes after startup, but direct review of the 13.6-14.6 s cadence gap found one additional real completed cycle around 14.15 s; the final cycle near 15.08 s lands before the 15.315 s source boundary."
+    },
+    {
+      "id": "v_JumpRope_g24_c07",
+      "sha256": "58396df92f05688d7133233b3d140047ba08243efe920ba55b9817fc562e7339",
+      "sourceRef": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=test/JumpRope/v_JumpRope_g24_c07.avi",
+      "verdict": "REJECT",
+      "reason": "LATERAL_ALTERNATE_FOOT_SIDE_STEP",
+      "note": "Full-source lower-body review shows repeated lateral/non-synchronized footwork with alternating support. Strict two-foot STANDARD purity fails; no GT count admitted."
+    }
+  ]
+}
