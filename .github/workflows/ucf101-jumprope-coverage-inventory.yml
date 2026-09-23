@@ -1,0 +1,87 @@
+name: ROPEJUMP UCF101 JumpRope coverage inventory
+
+on:
+  push:
+    paths:
+      - ".github/workflows/ucf101-jumprope-coverage-inventory.yml"
+
+permissions:
+  contents: read
+  actions: write
+
+jobs:
+  inventory:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Build metadata-only JumpRope coverage inventory
+        run: |
+          set -Eeuo pipefail
+          python -m pip install -q --disable-pip-version-check remotezip
+          python - <<'PY'
+          import json, re
+          from pathlib import Path
+          from remotezip import RemoteZip
+
+          URL="https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true"
+
+          reviewed=set()
+          for p in Path("review").glob("*.json"):
+              try:
+                  obj=json.loads(p.read_text())
+              except Exception:
+                  continue
+              for row in obj.get("rows",[]):
+                  rid=row.get("id") or row.get("filename")
+                  if not rid:
+                      continue
+                  rid=rid[:-4] if rid.endswith(".avi") else rid
+                  if rid.startswith("v_JumpRope_"):
+                      reviewed.add(rid)
+
+          rows=[]
+          pat=re.compile(r"^(v_JumpRope_g(\d+)_c(\d+))\.avi$")
+          with RemoteZip(URL) as rz:
+              for entry in rz.namelist():
+                  if "/JumpRope/" not in entry:
+                      continue
+                  name=entry.rsplit("/",1)[-1]
+                  m=pat.match(name)
+                  if not m:
+                      continue
+                  clip_id=m.group(1)
+                  rows.append({
+                      "id":clip_id,
+                      "filename":name,
+                      "group":int(m.group(2)),
+                      "clip":int(m.group(3)),
+                      "archiveEntry":entry,
+                      "reviewed":clip_id in reviewed
+                  })
+
+          rows.sort(key=lambda x:(x["group"],x["clip"],x["archiveEntry"]))
+          unreviewed=[r for r in rows if not r["reviewed"]]
+          out={
+            "schemaVersion":1,
+            "dataset":"UCF101",
+            "datasetClass":"JumpRope",
+            "inventoryOnly":True,
+            "typeInferencePerformed":False,
+            "countInferencePerformed":False,
+            "totalUniqueIds":len({r["id"] for r in rows}),
+            "reviewedUniqueIds":len({r["id"] for r in rows if r["reviewed"]}),
+            "unreviewedUniqueIds":len({r["id"] for r in unreviewed}),
+            "unreviewed":unreviewed,
+            "allRows":rows
+          }
+          Path("coverage-inventory.json").write_text(json.dumps(out,indent=2)+"\n")
+          print(json.dumps({k:out[k] for k in ["totalUniqueIds","reviewedUniqueIds","unreviewedUniqueIds"]}))
+          PY
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ucf101-jumprope-coverage-inventory
+          path: coverage-inventory.json
+          retention-days: 2
