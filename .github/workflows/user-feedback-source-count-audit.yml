@@ -1,0 +1,55 @@
+name: ROPEJUMP user feedback source-count audit
+
+on:
+  push:
+    paths:
+      - ".github/workflows/user-feedback-source-count-audit.yml"
+
+permissions:
+  actions: write
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch feedback posts and isolate USER_ORIGINAL ids
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          mkdir -p out
+          node <<'NODE'
+          const fs=require('fs'), https=require('https');
+          const ids=new Set([
+            'JR-20260908-E86C659B','JR-20260908-376EF057','JR-20260909-9BDBF573','JR-20260909-AC5539AF',
+            'JR-20260911-BD41E9A3','JR-20260908-F62DC60E','JR-20260910-07583788','JR-20260908-913C26E0',
+            'JR-20260908-F45E4935','JR-20260910-C32FED68','JR-20260912-D5EEAE97','JR-20260913-694638E8'
+          ]);
+          const get=url=>new Promise((resolve,reject)=>{
+            https.get(url,{headers:{'user-agent':'ropejump-research-audit'}},res=>{
+              let d='';res.on('data',c=>d+=c);res.on('end',()=>{
+                if(res.statusCode<200||res.statusCode>=300) return reject(new Error('HTTP '+res.statusCode+' '+d.slice(0,300)));
+                try{resolve(JSON.parse(d))}catch(e){reject(e)}
+              });
+            }).on('error',reject);
+          });
+          (async()=>{
+            const found={}; let page=1, pages=1;
+            do {
+              const j=await get('https://api-jumprope.suaveforge.com/v1/feedback?page='+page+'&limit=20');
+              pages=Number(j.pages||1);
+              for(const item of (j.items||[])) if(ids.has(item.publicId)) found[item.publicId]=item;
+              page++;
+            } while(page<=pages);
+            const rows=[...ids].map(id=>({id,found:Boolean(found[id]),...(found[id]||{})}));
+            fs.writeFileSync('out/user-feedback-posts.json',JSON.stringify({generatedAt:new Date().toISOString(),rows},null,2)+'\n');
+            console.log('FOUND='+rows.filter(r=>r.found).length+'/12');
+            for(const r of rows) console.log(JSON.stringify({id:r.id,found:r.found,content:r.content||'',attachmentCount:r.attachmentCount||0,attachmentKinds:r.attachmentKinds||[]}));
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
+      - uses: actions/upload-artifact@v4
+        with:
+          name: user-feedback-source-count-audit
+          path: out/user-feedback-posts.json
+          retention-days: 2
