@@ -1,0 +1,103 @@
+{
+  "schemaVersion": 1,
+  "reviewedAtKst": "2026-09-23",
+  "dataset": "UCF101",
+  "datasetClass": "JumpRope",
+  "targetType": "STANDARD_BASIC_SINGLE_UNDER",
+  "sourceArtifactRun": 35805984103,
+  "sourceArtifactId": 10727262971,
+  "reviewMethod": "GPT direct visual review of the artifact's 15 fps whole-source and lower-body evidence for all ten candidates. Apparent PASS clips were additionally rechecked across the full source at 5 fps for arm/rope purity and at dense 15 fps lower-body cadence, then each completed body-jump cycle was visually confirmed frame-by-frame. Programmatic head/motion signals were used only to locate candidate apex frames and never to generate GT.",
+  "policy": {
+    "groupHistoryNeverAutoPasses": true,
+    "wholeSourcePureStandardRequired": true,
+    "mixedTypeRejectedFromStandardPool": true,
+    "countingOnlyAfterVisualStandardPass": true,
+    "passRequiresDenseLowerBodyRecheck": true,
+    "incompleteFinalCycleNotCounted": true,
+    "programSignalsNotUsedForGt": true
+  },
+  "summary": {
+    "reviewed": 10,
+    "passStandard": 2,
+    "hold": 0,
+    "reject": 8
+  },
+  "rows": [
+    {
+      "id": "v_JumpRope_g04_c03",
+      "sha256": "13ef0c9695a9e3194b42f51da7e8b1048a8894df8465f4de833cc448b1a577c0",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_OR_HIGH_KNEE",
+      "reason": "Dense whole-source review shows repeated unilateral knee/foot lift and asymmetric support in the mid-to-late clip, so the source is not pure synchronized two-foot basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g06_c03",
+      "sha256": "cc04236c63cebf1f8d88ccf62cebdc7499490ac8e7fd9ce4525a523b2c2dc04f",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "HIGH_KNEE_ALTERNATE_FOOT",
+      "reason": "The lower-body sequence clearly changes into repeated unilateral high-knee lifts and single-foot/asymmetric support; this fails the pure STANDARD criterion."
+    },
+    {
+      "id": "v_JumpRope_g07_c03",
+      "sha256": "ae26caf1bee7b6943d53d66ac120bb70a7e1d5b05be68ceb663a72e9f9dd787c",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_BASIC_CROSSOVER",
+      "reason": "Although much of the clip resembles synchronized basic bounce, clear crossed-arm/crossover rope passages are directly visible around 6.9-7.3 s, so the whole source is mixed."
+    },
+    {
+      "id": "v_JumpRope_g09_c03",
+      "sha256": "de92320825929ed8f0690cdf29a1b4df6253ccec11a56eb8ae8beb68b6791037",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_OR_HIGH_KNEE",
+      "reason": "Direct review near 1.47-1.53 s already shows a unilateral knee/foot lift with asymmetric support, disqualifying the clip from synchronized two-foot STANDARD."
+    },
+    {
+      "id": "v_JumpRope_g10_c03",
+      "sha256": "23ad75644d9e900dbca0dfeb227a84455b6bfe0e2d5bb47301754ee30c077d27",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_NON_BASIC_SIDE_FOOTWORK",
+      "reason": "The later source contains clear wide lateral/side-footwork jumps rather than continuous ordinary two-foot basic bounce, so the whole clip is not pure STANDARD."
+    },
+    {
+      "id": "v_JumpRope_g12_c03",
+      "sha256": "b3e96322f02b75160e006f897f5a7837eb56d400e1e7aa47fb4b4bbfb7dd4fa3",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "ALTERNATE_FOOT_RUNNING_STEP",
+      "reason": "Repeated staggered feet and unilateral support are visible through the source; the pattern is alternate/running-step rather than synchronized two-foot basic bounce."
+    },
+    {
+      "id": "v_JumpRope_g14_c03",
+      "sha256": "386ee836d2ce0dc1602f7a1c92294067b09912f228fd573b96ea6e597f7f4365",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "MIXED_ALTERNATE_FOOT_AND_CROSSOVER",
+      "reason": "The clip repeatedly shows unilateral knee lifts/asymmetric support and crossed-arm rope handling, so it is not a pure uncrossed two-foot STANDARD source."
+    },
+    {
+      "id": "v_JumpRope_g15_c03",
+      "sha256": "996a358760a78b351aee5900a53d4b2ff273c83db011997bfd775fd535d35857",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Whole-source review preserves synchronized two-foot takeoff/airborne/landing and ordinary uncrossed single-under rope rotation throughout, with no subtype change or extraneous cut.",
+      "gptDirectBodyJumpCount": 32,
+      "countConfidence": "HIGH",
+      "countNote": "Thirty-two completed synchronized body-jump cycles were directly confirmed across the source. Dense lower-body review was used for every cycle; the final apex near 16.12 s is followed by a completed landing before the clip ends. Head/motion tracking only located candidate apexes and did not create the count."
+    },
+    {
+      "id": "v_JumpRope_g18_c03",
+      "sha256": "dcfce988d469b98950a066f1ab6934cf2c27101e43dc76bf814181fedc3d7d9e",
+      "status": "REJECT_STANDARD_POOL",
+      "observedType": "HIGH_KNEE_ALTERNATE_FOOT",
+      "reason": "Repeated unilateral high-knee lifts and asymmetric single-foot support are directly visible through the clip, excluding it from the pure STANDARD pool."
+    },
+    {
+      "id": "v_JumpRope_g23_c03",
+      "sha256": "8c00e1ec7156bcc81022c2d0caec66f95e428b9cb48bafb50eda78f6949c6057",
+      "status": "PASS_STANDARD",
+      "observedType": "STANDARD_BASIC_SINGLE_UNDER",
+      "reason": "Whole-source review shows continuous synchronized two-foot basic bounce with uncrossed ordinary single-under rope rotation; no alternate-foot, crossover, or other subtype change is visible.",
+      "gptDirectBodyJumpCount": 29,
+      "countConfidence": "HIGH",
+      "countNote": "Thirty airborne apexes are visible, but the final apex near 11.24 s reaches the source boundary before a completed landing and is excluded. The preceding twenty-nine completed body-jump cycles were visually confirmed frame-by-frame. Programmatic head/motion tracking only located candidate apexes and did not generate GT."
+    }
+  ]
+}
