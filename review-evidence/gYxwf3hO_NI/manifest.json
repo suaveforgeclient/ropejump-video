@@ -1,0 +1,52 @@
+{
+  "schema": "ROPEJUMP_REVIEW_EVIDENCE_ITEM_V1",
+  "video_id": "gYxwf3hO_NI",
+  "source_url": "https://www.youtube.com/watch?v=gYxwf3hO_NI",
+  "status": "READY",
+  "reason": "",
+  "title": "Jump Rope Workout: The Most FUN Cardio",
+  "duration_s": 8.02,
+  "source_sha256": "cfe66c05ac2d54ae177db3c42761f3dd9ae87d38581bc9228e5b4bd9e8e5ea40",
+  "review_proxy_sha256": "bf7f0379e8e10f1d03c16b9ce71964b250cd32f3367b65da453109d9d08d2640",
+  "review_proxy": "review.mp4",
+  "overview_dir": "overview",
+  "review_contract": {
+    "direct_visual_review_required": true,
+    "count_from_video_only": true,
+    "record_jump_event_ms": true,
+    "metadata_is_not_count_evidence": true
+  },
+  "candidate_priority_only": {
+    "train_priority": 4,
+    "dataset_group": "YT_CHANNEL_UCdDDPLL0XUjqtcRvtb6-h0A",
+    "final_type_must_come_from_visual_evidence": true
+  },
+  "visual_b64_ready": true,
+  "visual_access": {
+    "format": "base64-jpeg-contact-sheets",
+    "overview": {
+      "glob": "visual-b64/overview/*.jpg.b64",
+      "fps": 1,
+      "cells_per_sheet": 16,
+      "seconds_per_sheet": 16,
+      "sheet_count": 1
+    },
+    "full_100ms": {
+      "glob": "visual-b64/full-100ms/*.jpg.b64",
+      "fps": 10,
+      "cell_ms": 100,
+      "cells_per_sheet": 100,
+      "seconds_per_sheet": 10,
+      "sheet_count": 1
+    },
+    "lower_100ms": {
+      "glob": "visual-b64/lower-100ms/*.jpg.b64",
+      "fps": 10,
+      "cell_ms": 100,
+      "cells_per_sheet": 100,
+      "seconds_per_sheet": 10,
+      "sheet_count": 1
+    },
+    "decode": "read .b64 as UTF-8, then render data:image/jpeg;base64,<content> with image()"
+  }
+}
