@@ -1,0 +1,52 @@
+{
+  "schema": "ROPEJUMP_REVIEW_EVIDENCE_ITEM_V1",
+  "video_id": "VYxrbSVKQjk",
+  "source_url": "https://www.youtube.com/watch?v=VYxrbSVKQjk",
+  "status": "READY",
+  "reason": "",
+  "title": "Best Jump Rope Movement For Weight Loss | Anik Aesthetic Boy",
+  "duration_s": 159.88,
+  "source_sha256": "9177d7bd494fe1609fee1a04e718a7a8245910c1f14ade02c47461688110ed19",
+  "review_proxy_sha256": "dea3fc7e1d50ec0dcd77ab984e4510e4ccf756f0547bebdc92daa9d52a7e48c9",
+  "review_proxy": "review.mp4",
+  "overview_dir": "overview",
+  "review_contract": {
+    "direct_visual_review_required": true,
+    "count_from_video_only": true,
+    "record_jump_event_ms": true,
+    "metadata_is_not_count_evidence": true
+  },
+  "candidate_priority_only": {
+    "train_priority": 8,
+    "dataset_group": "YT_CHANNEL_UCbJ8oxm0bEvSdTbqfj0JKig",
+    "final_type_must_come_from_visual_evidence": true
+  },
+  "visual_b64_ready": true,
+  "visual_access": {
+    "format": "base64-jpeg-contact-sheets",
+    "overview": {
+      "glob": "visual-b64/overview/*.jpg.b64",
+      "fps": 1,
+      "cells_per_sheet": 16,
+      "seconds_per_sheet": 16,
+      "sheet_count": 10
+    },
+    "full_100ms": {
+      "glob": "visual-b64/full-100ms/*.jpg.b64",
+      "fps": 10,
+      "cell_ms": 100,
+      "cells_per_sheet": 100,
+      "seconds_per_sheet": 10,
+      "sheet_count": 16
+    },
+    "lower_100ms": {
+      "glob": "visual-b64/lower-100ms/*.jpg.b64",
+      "fps": 10,
+      "cell_ms": 100,
+      "cells_per_sheet": 100,
+      "seconds_per_sheet": 10,
+      "sheet_count": 16
+    },
+    "decode": "read .b64 as UTF-8, then render data:image/jpeg;base64,<content> with image()"
+  }
+}
