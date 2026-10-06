@@ -1,0 +1,12 @@
+name: F V2 isolated runner sanity
+on:
+  push:
+    branches:
+      - research/f-v2-isolated
+    paths:
+      - '.github/workflows/f-v2-isolated-sanity.yml'
+jobs:
+  sanity:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo F_V2_ISOLATED_RUNNER_OK
