@@ -1,0 +1,35 @@
+name: F V2 YouTube exact-source probe
+on:
+  push:
+    branches:
+      - research/f-v2-isolated
+    paths:
+      - '.github/workflows/f-v2-youtube-sha-probe.yml'
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Probe locked source SHA
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          YTDLP="$RUNNER_TEMP/yt-dlp"
+          curl -fsSL https://github.com/yt-dlp/yt-dlp/releases/latest/download/yt-dlp_linux -o "$YTDLP"
+          chmod +x "$YTDLP"
+          mkdir -p /tmp/fv2-probe
+          probe(){
+            id="$1"; expected="$2"
+            d="/tmp/fv2-probe/$id"; mkdir -p "$d"
+            "$YTDLP" --no-warnings --no-progress --no-playlist --max-filesize 350M --merge-output-format mp4 -f 'best[height<=720][ext=mp4]/best[height<=720]/best' -o "$d/source.%(ext)s" "https://www.youtube.com/watch?v=$id"
+            src="$(find "$d" -maxdepth 1 -type f -name 'source.*' ! -name '*.part' ! -name '*.ytdl' -print -quit)"
+            test -s "$src"
+            actual="$(sha256sum "$src" | awk '{print $1}')"
+            bytes="$(wc -c < "$src" | tr -d ' ')"
+            if [ "$actual" = "$expected" ]; then match=yes; else match=no; fi
+            echo "FV2_YT_SHA id=$id match=$match expected=$expected actual=$actual bytes=$bytes"
+          }
+          probe k7dq0RQlBpM 3ff2556f1b2a2ddd04821ef472036c3895d5688232d40b81f67e38b49e678cea
+          probe BwwAjZ7dUcc 7b63f14bed83e116d0aab61a5a11eb1aaf9957d4c4d4fd9050ecd9a9762899ff
+          probe gEeCbBHdXPI 6d2c95202c3d09cd08479f87de33a3a59ee3f41c5593719b6f5a9c74d56af5cf
+          probe qjRMa53uL-I 4cddf5dbe0fcf2398ae041584ac2cb7e8dd687da9441819628caf4c78705eafd
