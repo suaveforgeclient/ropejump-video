@@ -1,0 +1,12 @@
+name: F V2 archive runner probe
+on:
+  push:
+    branches:
+      - research/f-v2-runner-probe
+    paths:
+      - '.github/workflows/f-v2-runner-probe.yml'
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo F_V2_ARCHIVE_RUNNER_OK
