@@ -1,0 +1,82 @@
+name: F V2 server fast probe
+on:
+  push:
+    branches: [research/f-v2-isolated]
+    paths: ['.github/workflows/f-v2-server-fast-probe.yml']
+permissions:
+  contents: write
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tools
+        run: |
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq sshpass openssh-client openssl
+      - name: Publish key
+        env:
+          RUN_ID: ${{ github.run_id }}
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out /tmp/private.pem >/dev/null 2>&1
+          openssl pkey -in /tmp/private.pem -pubout -out /tmp/public.pem >/dev/null 2>&1
+          BR="research/f-v2-fast-handshake-$RUN_ID"
+          git config user.name f-v2-fast-probe
+          git config user.email actions@users.noreply.github.com
+          git switch -c "$BR"
+          mkdir -p research-handshake
+          cp /tmp/public.pem research-handshake/public.pem
+          git add research-handshake/public.pem
+          git commit -m "research(Fv2): fast probe handshake $RUN_ID [skip ci]"
+          git push origin "HEAD:$BR"
+          git switch --detach "$GITHUB_SHA"
+          echo "FV2_HANDSHAKE_BRANCH=$BR" >> "$GITHUB_ENV"
+      - name: Receive credential
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          for _ in $(seq 1 90); do
+            git fetch --quiet origin "$FV2_HANDSHAKE_BRANCH" || true
+            if git cat-file -e 'FETCH_HEAD:research-handshake/cipher.b64' 2>/dev/null; then
+              git show 'FETCH_HEAD:research-handshake/cipher.b64' > /tmp/cipher.b64
+              base64 -d /tmp/cipher.b64 > /tmp/cipher.bin
+              openssl pkeyutl -decrypt -inkey /tmp/private.pem -in /tmp/cipher.bin -out /tmp/pass
+              test -s /tmp/pass
+              secret=$(cat /tmp/pass); echo "::add-mask::$secret"; unset secret
+              exit 0
+            fi
+            sleep 3
+          done
+          exit 71
+      - name: Fast source check
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          HOST=211.255.25.123; PORT=27548; USER=root
+          mkdir -p "$HOME/.ssh"
+          timeout 10s ssh-keyscan -p "$PORT" "$HOST" > "$HOME/.ssh/known_hosts" 2>/dev/null
+          test -s "$HOME/.ssh/known_hosts"
+          timeout 60s sshpass -f /tmp/pass ssh -p "$PORT" -o ConnectTimeout=10 -o ServerAliveInterval=5 -o ServerAliveCountMax=2 -o UserKnownHostsFile="$HOME/.ssh/known_hosts" -o StrictHostKeyChecking=yes -o PreferredAuthentications=password -o PubkeyAuthentication=no "$USER@$HOST" 'bash -s' <<'REMOTE'
+          set -Eeuo pipefail
+          C=/home/jumprope-research/canonical/videos
+          echo "FV2_FAST_CANONICAL_DIR=$([ -d "$C" ] && echo yes || echo no)"
+          for id in JR-20260908-376EF057 JR-20260908-913C26E0 JR-20260908-E86C659B JR-20260908-F62DC60E JR-20260909-9BDBF573 JR-20260909-AC5539AF JR-20260910-07583788 JR-20260911-BD41E9A3 JR-20260912-D5EEAE97 JR-20260913-694638E8; do
+            n=$(find "$C" -maxdepth 1 -type f -name "$id"'__*' 2>/dev/null | wc -l | tr -d ' ')
+            echo "FV2_FAST_CANONICAL id=$id files=$n"
+          done
+          if [ -d /home/jumprope/.git ]; then
+            echo FV2_FAST_GIT=/home/jumprope
+            if git -C /home/jumprope cat-file -e 'refs/remotes/origin/research/train-evidence-dynamic-1020:review-evidence/k7dq0RQlBpM/review.mp4' 2>/dev/null; then
+              echo "FV2_FAST_LOCAL_EVIDENCE=yes blob=$(git -C /home/jumprope rev-parse 'refs/remotes/origin/research/train-evidence-dynamic-1020:review-evidence/k7dq0RQlBpM/review.mp4')"
+            else echo FV2_FAST_LOCAL_EVIDENCE=no; fi
+            set +e
+            timeout 12s env GIT_TERMINAL_PROMPT=0 git -C /home/jumprope ls-remote --heads origin refs/heads/research/train-evidence-dynamic-1020 >/tmp/lsremote 2>/dev/null
+            rc=$?; set -e
+            if [ "$rc" -eq 0 ] && [ -s /tmp/lsremote ]; then echo "FV2_FAST_REMOTE_EVIDENCE=yes sha=$(awk '{print $1}' /tmp/lsremote | head -n1)"; else echo "FV2_FAST_REMOTE_EVIDENCE=no rc=$rc"; fi
+          else echo FV2_FAST_GIT=missing; fi
+          REMOTE
+          shred -u /tmp/pass /tmp/private.pem /tmp/cipher.bin /tmp/cipher.b64 2>/dev/null || true
+          git push origin --delete "$FV2_HANDSHAKE_BRANCH" >/dev/null 2>&1 || true
