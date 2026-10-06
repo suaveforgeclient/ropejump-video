@@ -1,0 +1,52 @@
+{
+  "schema": "ROPEJUMP_REVIEW_EVIDENCE_ITEM_V1",
+  "video_id": "NN9S4BVGM3Q",
+  "source_url": "https://www.youtube.com/watch?v=NN9S4BVGM3Q",
+  "status": "READY",
+  "reason": "",
+  "title": "OSCAR-TALK , Just Jump Rope!",
+  "duration_s": 43.86,
+  "source_sha256": "6242259b1150ac6c6085dad3f3fde33077c158fd8559564221894ae9c40e1209",
+  "review_proxy_sha256": "bb9164805a415fb3c2e3928a4655ec85d190932829bfc99521a533eac88c5f28",
+  "review_proxy": "review.mp4",
+  "overview_dir": "overview",
+  "review_contract": {
+    "direct_visual_review_required": true,
+    "count_from_video_only": true,
+    "record_jump_event_ms": true,
+    "metadata_is_not_count_evidence": true
+  },
+  "candidate_priority_only": {
+    "train_priority": 4,
+    "dataset_group": "YT_CHANNEL_UCwIfKaGiqlIyUA_YTe7-1UQ",
+    "final_type_must_come_from_visual_evidence": true
+  },
+  "visual_b64_ready": true,
+  "visual_access": {
+    "format": "base64-jpeg-contact-sheets",
+    "overview": {
+      "glob": "visual-b64/overview/*.jpg.b64",
+      "fps": 1,
+      "cells_per_sheet": 16,
+      "seconds_per_sheet": 16,
+      "sheet_count": 3
+    },
+    "full_100ms": {
+      "glob": "visual-b64/full-100ms/*.jpg.b64",
+      "fps": 10,
+      "cell_ms": 100,
+      "cells_per_sheet": 100,
+      "seconds_per_sheet": 10,
+      "sheet_count": 5
+    },
+    "lower_100ms": {
+      "glob": "visual-b64/lower-100ms/*.jpg.b64",
+      "fps": 10,
+      "cell_ms": 100,
+      "cells_per_sheet": 100,
+      "seconds_per_sheet": 10,
+      "sheet_count": 5
+    },
+    "decode": "read .b64 as UTF-8, then render data:image/jpeg;base64,<content> with image()"
+  }
+}
