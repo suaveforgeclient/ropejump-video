@@ -1,0 +1,201 @@
+name: F V2 clean retrain archive runner
+
+on:
+  push:
+    branches:
+      - research/f-v2-clean-retrain
+    paths:
+      - '.github/workflows/f-v2-clean-retrain.yml'
+      - 'research/ml_shadow_f_v2/**'
+      - 'research/viewer/**'
+      - 'tests/canonical-video-registry.json'
+      - 'review-evidence/**'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ropejump-f-v2-archive-clean-retrain
+  cancel-in-progress: true
+
+jobs:
+  clean-retrain:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install isolated research runtime
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq ffmpeg libegl1 libgles2 libgl1 libgbm1 libglib2.0-0 sshpass openssh-client openssl
+          python -m pip install -q --disable-pip-version-check mediapipe numpy
+          python -m pip uninstall -y -q opencv-python opencv-contrib-python opencv-python-headless opencv-contrib-python-headless || true
+          python -m pip install -q --disable-pip-version-check 'opencv-contrib-python-headless==4.10.0.84'
+          python -m pip install -q --disable-pip-version-check torch --index-url https://download.pytorch.org/whl/cpu
+          mkdir -p .research-runtime
+          curl -fsSL 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_full/float16/1/pose_landmarker_full.task' -o .research-runtime/pose_landmarker_full.task
+
+      - name: Static safety gate
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          test "${{ runner.os }}" = "Linux"
+          python -m py_compile research/ml_shadow_f_v2/feature_builder.py research/ml_shadow_f_v2/materialize.py research/ml_shadow_f_v2/train.py scripts/extract-pose-landmarks.py
+          grep -q 'legacy_checkpoint_loaded.*False' research/ml_shadow_f_v2/train.py
+          grep -q 'JR-20260915-DE1CE4AF' research/ml_shadow_f_v2/materialize.py
+          test "$(find review-evidence -mindepth 1 -maxdepth 1 -type d | wc -l | tr -d ' ')" = 22
+
+      - name: Prepare ephemeral canonical credential handoff
+        shell: bash
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -Eeuo pipefail
+          openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out /tmp/fv2-private.pem >/dev/null 2>&1
+          openssl pkey -in /tmp/fv2-private.pem -pubout -out /tmp/fv2-public.pem >/dev/null 2>&1
+          chmod 600 /tmp/fv2-private.pem
+          HANDSHAKE_BRANCH="research/f-v2-archive-handshake-${RUN_ID}"
+          git config user.name "ropejump-f-v2-research"
+          git config user.email "actions@users.noreply.github.com"
+          git switch -c "$HANDSHAKE_BRANCH"
+          mkdir -p research-handshake
+          cp /tmp/fv2-public.pem research-handshake/public.pem
+          printf 'run_id=%s\nhead_sha=%s\n' "$RUN_ID" "$GITHUB_SHA" > research-handshake/meta.txt
+          git add research-handshake/public.pem research-handshake/meta.txt
+          git commit -m "research(Fv2): archive credential handshake $RUN_ID [skip ci]"
+          git push origin "HEAD:$HANDSHAKE_BRANCH"
+          git switch --detach "$GITHUB_SHA"
+          echo "FV2_HANDSHAKE_BRANCH=$HANDSHAKE_BRANCH" >> "$GITHUB_ENV"
+          echo "FV2_HANDSHAKE_READY branch=$HANDSHAKE_BRANCH"
+
+      - name: Receive encrypted canonical credential
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          found=0
+          for _ in $(seq 1 120); do
+            git fetch --quiet origin "$FV2_HANDSHAKE_BRANCH" || true
+            if git cat-file -e "FETCH_HEAD:research-handshake/cipher.b64" 2>/dev/null; then
+              git show "FETCH_HEAD:research-handshake/cipher.b64" > /tmp/fv2-cipher.b64
+              found=1
+              break
+            fi
+            sleep 5
+          done
+          test "$found" = 1 || { echo 'FV2_HANDSHAKE_TIMEOUT=yes'; exit 71; }
+          base64 -d /tmp/fv2-cipher.b64 > /tmp/fv2-cipher.bin
+          openssl pkeyutl -decrypt -inkey /tmp/fv2-private.pem -in /tmp/fv2-cipher.bin -out /tmp/fv2-ssh-pass
+          test -s /tmp/fv2-ssh-pass
+          chmod 600 /tmp/fv2-ssh-pass
+          secret="$(cat /tmp/fv2-ssh-pass)"
+          echo "::add-mask::$secret"
+          unset secret
+          shred -u /tmp/fv2-private.pem /tmp/fv2-cipher.bin /tmp/fv2-cipher.b64 || true
+          git push origin --delete "$FV2_HANDSHAKE_BRANCH" >/dev/null 2>&1 || true
+          echo 'FV2_HANDSHAKE_ACCEPTED=yes'
+
+      - name: Fetch exact canonical USER_ORIGINAL bytes
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          HOST='211.255.25.123'
+          PORT='27548'
+          USER='root'
+          REMOTE='/home/jumprope-research/canonical/videos'
+          OUT="$GITHUB_WORKSPACE/artifacts/f-v2-canonical"
+          mkdir -p "$OUT" "$HOME/.ssh"
+          chmod 700 "$HOME/.ssh"
+          ssh-keyscan -p "$PORT" "$HOST" > "$HOME/.ssh/known_hosts" 2>/dev/null
+          test -s "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+          python - <<'PY' > /tmp/fv2-required.txt
+          import json
+          from pathlib import Path
+          root=Path('.')
+          g=json.loads((root/'research/viewer/ground-counts.json').read_text())['items']
+          u=json.loads((root/'research/viewer/user-original-segment-annotations.json').read_text())['items']
+          r=json.loads((root/'tests/canonical-video-registry.json').read_text())['items']
+          de1='JR-20260915-DE1CE4AF'
+          ids=set()
+          for vid,x in g.items():
+              if (
+                  vid!=de1
+                  and str(x.get('source_ref') or '').startswith('USER_ORIGINAL:')
+                  and x.get('dataset_role') in {'TRAIN','VALIDATION','HOLDOUT'}
+                  and x.get('dataset_eligibility')=='ELIGIBLE_VERIFIED_STANDARD'
+              ):
+                  ids.add(vid)
+          for vid,x in u.items():
+              if vid!=de1 and x.get('segment_usage')=='HARD_NEGATIVE':
+                  ids.add(vid)
+          for vid in sorted(ids):
+              entry=r.get(vid) or {}
+              sha=str(entry.get('sha256') or '').lower()
+              if entry.get('storage')!='server-canonical' or len(sha)!=64:
+                  raise SystemExit(f'canonical_registry_invalid:{vid}')
+              print(vid,sha)
+          PY
+
+          while read -r id sha; do
+            test -n "$id"; test -n "$sha"
+            remote_path="$(sshpass -f /tmp/fv2-ssh-pass ssh -p "$PORT" -o UserKnownHostsFile="$HOME/.ssh/known_hosts" -o StrictHostKeyChecking=yes -o PreferredAuthentications=password -o PubkeyAuthentication=no "$USER@$HOST" "find '$REMOTE' -maxdepth 1 -type f -name '${id}__${sha}.*' -print" | tr -d '\r')"
+            count="$(printf '%s\n' "$remote_path" | sed '/^$/d' | wc -l | tr -d ' ')"
+            test "$count" = 1 || { echo "FV2_CANONICAL_REMOTE_MATCH_ERROR id=$id count=$count"; exit 72; }
+            dest="$OUT/$(basename "$remote_path")"
+            sshpass -f /tmp/fv2-ssh-pass scp -P "$PORT" -o UserKnownHostsFile="$HOME/.ssh/known_hosts" -o StrictHostKeyChecking=yes -o PreferredAuthentications=password -o PubkeyAuthentication=no "$USER@$HOST:$remote_path" "$dest"
+            actual="$(sha256sum "$dest" | awk '{print $1}')"
+            test "$actual" = "$sha" || { echo "FV2_CANONICAL_SHA_MISMATCH id=$id"; exit 73; }
+            echo "FV2_CANONICAL_READY id=$id sha=$sha bytes=$(wc -c < "$dest" | tr -d ' ')"
+          done < /tmp/fv2-required.txt
+          shred -u /tmp/fv2-ssh-pass || true
+
+      - name: Materialize clean V2 corpus
+        shell: bash
+        env:
+          F_V2_CANONICAL_DIR: ${{ github.workspace }}/artifacts/f-v2-canonical
+        run: |
+          set -Eeuo pipefail
+          rm -rf artifacts/f-v2-work artifacts/f-v2-results
+          python research/ml_shadow_f_v2/materialize.py --output-root artifacts/f-v2-work --pose-model .research-runtime/pose_landmarker_full.task
+          cat artifacts/f-v2-work/report.json
+
+      - name: Train from random initialization
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          mkdir -p artifacts/f-v2-results
+          python research/ml_shadow_f_v2/train.py --manifest artifacts/f-v2-work/manifest.jsonl --output-root artifacts/f-v2-results --epochs 60
+          cp artifacts/f-v2-work/report.json artifacts/f-v2-results/materialization_report.json
+          cp artifacts/f-v2-work/manifest.jsonl artifacts/f-v2-results/manifest.jsonl
+          cat artifacts/f-v2-results/summary.json
+
+      - name: Persist research result branch
+        shell: bash
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -Eeuo pipefail
+          DEST="research-results/f-v2/$RUN_ID"
+          BRANCH="research/f-v2-result-$RUN_ID"
+          mkdir -p "$DEST"
+          cp artifacts/f-v2-results/best_model.pt "$DEST/"
+          cp artifacts/f-v2-results/summary.json "$DEST/"
+          cp artifacts/f-v2-results/materialization_report.json "$DEST/"
+          cp artifacts/f-v2-results/manifest.jsonl "$DEST/"
+          git config user.name "ropejump-f-v2-research"
+          git config user.email "actions@users.noreply.github.com"
+          git switch -c "$BRANCH"
+          git add "$DEST"
+          git commit -m "research(Fv2): persist clean retrain result $RUN_ID [skip ci]"
+          git push origin "HEAD:$BRANCH"
+          echo "FV2_RESULT_BRANCH=$BRANCH"
