@@ -90,10 +90,19 @@ def evidence_index(video_ids:set[str])->dict[str,str]:
     return found
 
 def materialize_evidence_proxy(vid:str,x:dict,branch:str,dst:Path)->None:
+    source_expected=str(x.get("sha256") or "").lower(); proxy_expected=str(x.get("review_proxy_sha256") or "").lower()
+    local_root=str(os.environ.get("F_V2_PROXY_DIR") or "").strip()
+    if local_root:
+        src=Path(local_root)/f"{vid}.mp4"
+        if not src.is_file(): raise RuntimeError(f"local_proxy_missing:{vid}")
+        dst.parent.mkdir(parents=True,exist_ok=True)
+        shutil.copyfile(src,dst)
+        actual=sha256(dst)
+        if actual!=proxy_expected: raise RuntimeError(f"local_proxy_sha_mismatch:{vid}:{actual}:{proxy_expected}")
+        return
     repo=os.environ.get("GITHUB_REPOSITORY","suaveforge/jumprope")
     manifest=json.loads(github_file_bytes(repo,f"review-evidence/{vid}/manifest.json",branch).decode("utf-8"))
     if manifest.get("status")!="READY": raise RuntimeError(f"proxy_not_ready:{vid}:{branch}")
-    source_expected=str(x.get("sha256") or "").lower(); proxy_expected=str(x.get("review_proxy_sha256") or "").lower()
     if str(manifest.get("source_sha256") or "").lower()!=source_expected: raise RuntimeError(f"proxy_source_sha_mismatch:{vid}")
     if str(manifest.get("review_proxy_sha256") or "").lower()!=proxy_expected: raise RuntimeError(f"proxy_manifest_sha_mismatch:{vid}")
     data=github_file_bytes(repo,f"review-evidence/{vid}/review.mp4",branch)
@@ -225,7 +234,7 @@ def main():
 
     inventory=positive_inventory(ground,content,ucf,user)+hard_negative_inventory(user,ground)
     external_ids={vid for vid,x,_,kind in inventory if kind=="YOUTUBE_REVIEW_PROXY"}
-    proxy_refs=evidence_index(external_ids) if external_ids else {}
+    proxy_refs=evidence_index(external_ids) if external_ids and not str(os.environ.get("F_V2_PROXY_DIR") or "").strip() else {}
     # Positive USER_ORIGINAL clips must never enter TRAIN. USER_ORIGINAL hard negatives are allowed only as explicit zero-target negatives.
     if any(vid.startswith("JR-") and x.get("dataset_role")=="TRAIN" and x.get("_sample_kind")!="HARD_NEGATIVE" for vid,x,_,_ in inventory):
         raise RuntimeError("user_original_positive_train_forbidden_v2")
@@ -245,7 +254,7 @@ def main():
                 actual=sha256(src)
                 if expected and actual!=expected: raise RuntimeError(f"ucf_sha_mismatch:{vid}:{actual}:{expected}")
             elif source_kind=="YOUTUBE_REVIEW_PROXY":
-                materialize_evidence_proxy(vid,x,proxy_refs[vid],src)
+                materialize_evidence_proxy(vid,x,proxy_refs.get(vid,"LOCAL_PROXY"),src)
             else:
                 expected=str((registry.get(vid) or {}).get("sha256") or x.get("sha256") or "").lower()
                 if not re.fullmatch(r"[0-9a-f]{64}",expected): raise RuntimeError(f"user_original_sha_invalid:{vid}")
