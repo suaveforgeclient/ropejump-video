@@ -1,0 +1,52 @@
+{
+  "schema": "ROPEJUMP_REVIEW_EVIDENCE_ITEM_V1",
+  "video_id": "eZUE40_-4cc",
+  "source_url": "https://www.youtube.com/watch?v=eZUE40_-4cc",
+  "status": "READY",
+  "reason": "",
+  "title": "Timeless Jump Beaded Rope #timelessjump #beadedrope #jumpropefitness",
+  "duration_s": 27.16,
+  "source_sha256": "07099ab1febce35265756d8332df286c48932b5e88f7a58bf95c06a42b5f3528",
+  "review_proxy_sha256": "95a4ced1502d27f67ab1a25c4517ea7404ac6d84741682fcf92e131d46ceb223",
+  "review_proxy": "review.mp4",
+  "overview_dir": "overview",
+  "review_contract": {
+    "direct_visual_review_required": true,
+    "count_from_video_only": true,
+    "record_jump_event_ms": true,
+    "metadata_is_not_count_evidence": true
+  },
+  "candidate_priority_only": {
+    "train_priority": 4,
+    "dataset_group": "YT_CHANNEL_UCc7zv7AXkOQpDaDB6GjynTw",
+    "final_type_must_come_from_visual_evidence": true
+  },
+  "visual_b64_ready": true,
+  "visual_access": {
+    "format": "base64-jpeg-contact-sheets",
+    "overview": {
+      "glob": "visual-b64/overview/*.jpg.b64",
+      "fps": 1,
+      "cells_per_sheet": 16,
+      "seconds_per_sheet": 16,
+      "sheet_count": 2
+    },
+    "full_100ms": {
+      "glob": "visual-b64/full-100ms/*.jpg.b64",
+      "fps": 10,
+      "cell_ms": 100,
+      "cells_per_sheet": 100,
+      "seconds_per_sheet": 10,
+      "sheet_count": 3
+    },
+    "lower_100ms": {
+      "glob": "visual-b64/lower-100ms/*.jpg.b64",
+      "fps": 10,
+      "cell_ms": 100,
+      "cells_per_sheet": 100,
+      "seconds_per_sheet": 10,
+      "sheet_count": 3
+    },
+    "decode": "read .b64 as UTF-8, then render data:image/jpeg;base64,<content> with image()"
+  }
+}
