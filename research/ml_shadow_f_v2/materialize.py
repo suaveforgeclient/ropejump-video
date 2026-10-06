@@ -71,33 +71,24 @@ def github_file_bytes(repo:str,path:str,ref:str)->bytes:
     raise RuntimeError(f"github_file_unreadable:{ref}:{path}")
 
 def evidence_index(video_ids:set[str])->dict[str,str]:
-    repo=os.environ.get("GITHUB_REPOSITORY","suaveforge/jumprope")
-    p=subprocess.run(["git","ls-remote","--heads","origin","refs/heads/research/train-evidence-*"],check=True,text=True,capture_output=True)
-    refs=[]
-    for line in p.stdout.splitlines():
-        if "refs/heads/" in line: refs.append(line.split("refs/heads/",1)[1].strip())
     found={}
-    for ref in refs:
-        qref=urllib.parse.quote(ref,safe="")
-        try: items=github_json(f"https://api.github.com/repos/{repo}/contents/review-evidence?ref={qref}")
-        except Exception: continue
-        if not isinstance(items,list): continue
-        names={str(x.get("name")) for x in items if x.get("type")=="dir"}
-        for vid in sorted(video_ids & names): found.setdefault(vid,ref)
-        if len(found)==len(video_ids): break
+    for vid in sorted(video_ids):
+        base=ROOT/"review-evidence"/vid
+        if (base/"manifest.json").is_file() and (base/"review.mp4").is_file():
+            found[vid]="LOCAL"
     missing=sorted(video_ids-set(found))
-    if missing: raise RuntimeError(f"evidence_proxy_branch_missing:{missing}")
+    if missing: raise RuntimeError(f"evidence_proxy_local_missing:{missing}")
     return found
 
 def materialize_evidence_proxy(vid:str,x:dict,branch:str,dst:Path)->None:
-    repo=os.environ.get("GITHUB_REPOSITORY","suaveforge/jumprope")
-    manifest=json.loads(github_file_bytes(repo,f"review-evidence/{vid}/manifest.json",branch).decode("utf-8"))
+    if branch!="LOCAL": raise RuntimeError(f"proxy_ref_invalid:{vid}:{branch}")
+    base=ROOT/"review-evidence"/vid
+    manifest=json.loads((base/"manifest.json").read_text(encoding="utf-8"))
     if manifest.get("status")!="READY": raise RuntimeError(f"proxy_not_ready:{vid}:{branch}")
     source_expected=str(x.get("sha256") or "").lower(); proxy_expected=str(x.get("review_proxy_sha256") or "").lower()
     if str(manifest.get("source_sha256") or "").lower()!=source_expected: raise RuntimeError(f"proxy_source_sha_mismatch:{vid}")
     if str(manifest.get("review_proxy_sha256") or "").lower()!=proxy_expected: raise RuntimeError(f"proxy_manifest_sha_mismatch:{vid}")
-    data=github_file_bytes(repo,f"review-evidence/{vid}/review.mp4",branch)
-    dst.parent.mkdir(parents=True,exist_ok=True); dst.write_bytes(data)
+    dst.parent.mkdir(parents=True,exist_ok=True); shutil.copyfile(base/"review.mp4",dst)
     actual=sha256(dst)
     if actual!=proxy_expected: raise RuntimeError(f"proxy_file_sha_mismatch:{vid}:{actual}:{proxy_expected}")
 
