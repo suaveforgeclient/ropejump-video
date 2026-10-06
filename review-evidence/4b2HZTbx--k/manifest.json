@@ -1,0 +1,52 @@
+{
+  "schema": "ROPEJUMP_REVIEW_EVIDENCE_ITEM_V1",
+  "video_id": "4b2HZTbx--k",
+  "source_url": "https://www.youtube.com/watch?v=4b2HZTbx--k",
+  "status": "READY",
+  "reason": "",
+  "title": "Don't Skip Your Opportunities - Skip your Jump Rope | 1 Minute Motivation | #EJSport 160",
+  "duration_s": 129.0,
+  "source_sha256": "d44be1b6c43b992843f06d4e1a00c2050582cff96e8a76b82c3e40d215b49a64",
+  "review_proxy_sha256": "eeb1513df7408aeecaee9a7a338866f4b1f941a08cbdf4d01a6216ea8a81364a",
+  "review_proxy": "review.mp4",
+  "overview_dir": "overview",
+  "review_contract": {
+    "direct_visual_review_required": true,
+    "count_from_video_only": true,
+    "record_jump_event_ms": true,
+    "metadata_is_not_count_evidence": true
+  },
+  "candidate_priority_only": {
+    "train_priority": 8,
+    "dataset_group": "YT_CHANNEL_UC9DjpzE-RfhdEzwBUgh8Wpw",
+    "final_type_must_come_from_visual_evidence": true
+  },
+  "visual_b64_ready": true,
+  "visual_access": {
+    "format": "base64-jpeg-contact-sheets",
+    "overview": {
+      "glob": "visual-b64/overview/*.jpg.b64",
+      "fps": 1,
+      "cells_per_sheet": 16,
+      "seconds_per_sheet": 16,
+      "sheet_count": 9
+    },
+    "full_100ms": {
+      "glob": "visual-b64/full-100ms/*.jpg.b64",
+      "fps": 10,
+      "cell_ms": 100,
+      "cells_per_sheet": 100,
+      "seconds_per_sheet": 10,
+      "sheet_count": 13
+    },
+    "lower_100ms": {
+      "glob": "visual-b64/lower-100ms/*.jpg.b64",
+      "fps": 10,
+      "cell_ms": 100,
+      "cells_per_sheet": 100,
+      "seconds_per_sheet": 10,
+      "sheet_count": 13
+    },
+    "decode": "read .b64 as UTF-8, then render data:image/jpeg;base64,<content> with image()"
+  }
+}
