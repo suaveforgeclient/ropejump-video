@@ -1,0 +1,99 @@
+{
+  "version": 1,
+  "policy": "Locked regression replay uses immutable canonical bytes only. sourceUrl/youtubeUrl is provenance metadata and must never be fetched as replay input.",
+  "items": {
+    "JR-20260908-376EF057": {
+      "storage": "server-canonical",
+      "sha256": "711b89492f78e3386ff045f7a816cf66a8a4b435bf1f05c8f07882e7dfad2e22",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260908-913C26E0": {
+      "storage": "server-canonical",
+      "sha256": "712d2738d9bd412d332191994644600ff815946a27536a5d7466965b205b43a0",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260908-E86C659B": {
+      "storage": "server-canonical",
+      "sha256": "9787f3a21a14871e199474a008d66a12c6d8029557a2b5e4a2f6c387b6f39d93",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260908-F45E4935": {
+      "storage": "server-canonical",
+      "sha256": "7600030b114fac88dcd149047df4e92fd305a97acc9ed5af8359377ea295880b",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260908-F62DC60E": {
+      "storage": "server-canonical",
+      "sha256": "7e3d6256d7d9e35409488427a7b1dbfe2cee2451be6cd6e2cf798f3691dc4bdf",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260909-9BDBF573": {
+      "storage": "server-canonical",
+      "sha256": "1cbb78f65e660c52d8471366cadf4ec7395f65fe3ddf02690e5fbfceb9be04fe",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260909-AC5539AF": {
+      "storage": "server-canonical",
+      "sha256": "3175f101b902c5b7a8dc1da6010ff1d2c155847872582dfbf12b076a7bcf35ca",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260910-07583788": {
+      "storage": "server-canonical",
+      "sha256": "a2030f88490c41598a6f53f2b58b3bb33b247a7fd5e5f70e7f9f0b00d3e4e898",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260910-6579D76C": {
+      "storage": "repo-fixture",
+      "path": "tests/fixtures/groundtruth/JR-20260910-6579D76C.mp4",
+      "sha256": "903e266cfc4d8cdcc4931b0544d1db6d16a8db10c835e69f75a4e5c53bf46ee3",
+      "sourceClass": "WEB",
+      "sourceUrl": "https://www.youtube.com/watch?v=82jNjDS19lg"
+    },
+    "JR-20260910-83F35476": {
+      "storage": "repo-fixture",
+      "path": "tests/fixtures/groundtruth/JR-20260910-83F35476.mp4",
+      "sha256": "0592cbb19613e5df54d2e2f84f654cea6b5e08347bcc324c46994986edd4e849",
+      "sourceClass": "WEB",
+      "sourceUrl": "https://www.youtube.com/watch?v=fLiozP7GVeA"
+    },
+    "JR-20260910-A7D305FC": {
+      "storage": "repo-fixture",
+      "path": "tests/fixtures/groundtruth/JR-20260910-A7D305FC.mp4",
+      "sha256": "2f935c5d27b86f484fb44dec8b015638f37c8ec6f828ad67c148452ef3070fbd",
+      "sourceClass": "WEB",
+      "sourceUrl": "https://www.youtube.com/watch?v=Y3wzaWE9QRY"
+    },
+    "JR-20260910-C32FED68": {
+      "storage": "server-canonical",
+      "sha256": "6bf454a676ecfaa8bd3e5e6bbe478ac4255dbbf19237cf391c973b07157842ef",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260911-BD41E9A3": {
+      "storage": "server-canonical",
+      "sha256": "3812aa2afaa929dc93e8d999e27075698aeee568a9667e0360c230717583f4bb",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260912-D5EEAE97": {
+      "storage": "server-canonical",
+      "sha256": "8ebe77b26beae6afcad031c3d01809981c736a24b9cee6647544cf5261c4c802",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    },
+    "JR-20260913-694638E8": {
+      "storage": "server-canonical",
+      "sha256": "fda492fa1ce637261837b07ba73ea1aea3535f711d5bd02d9ab3719118cba6d9",
+      "sourceClass": "USER_ORIGINAL",
+      "materializeFrom": "feedback-attachment"
+    }
+  }
+}
