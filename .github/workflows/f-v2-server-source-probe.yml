@@ -1,0 +1,132 @@
+name: F V2 server source probe
+
+on:
+  push:
+    branches:
+      - research/f-v2-isolated
+    paths:
+      - '.github/workflows/f-v2-server-source-probe.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Install bridge tools
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          sudo apt-get update -qq
+          sudo DEBIAN_FRONTEND=noninteractive apt-get install -y -qq sshpass openssh-client openssl
+
+      - name: Publish ephemeral public key
+        shell: bash
+        env:
+          RUN_ID: ${{ github.run_id }}
+        run: |
+          set -Eeuo pipefail
+          openssl genpkey -algorithm RSA -pkeyopt rsa_keygen_bits:2048 -out /tmp/fv2-private.pem >/dev/null 2>&1
+          openssl pkey -in /tmp/fv2-private.pem -pubout -out /tmp/fv2-public.pem >/dev/null 2>&1
+          chmod 600 /tmp/fv2-private.pem
+          BR="research/f-v2-source-handshake-$RUN_ID"
+          git config user.name "f-v2-source-probe"
+          git config user.email "actions@users.noreply.github.com"
+          git switch -c "$BR"
+          mkdir -p research-handshake
+          cp /tmp/fv2-public.pem research-handshake/public.pem
+          printf 'run_id=%s\nhead_sha=%s\n' "$RUN_ID" "$GITHUB_SHA" > research-handshake/meta.txt
+          git add research-handshake
+          git commit -m "research(Fv2): source probe handshake $RUN_ID [skip ci]"
+          git push origin "HEAD:$BR"
+          git switch --detach "$GITHUB_SHA"
+          echo "FV2_HANDSHAKE_BRANCH=$BR" >> "$GITHUB_ENV"
+          echo "FV2_SOURCE_HANDSHAKE_READY branch=$BR"
+
+      - name: Receive encrypted SSH password
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          found=0
+          for _ in $(seq 1 120); do
+            git fetch --quiet origin "$FV2_HANDSHAKE_BRANCH" || true
+            if git cat-file -e "FETCH_HEAD:research-handshake/cipher.b64" 2>/dev/null; then
+              git show "FETCH_HEAD:research-handshake/cipher.b64" > /tmp/fv2-cipher.b64
+              found=1
+              break
+            fi
+            sleep 5
+          done
+          test "$found" = 1 || { echo 'FV2_SOURCE_HANDSHAKE_TIMEOUT=yes'; exit 71; }
+          base64 -d /tmp/fv2-cipher.b64 > /tmp/fv2-cipher.bin
+          openssl pkeyutl -decrypt -inkey /tmp/fv2-private.pem -in /tmp/fv2-cipher.bin -out /tmp/fv2-ssh-pass
+          test -s /tmp/fv2-ssh-pass
+          chmod 600 /tmp/fv2-ssh-pass
+          secret="$(cat /tmp/fv2-ssh-pass)"
+          echo "::add-mask::$secret"
+          unset secret
+          shred -u /tmp/fv2-private.pem /tmp/fv2-cipher.bin /tmp/fv2-cipher.b64 || true
+          echo 'FV2_SOURCE_HANDSHAKE_ACCEPTED=yes'
+
+      - name: Probe canonical and repository sources
+        shell: bash
+        run: |
+          set -Eeuo pipefail
+          HOST='211.255.25.123'
+          PORT='27548'
+          USER='root'
+          mkdir -p "$HOME/.ssh"
+          ssh-keyscan -p "$PORT" "$HOST" > "$HOME/.ssh/known_hosts" 2>/dev/null
+          test -s "$HOME/.ssh/known_hosts"
+          chmod 600 "$HOME/.ssh/known_hosts"
+
+          sshpass -f /tmp/fv2-ssh-pass ssh -p "$PORT" \
+            -o UserKnownHostsFile="$HOME/.ssh/known_hosts" \
+            -o StrictHostKeyChecking=yes \
+            -o PreferredAuthentications=password \
+            -o PubkeyAuthentication=no \
+            "$USER@$HOST" 'bash -s' <<'REMOTE'
+          set -Eeuo pipefail
+          C=/home/jumprope-research/canonical/videos
+          if [ -d "$C" ]; then echo 'FV2_SERVER_CANONICAL_DIR=yes'; else echo 'FV2_SERVER_CANONICAL_DIR=no'; fi
+          if [ -d "$C" ]; then echo "FV2_SERVER_CANONICAL_FILES=$(find "$C" -maxdepth 1 -type f | wc -l | tr -d ' ')"; fi
+          for id in JR-20260908-376EF057 JR-20260908-913C26E0 JR-20260908-E86C659B JR-20260908-F62DC60E JR-20260909-9BDBF573 JR-20260909-AC5539AF JR-20260910-07583788 JR-20260911-BD41E9A3 JR-20260912-D5EEAE97 JR-20260913-694638E8; do
+            n=$(find "$C" -maxdepth 1 -type f -name "$id"'__*' 2>/dev/null | wc -l | tr -d ' ')
+            echo "FV2_CANONICAL_ID id=$id files=$n"
+          done
+
+          found=0
+          while IFS= read -r gd; do
+            repo=$(dirname "$gd")
+            [ -d "$repo" ] || continue
+            case "$repo" in *jumprope*) ;; *) continue ;; esac
+            found=$((found+1))
+            echo "FV2_GIT_WORKTREE index=$found path=$repo"
+            if git -C "$repo" cat-file -e 'refs/remotes/origin/research/train-evidence-dynamic-1020:review-evidence/k7dq0RQlBpM/review.mp4' 2>/dev/null; then
+              sha=$(git -C "$repo" rev-parse 'refs/remotes/origin/research/train-evidence-dynamic-1020:review-evidence/k7dq0RQlBpM/review.mp4')
+              echo "FV2_LOCAL_EVIDENCE_REF=yes blob=$sha"
+            else
+              echo 'FV2_LOCAL_EVIDENCE_REF=no'
+            fi
+            set +e
+            GIT_TERMINAL_PROMPT=0 git -C "$repo" ls-remote --heads origin refs/heads/research/train-evidence-dynamic-1020 >/tmp/fv2-lsremote.out 2>/tmp/fv2-lsremote.err
+            rc=$?
+            set -e
+            if [ "$rc" -eq 0 ] && [ -s /tmp/fv2-lsremote.out ]; then
+              sha=$(awk '{print $1}' /tmp/fv2-lsremote.out | head -n1)
+              echo "FV2_REMOTE_EVIDENCE_ACCESS=yes sha=$sha"
+            else
+              echo "FV2_REMOTE_EVIDENCE_ACCESS=no rc=$rc"
+            fi
+          done < <(find /home -maxdepth 7 -type d -name .git 2>/dev/null | head -n 30)
+          echo "FV2_GIT_WORKTREES_TOTAL=$found"
+          REMOTE
+
+          shred -u /tmp/fv2-ssh-pass || true
+          git push origin --delete "$FV2_HANDSHAKE_BRANCH" >/dev/null 2>&1 || true
