@@ -1,0 +1,1907 @@
+{
+  "schema_version": 1,
+  "updated_at_kst": "2026-09-23 KST",
+  "count_convention": "GPT-direct visual count. Store only counts personally reviewed from the source video; do not copy BODY_GT or logic outputs into this file.",
+  "items": {
+    "x8au8pu": {
+      "count": 31,
+      "counted_at_kst": "2026-09-22 09:37 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.dailymotion.com/video/x8au8pu",
+      "note": "GPT direct visual review of the full source. 31 visually confirmed jump-rope repetitions; bright physical rope remained trackable. Dense review of the two largest cadence gaps found no missed repetition.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "sha256": "b117ae591b6d61fac9cbfa69d3172e6d90058e7ffbc6010c77d3f617d41ca09e",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "non_standard_subtype": "MIXED_DANCE_ALTERNATE_FOOT",
+      "type_reviewed_at_kst": "2026-09-23 15:54 KST",
+      "type_review_source": "GPT_DIRECT_VISUAL_REVIEW"
+    },
+    "x7zay0w": {
+      "count": 17,
+      "counted_at_kst": "2026-09-22 11:16 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.dailymotion.com/video/x7zay0w",
+      "note": "GPT direct visual review of the full source at dense 10 fps. Seventeen distinct takeoff/airborne/landing jump cycles were confirmed. The late low crouch/rope-manipulation motion near 14.3 s was not counted as a jump.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "sha256": "e1329822d7cd226a05f58d7564922b543e6c7f638386595b8941a256ab4d07d4",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "non_standard_subtype": "ALTERNATE_FOOT_TRICK_STEP",
+      "type_reviewed_at_kst": "2026-09-23 15:54 KST",
+      "type_review_source": "GPT_DIRECT_VISUAL_REVIEW"
+    },
+    "x8by42a": {
+      "count": 38,
+      "counted_at_kst": "2026-09-22 11:16 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.dailymotion.com/video/x8by42a",
+      "note": "GPT direct visual review of the full source using dense 10 fps and targeted 0.2 s interval sheets. Thirty-eight body jump/hop cycles were confirmed. Three turn/walk-only minima around 16.2-17.7 s and one end crouch around 22.1 s were explicitly excluded.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "sha256": "1dffd35398a8eec4a856ac98178bfde05a41e407863ef6b3438f3199e44526e1",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "non_standard_subtype": "ALTERNATE_FOOT_HIGH_KNEE_TRICK",
+      "type_reviewed_at_kst": "2026-09-23 15:54 KST",
+      "type_review_source": "GPT_DIRECT_VISUAL_REVIEW"
+    },
+    "x815y0i": {
+      "count": 13,
+      "counted_at_kst": "2026-09-22 11:16 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.dailymotion.com/video/x815y0i",
+      "note": "GPT direct visual review of the full source at dense 10 fps. Thirteen distinct body jump/hop cycles were confirmed. Ghost/transition motion near 8.7 s and grounded rope-manipulation/pivot motions near 10.1 s and 13-14 s were excluded.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "non_standard_subtype": "TRICK_MIXED_ROPE_MANIPULATION",
+      "sha256_status": "UNRESOLVED_EXACT_REVIEW_BYTES_NOT_PROVEN",
+      "sha256_reviewed_at_kst": "2026-09-24 KST",
+      "sha256_review_note": "Do not populate SHA-256 from the current count-viewer Dailymotion materialization. The manifest source/media hashes are not proven to be the exact bytes used for the prior GPT direct review, and existing Dailymotion ground records demonstrate that materializer sourceSha256 can differ from their locked ground sha256. Fill only when the exact reviewed source bytes or equivalent provenance are recovered."
+    },
+    "v_JumpRope_g02_c01": {
+      "count": 44,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=test/JumpRope/v_JumpRope_g02_c01.avi",
+      "sha256": "a2c0e34603cc73a9aa630335d3f2a185db25b77a6eb04ac9ea7494118014538d",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "HOLDOUT",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g02",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g03_c01": {
+      "count": 22,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=val/JumpRope/v_JumpRope_g03_c01.avi",
+      "sha256": "196f83741979ae7113cdb2bdb4f11165b43eaf9b63ddeb676e401d9e7685acca",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "VALIDATION",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g03",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g08_c01": {
+      "count": 34,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g08_c01.avi",
+      "sha256": "e7d6681365be2867c7b47a9f77442e0633f504525ca77402898927fb83c44f76",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g08",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g22_c01": {
+      "count": 16,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g22_c01.avi",
+      "sha256": "767bfd65e3794998892a88e803b1c7169a5590e5645bed5d7ec4fd8d4a86a176",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g22",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g24_c01": {
+      "count": 32,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=test/JumpRope/v_JumpRope_g24_c01.avi",
+      "sha256": "c2ee9b1e65db9481e4c06015f1407c1a947b45b865b1c51e3e157fa04d72b701",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "HOLDOUT",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g24",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g25_c01": {
+      "count": 27,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g25_c01.avi",
+      "sha256": "038c7dbbe7f8a9c65491eadf9a82a2025a802f8daa7bd7330cb9937f14ff5b05",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g25",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g08_c02": {
+      "count": 30,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=test/JumpRope/v_JumpRope_g08_c02.avi",
+      "sha256": "846cd42d398248a269aa81ad70f2f41d54f59a796eed333c01fd0883bcafcc24",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g08",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g22_c02": {
+      "count": 14,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g22_c02.avi",
+      "sha256": "aac83932509a91dfae8cc4e08b76319ce55e12ac52254ecdcf761d4fb73a68e5",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g22",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g25_c02": {
+      "count": 26,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g25_c02.avi",
+      "sha256": "55996cf0837d370e47b8eebd788538ba865cca345f24033778d36f3e83ff257d",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g25",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g22_c03": {
+      "count": 14,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g22_c03.avi",
+      "sha256": "44a319e8b42943b733d646b645c610057e0825c8cbd402f2e6d7c6c5ab986f62",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g22",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g25_c03": {
+      "count": 22,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g25_c03.avi",
+      "sha256": "405dd2d41f4def8dd6129e832aaf785c94793f4e6d545fa19d856f4c7091bb44",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Dense lower-body/type audit was completed first; motion/optical-flow peaks were used only as frame locators, then every candidate jump and clip boundary was visually checked as a real takeoff/airborne/landing cycle. Mixed/alternate-foot clips were excluded before this count was admitted.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g25",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g13_c02": {
+      "count": 30,
+      "counted_at_kst": "2026-09-23 07:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g13_c02.avi",
+      "sha256": "de7e980a0922742cf2791efdf13c4ce45ffbe7834d515461989e4bcd096fba8f",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "note": "CERTAIN-ONLY dense lower-body re-review supersedes the prior BASIC_SINGLE_UNDER classification. Repeated staggered left/right support and alternating foot/knee lift are visible through the clip. Existing BODY count/timing truth is retained, but the source is excluded from basic-positive training.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "prior_dataset_role": "TRAIN",
+      "prior_dataset_group": "g13",
+      "non_standard_subtype": "ALTERNATING_OR_RUNNING_STEP",
+      "type_reviewed_at_kst": "2026-09-25 KST",
+      "type_review_source": "GPT_CERTAIN_ONLY_DENSE_VISUAL_REVIEW"
+    },
+    "v_JumpRope_g22_c04": {
+      "count": 17,
+      "counted_at_kst": "2026-09-23 09:55 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g22_c04.avi",
+      "sha256": "5023daebc325c26fa97134f62156a0c72cdefbdd18d2a1dfa7c9500518168502",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual count after independent type-purity review. Full 10 fps evidence and a separate 15 fps lower-body re-review confirmed pure synchronized two-foot basic single-under throughout. Seventeen completed body-jump cycles were directly checked frame-by-frame; the first airborne cycle begins immediately at the source start and is included. Programmatic motion/centroid signals were used only to locate candidate frames and did not generate the GT.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g22",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g15_c03": {
+      "count": 32,
+      "counted_at_kst": "2026-09-23 10:46 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g15_c03.avi",
+      "sha256": "996a358760a78b351aee5900a53d4b2ff273c83db011997bfd775fd535d35857",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual count after independent type-purity review. Full-source 15 fps lower-body evidence plus a separate 5 fps whole-body/rope pass confirmed synchronized two-foot uncrossed basic single-under throughout. Thirty-two completed body-jump cycles were visually confirmed frame-by-frame; the final apex near 16.12 s is followed by a completed landing before the source ends. Programmatic head/motion tracking was used only to locate candidate apex frames and did not generate the GT.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g15",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g23_c03": {
+      "count": 29,
+      "counted_at_kst": "2026-09-23 10:46 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g23_c03.avi",
+      "sha256": "8c00e1ec7156bcc81022c2d0caec66f95e428b9cb48bafb50eda78f6949c6057",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual count after independent type-purity review. Full-source 15 fps lower-body evidence plus a separate 5 fps whole-body/rope pass confirmed synchronized two-foot uncrossed basic single-under throughout. Twenty-nine completed body-jump cycles were directly confirmed. A thirtieth airborne apex near 11.24 s reaches the clip boundary before a completed landing and is explicitly excluded. Programmatic head/motion tracking was used only to locate candidate apex frames and did not generate the GT.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g23",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g08_c04": {
+      "count": 25,
+      "counted_at_kst": "2026-09-23 11:33 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g08_c04.avi",
+      "sha256": "671c63842ca3d079bda8cdddf7401af22e686e251381f6df77bab2e74aa9169e",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "note": "CERTAIN-ONLY dense 0.1 s lower-body re-review supersedes the prior BASIC_SINGLE_UNDER note. Repeated left/right support and foot lift alternate across the clip, so this is alternating/running-step rather than synchronized two-foot basic single-under. The 25 visually confirmed BODY jump cycles remain valid, but the clip is excluded from basic-positive training.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "prior_dataset_role": "TRAIN",
+      "prior_dataset_group": "g08",
+      "non_standard_subtype": "ALTERNATING_OR_RUNNING_STEP",
+      "type_reviewed_at_kst": "2026-09-25 KST",
+      "type_review_source": "GPT_CERTAIN_ONLY_DENSE_VISUAL_REVIEW"
+    },
+    "v_JumpRope_g23_c04": {
+      "count": 35,
+      "counted_at_kst": "2026-09-23 11:33 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g23_c04.avi",
+      "sha256": "2cf5057cddd08dfe0bc4dae736d133994d6babfa0fa8e265c699a102c10bb949",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual count after independent type-purity review. Whole-source 10-15 fps lower-body and whole-body review confirmed synchronized two-foot uncrossed basic single-under throughout. Thirty-five completed takeoff/airborne/landing cycles were visually verified; 30 fps boundary review confirms the 35th landing completes before source end and no additional completed cycle is present. Programmatic motion signals were used only as frame locators and did not generate the GT.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g23",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g08_c05": {
+      "count": 33,
+      "counted_at_kst": "2026-09-23 12:08 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g08_c05.avi",
+      "sha256": "1a11ff1f12162548db38896e91feded05d8cae1456b2b41e634bc25b529650f7",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Full-source 15 fps whole-body/lower-body purity review confirmed synchronized two-foot uncrossed basic single-under throughout. 33 completed takeoff/airborne/landing cycles were visually verified; 30 fps boundary review confirmed the first takeoff and final landing are inside the source. Programmatic signals were locators only.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g08",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g15_c05": {
+      "count": 34,
+      "counted_at_kst": "2026-09-23 12:08 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=test/JumpRope/v_JumpRope_g15_c05.avi",
+      "sha256": "f5973a8a934b85c653051d95ed01dbb0c6ebc0092e475495811451d10f77e74d",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Full-source 15 fps whole-body/lower-body purity review confirmed synchronized two-foot uncrossed basic single-under throughout. 34 completed takeoff/airborne/landing cycles were visually verified; 30 fps boundary review confirmed the first admitted takeoff and final landing are inside the source. Programmatic signals were locators only.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g15",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g25_c05": {
+      "count": 28,
+      "counted_at_kst": "2026-09-23 12:08 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g25_c05.avi",
+      "sha256": "8d7568bcd0c22b39d6731d140cc434e4760a7521fd007ca41db437c50d310c07",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Full-source 15 fps whole-body/lower-body purity review confirmed synchronized two-foot uncrossed basic single-under throughout. 28 completed takeoff/airborne/landing cycles were visually verified; 30 fps end-boundary review confirmed the last landing completes before source end. Programmatic signals were locators only.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g25",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g08_c06": {
+      "count": 24,
+      "counted_at_kst": "2026-09-23 12:34 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g08_c06.avi",
+      "sha256": "05884cb9a9ce755bdd28b2864b2752984dca1d4c172824649fa1bac6f197f7c5",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Full-source 15 fps whole-body/lower-body purity review confirmed synchronized two-foot uncrossed basic single-under throughout. 24 completed takeoff/airborne/landing cycles were visually verified from dense locator-centered event windows; first and last cycle boundaries were checked inside the source. Programmatic signals were locators only.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g08",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g08_c07": {
+      "count": 30,
+      "counted_at_kst": "2026-09-23 12:53 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=val/JumpRope/v_JumpRope_g08_c07.avi",
+      "sha256": "c28db94fe21db381e9f76c55bd4d5be4afa8b81070720dc352f039e2b56b7ade",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Full-source 15 fps whole-body/lower-body purity review confirmed synchronized two-foot uncrossed basic single-under throughout. Thirty completed takeoff/airborne/landing cycles were directly visually verified. Programmatic centroid/motion analysis was used only as a timestamp locator; direct cadence-gap review recovered one real cycle around 14.15 s that the locator missed. The final cycle near 15.08 s lands before the 15.315 s source boundary.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g08",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g11_c04": {
+      "count": 40,
+      "counted_at_kst": "2026-09-23 13:12 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g11_c04.avi",
+      "sha256": "22358e5adb02e1fe6cf5137c0fce3c51ee2332dfdde73d2680b7bfa6e25c69c0",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "note": "GPT direct whole-source visual review. Full-source 15 fps whole-body/lower-body purity review confirmed synchronized two-foot uncrossed basic single-under throughout. Forty completed takeoff/airborne/landing cycles were directly verified in original ~30 fps candidate windows. Programmatic body-motion analysis was used only to propose timestamps and did not generate the GT. The final apex near 17.02 s lands before the 17.284 s source boundary.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role": "TRAIN",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_group": "g11",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g18_c04": {
+      "count": 28,
+      "counted_at_kst": "2026-09-23 13:31 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g18_c04.avi",
+      "sha256": "fe9e03593e078a5c0e6fb703edf6674b967d6fcae0715872c0f51d84a934b899",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "note": "Dense 0.1 s lower-body re-review resolves recurring single-leg support/high-knee alternation throughout the clip. Prior STANDARD/basic metadata is superseded. BODY count remains valid; the source is retained only as non-standard research evidence and excluded from basic-positive training.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "prior_dataset_role": "TRAIN",
+      "prior_dataset_group": "g18",
+      "non_standard_subtype": "ALTERNATING_OR_RUNNING_STEP",
+      "type_reviewed_at_kst": "2026-09-25 KST",
+      "type_review_source": "GPT_CERTAIN_ONLY_DENSE_VISUAL_REVIEW"
+    },
+    "v_JumpRope_g18_c05": {
+      "count": 35,
+      "counted_at_kst": "2026-09-23 14:26 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g18_c05.avi",
+      "sha256": "f48eb58375a9e4882ebba01eabc5ed8bb82c68352dfd2b6e6a3c0cd9942234ce",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "note": "Dense 0.1 s lower-body re-review resolves repeated single-leg/high-knee alternation throughout the source. Prior STANDARD/basic metadata is superseded. BODY count remains valid; the source is excluded from basic-positive training.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "prior_dataset_role": "TRAIN",
+      "prior_dataset_group": "g18",
+      "non_standard_subtype": "ALTERNATING_OR_RUNNING_STEP",
+      "type_reviewed_at_kst": "2026-09-25 KST",
+      "type_review_source": "GPT_CERTAIN_ONLY_DENSE_VISUAL_REVIEW"
+    },
+    "v_JumpRope_g21_c05": {
+      "count": 49,
+      "counted_at_kst": "2026-09-23 14:26 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g21_c05.avi",
+      "sha256": "558a46ed0d544ec1cb6a362a3ea305d8a40612be31269d6f84fb43b96da1c7b0",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "dataset_role": "TRAIN",
+      "note": "GPT direct visual review. Whole-source visual review confirmed synchronized two-foot uncrossed basic. 49 completed cycles directly verified; close opening cycles were checked as distinct, long gap as a real pause, and final landing completes before source end. Programmatic motion/centroid analysis was used only to propose timestamps and did not generate the GT.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_group": "g21",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g18_c06": {
+      "count": 48,
+      "counted_at_kst": "2026-09-23 14:26 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g18_c06.avi",
+      "sha256": "826865c0f461be19437a2a9784d0f3ff319f64d5d64f990226275d0e21eddd6d",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "note": "Dense 0.1 s lower-body re-review resolves alternating/high-knee single-foot support throughout the clip. Prior STANDARD/basic metadata is superseded. BODY count remains valid; the source is excluded from basic-positive training.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "prior_dataset_role": "TRAIN",
+      "prior_dataset_group": "g18",
+      "non_standard_subtype": "ALTERNATING_OR_RUNNING_STEP",
+      "type_reviewed_at_kst": "2026-09-25 KST",
+      "type_review_source": "GPT_CERTAIN_ONLY_DENSE_VISUAL_REVIEW"
+    },
+    "v_JumpRope_g20_c06": {
+      "count": 52,
+      "counted_at_kst": "2026-09-23 14:26 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g20_c06.avi",
+      "sha256": "344ea741c30019416b56ea7d12b0f3c83b76f160820751c795aeaf837f30166f",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "note": "Dense lower-body re-review resolves a real within-video technique switch: synchronized two-foot basic single-under first, then alternating/running-step begins at about 12.8 s. Because the source is mixed, the whole clip is excluded from basic-positive training; segment-level annotation preserves the basic and alternating intervals separately.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "prior_dataset_role": "TRAIN",
+      "prior_dataset_group": "g20",
+      "non_standard_subtype": "MIXED_BASIC_TO_ALTERNATING_RUNNING_STEP",
+      "type_reviewed_at_kst": "2026-09-25 KST",
+      "type_review_source": "GPT_CERTAIN_ONLY_DENSE_VISUAL_REVIEW"
+    },
+    "v_JumpRope_g11_c07": {
+      "count": 35,
+      "counted_at_kst": "2026-09-23 14:26 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g11_c07.avi",
+      "sha256": "34cbc3d60c99671c6c58f6d7202dd42fda4cace2f25a642356838451e751bf72",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "dataset_role": "TRAIN",
+      "note": "GPT direct visual review. Full-source lower/full review confirmed synchronized two-foot uncrossed basic. 35 completed cycles directly verified; large gaps were manually re-read as actual standing/reset pauses and both boundaries were checked. Programmatic motion/centroid analysis was used only to propose timestamps and did not generate the GT.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_group": "g11",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "v_JumpRope_g18_c07": {
+      "count": 30,
+      "counted_at_kst": "2026-09-23 14:26 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g18_c07.avi",
+      "sha256": "3e04bdc9557ff72b4ab4f6de98adf1352a3f3639ecd61fa578e4750a65ed30fd",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "note": "Whole-source and dense lower-body re-review clearly resolve alternating high-knee/single-leg support rather than synchronized paired-foot basic skipping. Prior STANDARD/basic metadata is superseded. BODY count remains valid; the source is excluded from basic-positive training.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "prior_dataset_role": "TRAIN",
+      "prior_dataset_group": "g18",
+      "non_standard_subtype": "ALTERNATING_OR_RUNNING_STEP",
+      "type_reviewed_at_kst": "2026-09-25 KST",
+      "type_review_source": "GPT_CERTAIN_ONLY_DENSE_VISUAL_REVIEW"
+    },
+    "v_JumpRope_g20_c07": {
+      "count": 34,
+      "counted_at_kst": "2026-09-23 14:26 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g20_c07.avi",
+      "sha256": "2ef500f689c822576fee95fa74a7a0c1d0675e06ed22a7870fc430877dcf6008",
+      "jump_rope_type": "NON_STANDARD_MIXED_OR_TRICK",
+      "note": "Dense lower-body re-review resolves a real within-video technique switch: synchronized two-foot basic single-under first, then alternating/running-step begins at about 13.0 s. Because the source is mixed, the whole clip is excluded from basic-positive training; segment-level annotation preserves the basic and alternating intervals separately.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_MIXED_OR_TRICK",
+      "prior_dataset_role": "TRAIN",
+      "prior_dataset_group": "g20",
+      "non_standard_subtype": "MIXED_BASIC_TO_ALTERNATING_RUNNING_STEP",
+      "type_reviewed_at_kst": "2026-09-25 KST",
+      "type_review_source": "GPT_CERTAIN_ONLY_DENSE_VISUAL_REVIEW"
+    },
+    "v_JumpRope_g21_c07": {
+      "count": 37,
+      "counted_at_kst": "2026-09-23 14:26 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://huggingface.co/datasets/bitmind/UCF101Fullvideo/resolve/main/UCF101Fullvideo.zip?download=true#entry=train/JumpRope/v_JumpRope_g21_c07.avi",
+      "sha256": "611f4b3d21725be8cd4081f638395062b7997d8f59739f4927ef02f096ac0c7c",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "dataset_role": "TRAIN",
+      "note": "GPT direct visual review. Whole-source review confirmed synchronized two-foot basic throughout. 37 completed cycles directly verified; long gaps were manually checked as real pauses and the final cycle lands before the source boundary. Programmatic motion/centroid analysis was used only to propose timestamps and did not generate the GT.",
+      "source": "GPT_DIRECT_VIEWER",
+      "dataset_group": "g21",
+      "dataset_role_policy": "GROUP_LOCKED_BY_UCF_GROUP_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD"
+    },
+    "JR-20260908-E86C659B": {
+      "count": 6,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260908-E86C659B",
+      "sha256": "9787f3a21a14871e199474a008d66a12c6d8029557a2b5e4a2f6c387b6f39d93",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Count was established from exact canonical USER_ORIGINAL media, not copied from counter output.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "NON_STANDARD_NO_VISIBLE_ROPE_BODY_JUMP",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_NO_VISIBLE_ROPE",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Whole-source overview and dense active review show body-jump motion, but no physical rope/handle rotation could be verified. Excluded from STANDARD positive training; retained as non-standard body-jump evidence."
+    },
+    "JR-20260908-376EF057": {
+      "count": 4,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260908-376EF057",
+      "sha256": "711b89492f78e3386ff045f7a816cf66a8a4b435bf1f05c8f07882e7dfad2e22",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Count was established from exact canonical USER_ORIGINAL media, not copied from counter output.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "NON_STANDARD_NO_VISIBLE_ROPE_BODY_JUMP",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_NO_VISIBLE_ROPE",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Whole-source overview and dense active review show body-jump motion, but no physical rope/handle rotation could be verified. Excluded from STANDARD positive training; retained as non-standard body-jump evidence."
+    },
+    "JR-20260909-9BDBF573": {
+      "count": 24,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260909-9BDBF573",
+      "sha256": "1cbb78f65e660c52d8471366cadf4ec7395f65fe3ddf02690e5fbfceb9be04fe",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Count was established from exact canonical USER_ORIGINAL media, not copied from counter output.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "NON_STANDARD_NO_VISIBLE_ROPE_BODY_JUMP",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_NO_VISIBLE_ROPE",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Whole-source overview and dense active review show repeated body jumps, but no physical rope/handle rotation could be verified. Excluded from STANDARD positive training."
+    },
+    "JR-20260909-AC5539AF": {
+      "count": 0,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260909-AC5539AF",
+      "sha256": "3175f101b902c5b7a8dc1da6010ff1d2c155847872582dfbf12b076a7bcf35ca",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Exact canonical USER_ORIGINAL clip is a verified zero-jump hard negative.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "NO_JUMP_HARD_NEGATIVE",
+      "dataset_role_policy": "HARD_NEGATIVE_ONLY",
+      "dataset_eligibility": "HARD_NEGATIVE_ONLY",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Whole-source exact-canonical visual review confirms zero completed jump-rope repetitions. Retain only as hard-negative evidence; never admit as STANDARD positive."
+    },
+    "JR-20260911-BD41E9A3": {
+      "count": 0,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260911-BD41E9A3",
+      "sha256": "3812aa2afaa929dc93e8d999e27075698aeee568a9667e0360c230717583f4bb",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Exact canonical USER_ORIGINAL clip is a verified zero-jump hard negative.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "NO_JUMP_HARD_NEGATIVE",
+      "dataset_role_policy": "HARD_NEGATIVE_ONLY",
+      "dataset_eligibility": "HARD_NEGATIVE_ONLY",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Whole-source exact-canonical visual review confirms zero completed jump-rope repetitions. Retain only as hard-negative evidence; never admit as STANDARD positive."
+    },
+    "JR-20260908-F62DC60E": {
+      "count": 6,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260908-F62DC60E",
+      "sha256": "7e3d6256d7d9e35409488427a7b1dbfe2cee2451be6cd6e2cf798f3691dc4bdf",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Count was established from exact canonical USER_ORIGINAL media, not copied from counter output.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "NON_STANDARD_NO_VISIBLE_ROPE_BODY_JUMP",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_NO_VISIBLE_ROPE",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Whole-source overview and dense active review show body-jump motion, but no physical rope/handle rotation could be verified. Excluded from STANDARD positive training."
+    },
+    "JR-20260910-07583788": {
+      "count": 34,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260910-07583788",
+      "sha256": "a2030f88490c41598a6f53f2b58b3bb33b247a7fd5e5f70e7f9f0b00d3e4e898",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Count was established from exact canonical USER_ORIGINAL media, not copied from counter output.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "dataset_role_policy": "USER_ORIGINAL_GROUP_LOCKED_NO_PERSON_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "dataset_role": "HOLDOUT",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Exact-canonical whole-source and dense active review verify a visible physical rope and continuous synchronized two-foot basic single-under during the counted interval; no alternate-foot/trick segment was observed.",
+      "dataset_group": "USER_ORIGINAL_REPORTER_ORIGIN_UNRESOLVED_202609",
+      "split_review_note": "Capture sessions are distinct, but reporter/person independence is not established by stored provenance. Group-locked with the other verified STANDARD USER_ORIGINAL clips in HOLDOUT to prevent possible person leakage."
+    },
+    "JR-20260908-913C26E0": {
+      "count": 7,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260908-913C26E0",
+      "sha256": "712d2738d9bd412d332191994644600ff815946a27536a5d7466965b205b43a0",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Count was established from exact canonical USER_ORIGINAL media, not copied from counter output.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "NON_STANDARD_NO_VISIBLE_ROPE_BODY_JUMP",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_NO_VISIBLE_ROPE",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Whole-source overview and dense active review show body-jump motion, but no physical rope/handle rotation could be verified. Excluded from STANDARD positive training."
+    },
+    "JR-20260908-F45E4935": {
+      "count": 7,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260908-F45E4935",
+      "sha256": "7600030b114fac88dcd149047df4e92fd305a97acc9ed5af8359377ea295880b",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Count was established from exact canonical USER_ORIGINAL media, not copied from counter output.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "NON_STANDARD_NO_VISIBLE_ROPE_BODY_JUMP",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_NO_VISIBLE_ROPE",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Whole-source overview and dense active review show body-jump motion, but no physical rope/handle rotation could be verified. Excluded from STANDARD positive training."
+    },
+    "JR-20260910-C32FED68": {
+      "count": 20,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260910-C32FED68",
+      "sha256": "6bf454a676ecfaa8bd3e5e6bbe478ac4255dbbf19237cf391c973b07157842ef",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Count was established from exact canonical USER_ORIGINAL media, not copied from counter output.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "NON_STANDARD_NO_VISIBLE_ROPE_BODY_JUMP",
+      "dataset_role_policy": "EXCLUDED_NON_STANDARD",
+      "dataset_eligibility": "EXCLUDED_NON_STANDARD_NO_VISIBLE_ROPE",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Whole-source and dense active review are strongly backlit/dark; repeated body-jump motion is visible, but a physical rope/pass cannot be verified. Excluded conservatively from STANDARD positive training."
+    },
+    "JR-20260912-D5EEAE97": {
+      "count": 10,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260912-D5EEAE97",
+      "sha256": "8ebe77b26beae6afcad031c3d01809981c736a24b9cee6647544cf5261c4c802",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Count was established from exact canonical USER_ORIGINAL media, not copied from counter output.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "dataset_role_policy": "USER_ORIGINAL_GROUP_LOCKED_NO_PERSON_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "dataset_role": "HOLDOUT",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Exact-canonical whole-source and dense active review verify a visible physical rope and synchronized two-foot basic single-under for the 10 counted repetitions; setup/exit frames are outside the counted interval.",
+      "dataset_group": "USER_ORIGINAL_REPORTER_ORIGIN_UNRESOLVED_202609",
+      "split_review_note": "Capture sessions are distinct, but reporter/person independence is not established by stored provenance. Group-locked with the other verified STANDARD USER_ORIGINAL clips in HOLDOUT to prevent possible person leakage."
+    },
+    "JR-20260913-694638E8": {
+      "count": 130,
+      "counted_at_kst": "2026-09-23 16:27 KST",
+      "confidence": "HIGH",
+      "source_ref": "USER_ORIGINAL:JR-20260913-694638E8",
+      "sha256": "fda492fa1ce637261837b07ba73ea1aea3535f711d5bd02d9ab3719118cba6d9",
+      "note": "Promoted from locked independent visual GT (derivedFromCounter=false). Count was established from exact canonical USER_ORIGINAL media, not copied from counter output.",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "dataset_role_policy": "USER_ORIGINAL_GROUP_LOCKED_NO_PERSON_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "dataset_role": "HOLDOUT",
+      "type_reviewed_at_kst": "2026-09-23 KST",
+      "type_review_source": "GPT_DIRECT_EXACT_CANONICAL_VISUAL_REVIEW",
+      "type_review_note": "Exact-canonical whole-source plus dense lower-body review verify a visible physical rope and sustained basic single-under throughout the 130-count active interval; no trick/cross/alternate-foot section was observed.",
+      "dataset_group": "USER_ORIGINAL_REPORTER_ORIGIN_UNRESOLVED_202609",
+      "split_review_note": "Capture sessions are distinct, but reporter/person independence is not established by stored provenance. Group-locked with the other verified STANDARD USER_ORIGINAL clips in HOLDOUT to prevent possible person leakage."
+    },
+    "k7dq0RQlBpM": {
+      "count": 10,
+      "counted_at_kst": "2026-09-28 16:08 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=k7dq0RQlBpM",
+      "sha256": "3ff2556f1b2a2ddd04821ef472036c3895d5688232d40b81f67e38b49e678cea",
+      "review_proxy_sha256": "ab47d8427af18f6d82b4db1bcda9b2254bc61455068766981674d43811400daf",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UChPVBIfPpLf4akI9k2MaxoA",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        200,
+        700,
+        1200,
+        1700,
+        2200,
+        2700,
+        3200,
+        3700,
+        4200,
+        4700
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 2
+        },
+        {
+          "dense_sheet": 1,
+          "dense_cell": 7
+        },
+        {
+          "dense_sheet": 1,
+          "dense_cell": 12
+        },
+        {
+          "dense_sheet": 1,
+          "dense_cell": 17
+        },
+        {
+          "dense_sheet": 1,
+          "dense_cell": 22
+        },
+        {
+          "dense_sheet": 1,
+          "dense_cell": 27
+        },
+        {
+          "dense_sheet": 1,
+          "dense_cell": 32
+        },
+        {
+          "dense_sheet": 1,
+          "dense_cell": 37
+        },
+        {
+          "dense_sheet": 1,
+          "dense_cell": 42
+        },
+        {
+          "dense_sheet": 1,
+          "dense_cell": 47
+        }
+      ],
+      "activity_start_ms": 0,
+      "activity_end_ms": 4900,
+      "overview_sheets_checked": [
+        1
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": false
+      },
+      "note": "Single-subject continuous real-rope sequence. Full body, feet and rope remain visible. Direct 100 ms dense review shows ten synchronized two-foot completed basic single-under BODY cycles at the recorded cells; no crossover, alternate-foot, running step, high-knee, double-under, trick or technique switch observed. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "NwUYrxHx0Bg": {
+      "count": 0,
+      "counted_at_kst": "2026-10-02 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=NwUYrxHx0Bg",
+      "sha256": "c857b5e3e46270f814abdcfcf35baa84f1ec2fca7d9b32e06ca52f3e35451ba9",
+      "review_proxy_sha256": "00c89f04cadb622504170f9b523604622dd7640b86d7ba0a1ea3f56ca201b3f4",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "NO_JUMP_HARD_NEGATIVE",
+      "decision": "NON_BASIC_EXCLUDE",
+      "training_basic_eligible": false,
+      "dataset_role_policy": "HARD_NEGATIVE_ONLY",
+      "dataset_eligibility": "HARD_NEGATIVE_ONLY",
+      "jump_event_ms": [],
+      "event_support": [],
+      "zero_count_basis": "NO_COMPLETED_BODY_JUMP_VISIBLE",
+      "activity_start_ms": null,
+      "activity_end_ms": null,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3
+      ],
+      "full_dense_sheets_checked": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "lower_dense_sheets_checked": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "note": "Direct visual review of all overview and dense 100 ms evidence: product-only footage; no human completed BODY jump is visible anywhere in the source. Count 0 is therefore a positive no-jump determination, not an inferred or unresolved zero."
+    },
+    "uz3nLpfU8iw": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 01:14 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=uz3nLpfU8iw",
+      "sha256": "1742820a38c52289679a24d59742bd177cd362bedce0839bf9db0cf2afd64cb1",
+      "review_proxy_sha256": "19fbdcda57bc66687aec6ceec37d8fabcbebb548e50db20c4c89decce1335eab",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UC5k5qsjn4kM3yR1GZwORJ6w",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        15600
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 2,
+          "dense_cell": 56
+        }
+      ],
+      "activity_start_ms": 15400,
+      "activity_end_ms": 15800,
+      "overview_sheets_checked": [
+        1,
+        2
+      ],
+      "full_dense_sheets_checked": [
+        2
+      ],
+      "lower_dense_sheets_checked": [
+        2
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 15400,
+        "end_ms": 15800
+      },
+      "note": "All overview sheets reviewed. Dense full/lower 100ms sheet 2 shows a physical rope, synchronized two-foot basic bounce and one clean single-under cycle in the selected crop; no crossover/alternate-foot/trick feature is present inside the crop. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "BwwAjZ7dUcc": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 01:25 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=BwwAjZ7dUcc",
+      "sha256": "7b63f14bed83e116d0aab61a5a11eb1aaf9957d4c4d4fd9050ecd9a9762899ff",
+      "review_proxy_sha256": "0fc1294d18dfaee17a9f4182cec61c632f2e57976cf9cf1097f33242283c1476",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCrh6RXdzsPzR06fl2YHFp0Q",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        4400
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 44
+        }
+      ],
+      "activity_start_ms": 4200,
+      "activity_end_ms": 4600,
+      "overview_sheets_checked": [
+        1,
+        2
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 4200,
+        "end_ms": 4600
+      },
+      "note": "Both overview sheets reviewed; whole source mixes crossover and open-arm bounce, so only a clean open-arm BASIC segment is used. Dense full/lower 100ms sheet 1 confirms one synchronized two-foot single-under cycle inside the selected crop with no crossed-arm/non-basic feature in-crop. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "fNW9vRQ_rtE": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 01:26 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=fNW9vRQ_rtE",
+      "sha256": "4a826ddc88c5d7742a8c8a123e14c12d39f65bf805199d643aa186581e109467",
+      "review_proxy_sha256": "bc03d7882709891333001c807509823879a870cb43e91f3c63fb3a94f1ffe49e",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCb5rxhk3itRYyKYyp0IiybA",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        134500
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 14,
+          "dense_cell": 45
+        }
+      ],
+      "activity_start_ms": 134300,
+      "activity_end_ms": 134700,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11
+      ],
+      "full_dense_sheets_checked": [
+        14
+      ],
+      "lower_dense_sheets_checked": [
+        14
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 134300,
+        "end_ms": 134700
+      },
+      "note": "All 11 overview sheets reviewed. Source is a mixed-skills tutorial, therefore only a clean uncrossed two-foot single-under burst is retained. Dense full/lower 100ms sheet 14 confirms one complete BASIC cycle in the crop; non-basic tutorial portions remain outside segmentation. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "4b2HZTbx--k": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 02:26 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=4b2HZTbx--k",
+      "sha256": "d44be1b6c43b992843f06d4e1a00c2050582cff96e8a76b82c3e40d215b49a64",
+      "review_proxy_sha256": "eeb1513df7408aeecaee9a7a338866f4b1f941a08cbdf4d01a6216ea8a81364a",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UC9DjpzE-RfhdEzwBUgh8Wpw",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        34300
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 4,
+          "dense_cell": 43
+        }
+      ],
+      "activity_start_ms": 34100,
+      "activity_end_ms": 34500,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "full_dense_sheets_checked": [
+        4
+      ],
+      "lower_dense_sheets_checked": [
+        4
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 34100,
+        "end_ms": 34500
+      },
+      "note": "All nine overview sheets were reviewed independently. Whole source is instructional/mixed, so only the 34.1-34.5 s segment is admitted. Dense full-body and lower-body 100 ms sequence on sheet 4 shows a complete physical-rope synchronized two-foot single-under cycle: takeoff/ground-phase before the event, both feet airborne at cell 43 (34.3 s), and landing/ground-phase immediately after. No alternating step, crossover, high-knee, double-under, trick, or technique switch occurs inside the cropped interval. Source/on-screen counters were not used. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "VYxrbSVKQjk": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 02:32 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=VYxrbSVKQjk",
+      "sha256": "9177d7bd494fe1609fee1a04e718a7a8245910c1f14ade02c47461688110ed19",
+      "review_proxy_sha256": "dea3fc7e1d50ec0dcd77ab984e4510e4ccf756f0547bebdc92daa9d52a7e48c9",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCbJ8oxm0bEvSdTbqfj0JKig",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        21300
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 3,
+          "dense_cell": 13
+        }
+      ],
+      "activity_start_ms": 21000,
+      "activity_end_ms": 21600,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10
+      ],
+      "full_dense_sheets_checked": [
+        3
+      ],
+      "lower_dense_sheets_checked": [
+        3
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 21000,
+        "end_ms": 21600
+      },
+      "note": "All ten overview sheets were directly reviewed; the whole source mixes footwork, so it is not admitted wholesale. Full/lower 100 ms sheet 3 was rechecked and the 21.0-21.6 s crop contains one clean physical-rope synchronized two-foot single-under. Cell 13 (21.3 s) is the airborne event, with both-feet ground/takeoff and landing states on adjacent cells. The larger one-foot/alternating burst later in the sheet was deliberately excluded. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "gEeCbBHdXPI": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 02:33 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=gEeCbBHdXPI",
+      "sha256": "6d2c95202c3d09cd08479f87de33a3a59ee3f41c5593719b6f5a9c74d56af5cf",
+      "review_proxy_sha256": "5697784832782c1b79b49ac1d2497b067cbb6e4c2750afd0477bf401d91c8b39",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCIFmpXXoNajx_Lk3eY-6i_A",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        5400
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 54
+        }
+      ],
+      "activity_start_ms": 5100,
+      "activity_end_ms": 5800,
+      "overview_sheets_checked": [
+        1
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 5100,
+        "end_ms": 5800
+      },
+      "note": "The overview and full/lower 100 ms evidence were directly reviewed. The source begins with setup/talking and later changes movement, so only 5.1-5.8 s is admitted. In this crop the physical rope completes one clean synchronized two-foot single-under; cell 54 (5.4 s) is the airborne body event with takeoff before and landing after. The later non-basic movement around 8.4 s was excluded. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "bhjys_Ugzzw": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 02:35 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=bhjys_Ugzzw",
+      "sha256": "af3c1cb1ae00887e8288a295283a9764f934c07d46c8dd5f0f19e19c020f57fc",
+      "review_proxy_sha256": "fc087a300a51bd979202543ee4e00b205534ce07eb8b4700a3a29444caa7f87e",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCYzME7QSoOT1AOO3eJccqBA",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        800
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 8
+        }
+      ],
+      "activity_start_ms": 500,
+      "activity_end_ms": 1100,
+      "overview_sheets_checked": [
+        1
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 500,
+        "end_ms": 1100
+      },
+      "note": "The full source was directly reviewed and later contains a stumble/walk-away, so it is not admitted wholesale. The 0.5-1.1 s crop contains one complete physical-rope synchronized two-foot single-under attempt. Full/lower 100 ms evidence shows rope rise/overhead phase, both feet airborne at cell 8 (0.8 s), and landing immediately after. Later failed movement is outside the crop. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "gYxwf3hO_NI": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 02:37 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=gYxwf3hO_NI",
+      "sha256": "cfe66c05ac2d54ae177db3c42761f3dd9ae87d38581bc9228e5b4bd9e8e5ea40",
+      "review_proxy_sha256": "bf7f0379e8e10f1d03c16b9ce71964b250cd32f3367b65da453109d9d08d2640",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCdDDPLL0XUjqtcRvtb6-h0A",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        5300
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 53
+        }
+      ],
+      "activity_start_ms": 5000,
+      "activity_end_ms": 5600,
+      "overview_sheets_checked": [
+        1
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 5000,
+        "end_ms": 5600
+      },
+      "note": "The overview plus numbered full/lower 100 ms evidence were directly reviewed. This source shows stable physical-rope synchronized two-foot single-under. The 5.0-5.6 s crop isolates one clean cycle; cell 53 (5.3 s) is the airborne event with adjacent takeoff/landing frames and continuous single-under rope phase. No alternate-foot, crossover, high-knee, double-under, or trick occurs inside the crop. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "WL2a0n8Y4hA": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 02:46 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=WL2a0n8Y4hA",
+      "sha256": "90578ca279f320a4f53332c462f951b01368c3f7554bcd47ca914d5316b299d2",
+      "review_proxy_sha256": "a865dc32f07921cf8e55cc01b7a311dc1e58fcdb1ef19ac77fe7fd5c0c52e534",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCGBw2lMB0cRz5kveHOGwFWQ",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        3200
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 32
+        }
+      ],
+      "activity_start_ms": 2900,
+      "activity_end_ms": 3500,
+      "overview_sheets_checked": [
+        1,
+        2
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 2900,
+        "end_ms": 3500
+      },
+      "note": "Both overview sheets and full/lower 100 ms dense evidence were directly reviewed. The source is a clean physical-rope two-foot single-under stock clip. The 2.9-3.5 s crop isolates one complete cycle; sheet 1 cell 32 (3.2 s) directly shows both feet airborne, bounded by takeoff/landing frames. No alternate-foot, crossover, high-knee, double-under, or trick appears inside the crop. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "sMpMSUcyZgk": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:08 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=sMpMSUcyZgk",
+      "sha256": "0d890768db615b51e1f93d843441512ff594ae99293da3f0dcf2298890d6041c",
+      "review_proxy_sha256": "1d8181251018a49562c82d3d8a5cee467eb4bd55d2e5dc81a989390a68f5b6f5",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCc7zv7AXkOQpDaDB6GjynTw",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        5500
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 55
+        }
+      ],
+      "activity_start_ms": 5300,
+      "activity_end_ms": 5700,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 5300,
+        "end_ms": 5700
+      },
+      "note": "All overview sheets reviewed. Dense full/lower 100ms sheet 1 directly confirms a clean physical-rope synchronized two-foot single-under cycle at cell 55; cropped to isolate that BASIC event from the longer source. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "NN9S4BVGM3Q": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:09 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=NN9S4BVGM3Q",
+      "sha256": "6242259b1150ac6c6085dad3f3fde33077c158fd8559564221894ae9c40e1209",
+      "review_proxy_sha256": "bb9164805a415fb3c2e3928a4655ec85d190932829bfc99521a533eac88c5f28",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCwIfKaGiqlIyUA_YTe7-1UQ",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        14400
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 2,
+          "dense_cell": 44
+        }
+      ],
+      "activity_start_ms": 14200,
+      "activity_end_ms": 14600,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3
+      ],
+      "full_dense_sheets_checked": [
+        2
+      ],
+      "lower_dense_sheets_checked": [
+        2
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 14200,
+        "end_ms": 14600
+      },
+      "note": "All overview sheets reviewed. Full/lower 100ms dense sheet 2 directly shows a clean physical-rope synchronized two-foot single-under cycle at cell 44; cropped to that BASIC event. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "qjRMa53uL-I": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:10 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=qjRMa53uL-I",
+      "sha256": "4cddf5dbe0fcf2398ae041584ac2cb7e8dd687da9441819628caf4c78705eafd",
+      "review_proxy_sha256": "71b24ed3390b1ccbe1e77fd36ad582c57d52eb21d2add4352bdeaa4aef9f16d5",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCIFmpXXoNajx_Lk3eY-6i_A",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        3600
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 36
+        }
+      ],
+      "activity_start_ms": 3400,
+      "activity_end_ms": 3800,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 3400,
+        "end_ms": 3800
+      },
+      "note": "All overview sheets reviewed. Source changes to alternate-foot later, so only the directly verified early synchronized two-foot BASIC cycle at dense sheet 1 cell 36 is retained. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "l9dQRrPjqmA": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:11 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=l9dQRrPjqmA",
+      "sha256": "a45a90a14927e86a84fa162a5a48711bc4112a54426304804bafc1b68117c9eb",
+      "review_proxy_sha256": "9ad735118c9d21ac566176baaedc748078e08b3ff96bce1e058818d7a6eac0af",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCwCBQOUTw-quf9W5wOQLOmA",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        4400
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 44
+        }
+      ],
+      "activity_start_ms": 4200,
+      "activity_end_ms": 4600,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 4200,
+        "end_ms": 4600
+      },
+      "note": "All overview sheets reviewed. Early source is clean synchronized two-foot single-under before later instructional footwork; full/lower dense sheet 1 confirms the BASIC event at cell 44. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "eZUE40_-4cc": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:12 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=eZUE40_-4cc",
+      "sha256": "07099ab1febce35265756d8332df286c48932b5e88f7a58bf95c06a42b5f3528",
+      "review_proxy_sha256": "95a4ced1502d27f67ab1a25c4517ea7404ac6d84741682fcf92e131d46ceb223",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCc7zv7AXkOQpDaDB6GjynTw",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        8600
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 86
+        }
+      ],
+      "activity_start_ms": 8400,
+      "activity_end_ms": 8800,
+      "overview_sheets_checked": [
+        1,
+        2
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 8400,
+        "end_ms": 8800
+      },
+      "note": "All overview sheets reviewed. Full/lower dense sheet 1 directly confirms a physical-rope synchronized two-foot single-under cycle at cell 86; cropped tightly to one BASIC event. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "Nm4CFLU7Fb4": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:12 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=Nm4CFLU7Fb4",
+      "sha256": "c0431f5bbbb7d095f7793eeaac093d2595fad10c2a6060ef48f15a1f1a721ec2",
+      "review_proxy_sha256": "c4185e903159bd033931478c69fec97f0c1b20789d64d0a4e346524f67bf7e13",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCc7zv7AXkOQpDaDB6GjynTw",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        11500
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 2,
+          "dense_cell": 15
+        }
+      ],
+      "activity_start_ms": 11300,
+      "activity_end_ms": 11700,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3
+      ],
+      "full_dense_sheets_checked": [
+        2
+      ],
+      "lower_dense_sheets_checked": [
+        2
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 11300,
+        "end_ms": 11700
+      },
+      "note": "All overview sheets reviewed. Source is a montage, so only the directly verified single-subject physical-rope synchronized two-foot BASIC shot at dense sheet 2 cell 15 is retained. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "mxJXSKl9SAo": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:13 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=mxJXSKl9SAo",
+      "sha256": "64d0865708ea57ee3246f6fd2de7c7bca333fa17a0c58d5a9c48dabce0d5e6a4",
+      "review_proxy_sha256": "d58229dfcb10eb59053dd198534258a00b9540396db5ab19ec8f2c8f4e144607",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCvvgqvL8bDXwAKAKwvTap8g",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        1500
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 15
+        }
+      ],
+      "activity_start_ms": 1300,
+      "activity_end_ms": 1700,
+      "overview_sheets_checked": [
+        1,
+        2
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 1300,
+        "end_ms": 1700
+      },
+      "note": "All overview sheets reviewed. Montage source; only the opening same-subject real physical-rope synchronized two-foot basic-bounce cycle at dense sheet 1 cell 15 is retained. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "MFjhmtAJklI": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:14 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=MFjhmtAJklI",
+      "sha256": "c19218fae03dfe03fad85be9f3042fb6cea6a806b660fec99d5a597cffa2b855",
+      "review_proxy_sha256": "144789460d6cd5faead231c117747b9bec2293eea9b689cae805853b6fd5c5b8",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCogVXNy90ejP1SWRvKFUdsw",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        7500
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 75
+        }
+      ],
+      "activity_start_ms": 7300,
+      "activity_end_ms": 7700,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 7300,
+        "end_ms": 7700
+      },
+      "note": "All overview sheets reviewed. Mixed montage; full/lower dense sheet 1 directly verifies a separate red-jacket real-subject synchronized two-foot physical-rope single-under cycle at cell 75, isolated by crop. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "QGy31G7u8BY": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:14 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=QGy31G7u8BY",
+      "sha256": "17fd2d5900d17b393b79dc29333db85aab23f5eccdb2c00983250dacc790c8d1",
+      "review_proxy_sha256": "93f9f87f1b0a8a54dfb34db484bf5a4fa52b0454bf27bf84d314e0031a3f96db",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCogVXNy90ejP1SWRvKFUdsw",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        1500
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 15
+        }
+      ],
+      "activity_start_ms": 1300,
+      "activity_end_ms": 1700,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 1300,
+        "end_ms": 1700
+      },
+      "note": "All overview sheets reviewed. Mixed montage; only the opening blue-shirt real-subject physical-rope synchronized two-foot single-under cycle at dense sheet 1 cell 15 is retained. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "oighHf3GQrQ": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:15 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=oighHf3GQrQ",
+      "sha256": "e76c74eeb9e2dd6c377034522787e16f628bea807728cdba83c05d39c7313104",
+      "review_proxy_sha256": "7ec92fb2914789aa37f7e90b7d8f6c1b91ae9e3f0ca4c5786cb0eb5814db17d0",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCbBt2iD4_9sPqj91WnGHAUA",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        17600
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 2,
+          "dense_cell": 76
+        }
+      ],
+      "activity_start_ms": 17400,
+      "activity_end_ms": 17800,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3
+      ],
+      "full_dense_sheets_checked": [
+        2
+      ],
+      "lower_dense_sheets_checked": [
+        2
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 17400,
+        "end_ms": 17800
+      },
+      "note": "All overview sheets reviewed. Full/lower dense sheet 2 directly confirms the demonstrator's synchronized two-foot physical-rope single-under cycle at cell 76; cropped to isolate that BASIC event. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "WsygJe0-RqI": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:16 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=WsygJe0-RqI",
+      "sha256": "6557b1f14fc34cb9cca6f044732a3508685fbea33433e806ed671a6f0f8efd72",
+      "review_proxy_sha256": "e99dac7e58833ba24905eaf47192c5099662012d235c41e953e82d4d3eee3039",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCdKG1nft7GLjLkzf8wHTpJw",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        5500
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 1,
+          "dense_cell": 55
+        }
+      ],
+      "activity_start_ms": 5300,
+      "activity_end_ms": 5700,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3,
+        4
+      ],
+      "full_dense_sheets_checked": [
+        1
+      ],
+      "lower_dense_sheets_checked": [
+        1
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 5300,
+        "end_ms": 5700
+      },
+      "note": "All overview sheets reviewed. Source later transitions to Jogger/Boxer/other skips, so only the directly verified early 'Basic Jump' synchronized two-foot cycle at dense sheet 1 cell 55 is retained. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    },
+    "fwM-aoqpe_c": {
+      "count": 1,
+      "counted_at_kst": "2026-10-02 03:16 KST",
+      "confidence": "HIGH",
+      "source_ref": "https://www.youtube.com/watch?v=fwM-aoqpe_c",
+      "sha256": "200724d1a9aebc4a841e6d647cba16ed691b6161213a0ca85b1693eef925c0c5",
+      "review_proxy_sha256": "86135f6d8b763116ab08be64eb993a89813026a1eaeb1125e9826714c5282aab",
+      "source": "GPT_DIRECT_VIEWER",
+      "jump_rope_type": "STANDARD_BASIC_SINGLE_UNDER",
+      "decision": "CERTAIN_BASIC_PASS",
+      "training_basic_eligible": true,
+      "dataset_role": "TRAIN",
+      "dataset_group": "YT_CHANNEL_UCogVXNy90ejP1SWRvKFUdsw",
+      "dataset_role_policy": "EXTERNAL_SOURCE_GROUP_LOCKED_NO_LEAKAGE",
+      "dataset_eligibility": "ELIGIBLE_VERIFIED_STANDARD",
+      "jump_event_ms": [
+        10500
+      ],
+      "event_support": [
+        {
+          "dense_sheet": 2,
+          "dense_cell": 5
+        }
+      ],
+      "activity_start_ms": 10300,
+      "activity_end_ms": 10700,
+      "overview_sheets_checked": [
+        1,
+        2,
+        3
+      ],
+      "full_dense_sheets_checked": [
+        2
+      ],
+      "lower_dense_sheets_checked": [
+        2
+      ],
+      "event_time_basis": "DENSE_100MS_CELL",
+      "timestamp_interpolation_used": false,
+      "segmentation": {
+        "required": true,
+        "start_ms": 10300,
+        "end_ms": 10700
+      },
+      "note": "All overview sheets reviewed. Mixed montage; full/lower 100ms dense sheet 2 directly confirms the opening real female subject performing a physical-rope synchronized two-foot single-under cycle at cell 5. Crop isolates only that BASIC event. Promoted from accepted TRAIN direct-review result; event timestamps remain tied to inspected 100ms cells."
+    }
+  },
+  "dataset_split_policy": {
+    "version": 1,
+    "roles": [
+      "TRAIN",
+      "VALIDATION",
+      "HOLDOUT"
+    ],
+    "ucf_group_lock": true,
+    "rule": "All clips sharing the same UCF gXX group must remain in the same dataset role to prevent near-duplicate/source leakage.",
+    "future_assignment": "A newly verified clip inherits its existing gXX role. A new gXX group is assigned as a whole while keeping approximate TRAIN/VALIDATION/HOLDOUT balance.",
+    "current_ucf_groups": {
+      "TRAIN": [
+        "g08",
+        "g11",
+        "g15",
+        "g21",
+        "g22",
+        "g23",
+        "g25"
+      ],
+      "VALIDATION": [
+        "g03"
+      ],
+      "HOLDOUT": [
+        "g02",
+        "g24"
+      ]
+    },
+    "independent_sources": {
+      "TRAIN": [
+        "x8au8pu",
+        "x7zay0w"
+      ],
+      "VALIDATION": [
+        "x8by42a"
+      ],
+      "HOLDOUT": [
+        "x815y0i"
+      ]
+    },
+    "user_original_verified_standard": {
+      "TRAIN": [],
+      "VALIDATION": [],
+      "HOLDOUT": [
+        "JR-20260910-07583788",
+        "JR-20260912-D5EEAE97",
+        "JR-20260913-694638E8"
+      ]
+    },
+    "user_original_hard_negative": [
+      "JR-20260909-AC5539AF",
+      "JR-20260911-BD41E9A3"
+    ],
+    "user_original_excluded_non_standard": [
+      "JR-20260908-E86C659B",
+      "JR-20260908-376EF057",
+      "JR-20260909-9BDBF573",
+      "JR-20260908-F62DC60E",
+      "JR-20260908-913C26E0",
+      "JR-20260908-F45E4935",
+      "JR-20260910-C32FED68"
+    ],
+    "user_original_group_policy": {
+      "group_id": "USER_ORIGINAL_REPORTER_ORIGIN_UNRESOLVED_202609",
+      "role": "HOLDOUT",
+      "members": [
+        "JR-20260910-07583788",
+        "JR-20260912-D5EEAE97",
+        "JR-20260913-694638E8"
+      ],
+      "reason": "The three verified STANDARD clips are distinct canonical videos and distinct capture sessions, but stored provenance does not establish reporter/person independence. Keep them in one split to prevent possible source/session/person leakage."
+    },
+    "authority": "GROUP_LOCKED_RESEARCH_SPLIT",
+    "source_partition_note": "UCF source train/val/test folder names are provenance only. Research TRAIN/VALIDATION/HOLDOUT roles are assigned at whole gXX-group level to prevent same-source/person-group leakage and may override source-folder partitions.",
+    "role_provenance_note": "The final group-locked research split is authoritative. current_ucf_groups must exactly match item.dataset_role for every UCF gXX group."
+  }
+}

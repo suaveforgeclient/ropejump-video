@@ -1,0 +1,203 @@
+{
+  "schemaVersion": 1,
+  "items": {
+    "k7dq0RQlBpM": {
+      "status": "PASS_CONTINUOUS",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=k7dq0RQlBpM",
+      "sourceSha256": "3ff2556f1b2a2ddd04821ef472036c3895d5688232d40b81f67e38b49e678cea",
+      "reviewProxySha256": "ab47d8427af18f6d82b4db1bcda9b2254bc61455068766981674d43811400daf",
+      "reviewedAtUtc": "2026-09-28T07:08:53.846Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "uz3nLpfU8iw": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=uz3nLpfU8iw",
+      "sourceSha256": "1742820a38c52289679a24d59742bd177cd362bedce0839bf9db0cf2afd64cb1",
+      "reviewProxySha256": "19fbdcda57bc66687aec6ceec37d8fabcbebb548e50db20c4c89decce1335eab",
+      "reviewedAtUtc": "2026-10-01T16:14:12.206Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "BwwAjZ7dUcc": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=BwwAjZ7dUcc",
+      "sourceSha256": "7b63f14bed83e116d0aab61a5a11eb1aaf9957d4c4d4fd9050ecd9a9762899ff",
+      "reviewProxySha256": "0fc1294d18dfaee17a9f4182cec61c632f2e57976cf9cf1097f33242283c1476",
+      "reviewedAtUtc": "2026-10-01T16:25:58.825Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "fNW9vRQ_rtE": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=fNW9vRQ_rtE",
+      "sourceSha256": "4a826ddc88c5d7742a8c8a123e14c12d39f65bf805199d643aa186581e109467",
+      "reviewProxySha256": "bc03d7882709891333001c807509823879a870cb43e91f3c63fb3a94f1ffe49e",
+      "reviewedAtUtc": "2026-10-01T16:26:59.030Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "4b2HZTbx--k": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=4b2HZTbx--k",
+      "sourceSha256": "d44be1b6c43b992843f06d4e1a00c2050582cff96e8a76b82c3e40d215b49a64",
+      "reviewProxySha256": "eeb1513df7408aeecaee9a7a338866f4b1f941a08cbdf4d01a6216ea8a81364a",
+      "reviewedAtUtc": "2026-10-01T17:26:22.426Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "VYxrbSVKQjk": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=VYxrbSVKQjk",
+      "sourceSha256": "9177d7bd494fe1609fee1a04e718a7a8245910c1f14ade02c47461688110ed19",
+      "reviewProxySha256": "dea3fc7e1d50ec0dcd77ab984e4510e4ccf756f0547bebdc92daa9d52a7e48c9",
+      "reviewedAtUtc": "2026-10-01T17:32:49.158Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "gEeCbBHdXPI": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=gEeCbBHdXPI",
+      "sourceSha256": "6d2c95202c3d09cd08479f87de33a3a59ee3f41c5593719b6f5a9c74d56af5cf",
+      "reviewProxySha256": "5697784832782c1b79b49ac1d2497b067cbb6e4c2750afd0477bf401d91c8b39",
+      "reviewedAtUtc": "2026-10-01T17:33:46.835Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "bhjys_Ugzzw": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=bhjys_Ugzzw",
+      "sourceSha256": "af3c1cb1ae00887e8288a295283a9764f934c07d46c8dd5f0f19e19c020f57fc",
+      "reviewProxySha256": "fc087a300a51bd979202543ee4e00b205534ce07eb8b4700a3a29444caa7f87e",
+      "reviewedAtUtc": "2026-10-01T17:35:32.362Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "gYxwf3hO_NI": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=gYxwf3hO_NI",
+      "sourceSha256": "cfe66c05ac2d54ae177db3c42761f3dd9ae87d38581bc9228e5b4bd9e8e5ea40",
+      "reviewProxySha256": "bf7f0379e8e10f1d03c16b9ce71964b250cd32f3367b65da453109d9d08d2640",
+      "reviewedAtUtc": "2026-10-01T17:37:27.843Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "WL2a0n8Y4hA": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=WL2a0n8Y4hA",
+      "sourceSha256": "90578ca279f320a4f53332c462f951b01368c3f7554bcd47ca914d5316b299d2",
+      "reviewProxySha256": "a865dc32f07921cf8e55cc01b7a311dc1e58fcdb1ef19ac77fe7fd5c0c52e534",
+      "reviewedAtUtc": "2026-10-01T17:46:45.240Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "sMpMSUcyZgk": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=sMpMSUcyZgk",
+      "sourceSha256": "0d890768db615b51e1f93d843441512ff594ae99293da3f0dcf2298890d6041c",
+      "reviewProxySha256": "1d8181251018a49562c82d3d8a5cee467eb4bd55d2e5dc81a989390a68f5b6f5",
+      "reviewedAtUtc": "2026-10-01T18:08:34.439Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "NN9S4BVGM3Q": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=NN9S4BVGM3Q",
+      "sourceSha256": "6242259b1150ac6c6085dad3f3fde33077c158fd8559564221894ae9c40e1209",
+      "reviewProxySha256": "bb9164805a415fb3c2e3928a4655ec85d190932829bfc99521a533eac88c5f28",
+      "reviewedAtUtc": "2026-10-01T18:09:59.780Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "qjRMa53uL-I": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=qjRMa53uL-I",
+      "sourceSha256": "4cddf5dbe0fcf2398ae041584ac2cb7e8dd687da9441819628caf4c78705eafd",
+      "reviewProxySha256": "71b24ed3390b1ccbe1e77fd36ad582c57d52eb21d2add4352bdeaa4aef9f16d5",
+      "reviewedAtUtc": "2026-10-01T18:10:22.762Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "l9dQRrPjqmA": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=l9dQRrPjqmA",
+      "sourceSha256": "a45a90a14927e86a84fa162a5a48711bc4112a54426304804bafc1b68117c9eb",
+      "reviewProxySha256": "9ad735118c9d21ac566176baaedc748078e08b3ff96bce1e058818d7a6eac0af",
+      "reviewedAtUtc": "2026-10-01T18:11:16.325Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "eZUE40_-4cc": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=eZUE40_-4cc",
+      "sourceSha256": "07099ab1febce35265756d8332df286c48932b5e88f7a58bf95c06a42b5f3528",
+      "reviewProxySha256": "95a4ced1502d27f67ab1a25c4517ea7404ac6d84741682fcf92e131d46ceb223",
+      "reviewedAtUtc": "2026-10-01T18:12:28.659Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "Nm4CFLU7Fb4": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=Nm4CFLU7Fb4",
+      "sourceSha256": "c0431f5bbbb7d095f7793eeaac093d2595fad10c2a6060ef48f15a1f1a721ec2",
+      "reviewProxySha256": "c4185e903159bd033931478c69fec97f0c1b20789d64d0a4e346524f67bf7e13",
+      "reviewedAtUtc": "2026-10-01T18:12:51.970Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "mxJXSKl9SAo": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=mxJXSKl9SAo",
+      "sourceSha256": "64d0865708ea57ee3246f6fd2de7c7bca333fa17a0c58d5a9c48dabce0d5e6a4",
+      "reviewProxySha256": "d58229dfcb10eb59053dd198534258a00b9540396db5ab19ec8f2c8f4e144607",
+      "reviewedAtUtc": "2026-10-01T18:13:44.905Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "MFjhmtAJklI": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=MFjhmtAJklI",
+      "sourceSha256": "c19218fae03dfe03fad85be9f3042fb6cea6a806b660fec99d5a597cffa2b855",
+      "reviewProxySha256": "144789460d6cd5faead231c117747b9bec2293eea9b689cae805853b6fd5c5b8",
+      "reviewedAtUtc": "2026-10-01T18:14:25.757Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "QGy31G7u8BY": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=QGy31G7u8BY",
+      "sourceSha256": "17fd2d5900d17b393b79dc29333db85aab23f5eccdb2c00983250dacc790c8d1",
+      "reviewProxySha256": "93f9f87f1b0a8a54dfb34db484bf5a4fa52b0454bf27bf84d314e0031a3f96db",
+      "reviewedAtUtc": "2026-10-01T18:14:54.024Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "oighHf3GQrQ": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=oighHf3GQrQ",
+      "sourceSha256": "e76c74eeb9e2dd6c377034522787e16f628bea807728cdba83c05d39c7313104",
+      "reviewProxySha256": "7ec92fb2914789aa37f7e90b7d8f6c1b91ae9e3f0ca4c5786cb0eb5814db17d0",
+      "reviewedAtUtc": "2026-10-01T18:15:57.798Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "WsygJe0-RqI": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=WsygJe0-RqI",
+      "sourceSha256": "6557b1f14fc34cb9cca6f044732a3508685fbea33433e806ed671a6f0f8efd72",
+      "reviewProxySha256": "e99dac7e58833ba24905eaf47192c5099662012d235c41e953e82d4d3eee3039",
+      "reviewedAtUtc": "2026-10-01T18:16:19.419Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    },
+    "fwM-aoqpe_c": {
+      "status": "PASS_CROPPED",
+      "sourceKind": "accepted-train-direct-review",
+      "sourceUrl": "https://www.youtube.com/watch?v=fwM-aoqpe_c",
+      "sourceSha256": "200724d1a9aebc4a841e6d647cba16ed691b6161213a0ca85b1693eef925c0c5",
+      "reviewProxySha256": "86135f6d8b763116ab08be64eb993a89813026a1eaeb1125e9826714c5282aab",
+      "reviewedAtUtc": "2026-10-01T18:16:42.783Z",
+      "authority": "ROPEJUMP_TRAIN_ACCEPTED_DIRECT_VISUAL_REVIEW"
+    }
+  }
+}
